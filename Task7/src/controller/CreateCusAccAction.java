@@ -62,8 +62,8 @@ public class CreateCusAccAction extends Action {
 			}
 			cus=new Customer();
             cus.setUsername(form.getUsername());
-            cus.setFirstname(form.getConfirm());
-            cus.setLastname(form.getLastName());
+            cus.setFirstname(form.getFirstname());
+            cus.setLastname(form.getLastname());
             cus.setPassword(form.getPassword());
             cus.setAddr_line1(form.getAddr_line1());
             cus.setAddr_line2(form.getAddr_line2());

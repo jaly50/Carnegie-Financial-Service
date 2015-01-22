@@ -5,8 +5,8 @@
  <br />
  <br />
 <form method="post" action="resetCustomerPassword.do">
-<h4 style = "margin-left:380px">   Customer ID: &nbsp;&nbsp;&nbsp;
-     <input name="customer_id" type="text" value="${form.customer_id}" />
+<h4 style = "margin-left:380px">   Customer Username: &nbsp;&nbsp;&nbsp;
+     <input name="customer_id" type="text" value="${form.username}" />
  </h4>
  <br />
 <h4 style = "margin-left:380px">   New Password: &nbsp;&nbsp;&nbsp;

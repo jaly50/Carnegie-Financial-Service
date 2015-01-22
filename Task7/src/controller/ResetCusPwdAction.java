@@ -55,10 +55,9 @@ public class ResetCusPwdAction extends Action {
 
 			Customer customer;
 			// Create the fund bean
-			int id = Integer.parseInt(form.getCustomer_id());
-			customer = customerDAO.getCustomer(id);
+			customer = customerDAO.getCustomer(form.getUsername());
 			if (customer ==null) {
-				errors.add("No such customer whith ID" + id);
+				errors.add("Customer username " + form.getUsername()+ " does not exist");
 				return "resetCusPwd.jsp";
 			}
 			customer.setPassword(form.getNewPassword());

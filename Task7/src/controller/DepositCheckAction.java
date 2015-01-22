@@ -1,10 +1,17 @@
+/*
+ * Edited by Scarlett Chen
+ * Thursday Jan 22 2015 4:09 PM
+ * customer id --> username
+ */
 package controller;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import model.CustomerDAO;
 import model.Model;
 import model.TransactionDAO;
 
@@ -12,7 +19,10 @@ import org.genericdao.RollbackException;
 import org.mybeans.form.FormBeanException;
 import org.mybeans.form.FormBeanFactory;
 
+import databeans.Customer;
+import databeans.Employee;
 import databeans.Transaction;
+import databeans.User;
 import employeeFormbeans.DepositCheckForm;
 
 public class DepositCheckAction  extends Action  {
@@ -20,6 +30,7 @@ public class DepositCheckAction  extends Action  {
 			.getInstance(DepositCheckForm.class);
 	
 	private TransactionDAO transactionDAO;
+	private CustomerDAO customerDAO;
 	public DepositCheckAction(Model model) {
 		transactionDAO = model.getTransactionDAO();
 	}
@@ -28,10 +39,20 @@ public class DepositCheckAction  extends Action  {
 		return "depositCheck.do";
 	}
 	public String perform(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
 		List<String> errors = new ArrayList<String>();
+		User user = (User) session.getAttribute("user");
 		request.setAttribute("errors", errors);
 		
 		try {
+			if (user==null) {
+				errors.add("Please login first");
+				return "login.do";
+			}
+			else if (!(user instanceof Employee)) {
+				errors.add("You don't have permissions to do the operation");
+				return "login.do";
+			}
 			
 
 			DepositCheckForm form = formBeanFactory.create(request);
@@ -51,9 +72,14 @@ public class DepositCheckAction  extends Action  {
 			}
             
 			Transaction transaction;
+			Customer customer = customerDAO.getCustomer(form.getUsername());
+			if (customer==null) {
+				errors.add("Customer Username " +form.getUsername()+" does not exist");
+				return "depositCheck.jsp";
+			}
 			// Create the transaction bean
 			transaction = new Transaction();
-			transaction.setCustomer_id(form.getCustomer_idAsInt());
+			transaction.setCustomer_id(customer.getCustomer_id());
 			transaction.setFund_id(-1); // means it is not a fund
 			transaction.setExecute_date(null);
 			transaction.setShares(-1);

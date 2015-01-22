@@ -7,11 +7,11 @@ import org.genericdao.PrimaryKey;
 @PrimaryKey("transaction_id")
 
 public class Transaction {
-	private int transaction_id = -1;
-	private int customer_id = -1;
-	private int fund_id = -1;
-	private Date execute_date = null;
-	private long shares = 0;
+	private int transaction_id;
+	private int customer_id;
+	private int fund_id;
+	private Date execute_date;
+	private long shares;
 	// There is two transaction type : Check and Fund
 	private String transaction_type = null;
 	private double amount = 0;

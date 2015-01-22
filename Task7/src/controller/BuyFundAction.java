@@ -53,7 +53,7 @@ public class BuyFundAction extends Action {
 		DecimalFormat shares = new DecimalFormat("#,##0.000");
 
 		try {
-			if (request.getSession().getAttribute("customer") == null) {
+			if (request.getSession().getAttribute("user") == null) {
 				errors.add("Please Log in first");
 				return "login.jsp";
 			}

@@ -20,6 +20,9 @@ import javax.servlet.http.HttpSession;
 
 
 
+
+
+import databeans.User;
 import model.Model;
 
 @SuppressWarnings("serial")
@@ -71,8 +74,13 @@ public class Controller extends HttpServlet {
 	private String performTheAction(HttpServletRequest request) {
 		HttpSession session = request.getSession(true);
 		String servletPath = request.getServletPath();
+		User user = (User) session.getAttribute("user");
 		String action = getActionName(servletPath);
 
+		if (user == null) {
+			// If the user hasn't logged in, direct him to the login page
+			return Action.perform("login.do", request);
+		}
 
 
 		// Let the logged in user run his chosen action

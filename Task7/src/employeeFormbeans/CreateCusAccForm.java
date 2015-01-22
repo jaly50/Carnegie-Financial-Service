@@ -7,8 +7,8 @@ import org.mybeans.form.FormBean;
 
 public class CreateCusAccForm extends FormBean {
 	private String username;
-	private String firstName;
-	private String lastName;
+	private String firstname;
+	private String lastname;
 	private String password;
 	private String confirm;
 	private String addr_line1;
@@ -23,13 +23,6 @@ public class CreateCusAccForm extends FormBean {
 		return username;
 	}
 
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
 
 	public String getPassword() {
 		return password;
@@ -64,11 +57,11 @@ public class CreateCusAccForm extends FormBean {
 	}
 
 	public void setFirstName(String s) {
-		firstName = trimAndConvert(s, "<>\"");
+		firstname = trimAndConvert(s, "<>\"");
 	}
 
 	public void setLastName(String s) {
-		lastName = trimAndConvert(s, "<>\"");
+		lastname = trimAndConvert(s, "<>\"");
 	}
 	public void setState(String s) {
 		state = trimAndConvert(s, "<>\"");
@@ -106,11 +99,11 @@ public class CreateCusAccForm extends FormBean {
 			errors.add("Email is required");
 		}
 
-		if (firstName == null || firstName.length() == 0) {
+		if (firstname == null || firstname.length() == 0) {
 			errors.add("First Name is required");
 		}
 
-		if (lastName == null || lastName.length() == 0) {
+		if (lastname == null || lastname.length() == 0) {
 			errors.add("Last Name is required");
 		}
 
@@ -158,5 +151,21 @@ public class CreateCusAccForm extends FormBean {
 
 	public void setAvailablebalance(String availablebalance) {
 		this.availablebalance = availablebalance;
+	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 }

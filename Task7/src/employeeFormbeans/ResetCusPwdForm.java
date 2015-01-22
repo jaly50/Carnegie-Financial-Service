@@ -6,20 +6,9 @@ import java.util.List;
 import org.mybeans.form.FormBean;
 
 public class ResetCusPwdForm  extends FormBean  {
-	private String customer_id;
+	private String username;
 	private String newPassword;
 	private String confirm;
-	public String getCustomer_id() {
-		return customer_id;
-	}
-	public int getCustomer_idAsNumber() {
-		int id;
-		id = Integer.valueOf(customer_id);
-		return id;
-	}
-	public void setCustomer_id(String customer_id) {
-		this.customer_id = customer_id;
-	}
 	public String getNewPassword() {
 		return newPassword;
 	}
@@ -35,8 +24,8 @@ public class ResetCusPwdForm  extends FormBean  {
 	public List<String> getValidationErrors() {
 		List<String> errors = new ArrayList<String>();
 
-		if (customer_id == null || customer_id.length() == 0) {
-			errors.add("Customer ID is required");
+		if (username == null || username.length() == 0) {
+			errors.add("Customer Username is required");
 		}
 
 		if (newPassword == null || newPassword.length() == 0) {
@@ -52,6 +41,12 @@ public class ResetCusPwdForm  extends FormBean  {
 
 
 		return errors;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	

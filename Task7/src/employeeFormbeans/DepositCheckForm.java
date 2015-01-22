@@ -4,17 +4,8 @@ import java.util.List;
 
 import org.mybeans.form.FormBean;
 public class DepositCheckForm   extends FormBean   {
-	private String  customer_id;
+	private String  username;
 	private String amount;
-	public int getCustomer_idAsInt() {
-		try {
-			return Integer.parseInt(customer_id);
-		} catch (NumberFormatException e) {
-			// call getValidationErrors() to detect this
-			return -1;
-		}
-	}
-	
 	public double getAmountAsDouble() {
 		try {
 			return Double.parseDouble(amount);
@@ -24,12 +15,6 @@ public class DepositCheckForm   extends FormBean   {
 		}
 	}
 
-	public String getCustomer_id() {
-		return customer_id;
-	}
-	public void setCustomer_id(String customer_id) {
-		this.customer_id = customer_id;
-	}
 	public String getAmount() {
 		return amount;
 	}
@@ -38,8 +23,8 @@ public class DepositCheckForm   extends FormBean   {
 	}
 	public List<String> getValidationErrors() {
 		List<String> errors = new ArrayList<String>();
-		if (customer_id == null || customer_id.length()==0)
-			errors.add("Customer id is required");
+		if (username == null || username.length()==0)
+			errors.add("Customer Username is required");
         if (amount ==null || amount.length()==0) 
         	errors.add("Amount is required");
 
@@ -49,6 +34,14 @@ public class DepositCheckForm   extends FormBean   {
 
 
 		return errors;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }

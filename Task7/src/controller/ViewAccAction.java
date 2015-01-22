@@ -63,7 +63,7 @@ public class ViewAccAction extends Action {
 		HttpSession session = request.getSession();
 		
 		// get customer
-		Customer customer = (Customer) session.getAttribute("customer");
+		Customer customer = (Customer) session.getAttribute("user");
 		
 		if (customer == null) return "login.jsp";
 		

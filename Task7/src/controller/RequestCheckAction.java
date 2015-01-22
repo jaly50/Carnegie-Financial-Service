@@ -63,9 +63,6 @@ public class RequestCheckAction   extends Action  {
 			// Create the transaction bean
 			transaction = new Transaction();
 			transaction.setCustomer_id(customer.getCustomer_id());
-			//transaction.setFund_id(-1); // means it is not a fund
-			//transaction.setExecute_date(null);
-			//transaction.setShares(-1);
 			transaction.setTransaction_type("Check");
 			transaction.setAmount(-form.getAmountAsDouble()); // request money should be negative value
 			
