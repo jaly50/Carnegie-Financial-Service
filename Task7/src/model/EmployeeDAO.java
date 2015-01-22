@@ -43,6 +43,7 @@ public class EmployeeDAO extends GenericDAO<Employee> {
 	}
 
 	public void setPassword(Employee user) throws RollbackException {
+		System.out.print("emp"+user.getUsername());
 		update(user);
 		
 	}

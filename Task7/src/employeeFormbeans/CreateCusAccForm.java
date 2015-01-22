@@ -15,9 +15,9 @@ public class CreateCusAccForm extends FormBean {
 	private String addr_line2;
 	private String state;
 	private String city;
-	private int zip;
-	private long availablebalance;
-	private long totalbalance;
+	private String zip;
+	private String availablebalance;
+	private String totalbalance;
 	
 	public String getUsername() {
 		return username;
@@ -54,7 +54,7 @@ public class CreateCusAccForm extends FormBean {
 	public String getCity() {
 		return city;
 	}
-	public int getZip()
+	public String getZip()
 	{
 		return zip;
 	}
@@ -75,7 +75,7 @@ public class CreateCusAccForm extends FormBean {
 	}
 
 	
-	public void setZip(int s) {
+	public void setZip(String s) {
 		zip = s;
 	}
 
@@ -132,20 +132,31 @@ public class CreateCusAccForm extends FormBean {
 
 		return errors;
 	}
+    
+	public long getAvailablebalanceAsLong() {
+		long availableLong = Long.parseLong(availablebalance);
+		return availableLong;
+	}
 
-	public long getAvailablebalance() {
+
+	public String getTotalbalance() {
+		return totalbalance;
+	}
+	public long getTotalBalanceAsLong() {
+		long totalLong = Long.parseLong(totalbalance);
+		return totalLong;
+		
+	}
+
+	public void setTotalbalance(String totalbalance) {
+		this.totalbalance = totalbalance;
+	}
+
+	public String getAvailablebalance() {
 		return availablebalance;
 	}
 
-	public void setAvailablebalance(long availablebalance) {
+	public void setAvailablebalance(String availablebalance) {
 		this.availablebalance = availablebalance;
-	}
-
-	public long getTotalbalance() {
-		return totalbalance;
-	}
-
-	public void setTotalbalance(long totalbalance) {
-		this.totalbalance = totalbalance;
 	}
 }

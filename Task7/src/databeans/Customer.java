@@ -13,7 +13,7 @@ public class Customer extends User {
     private String addr_line2;
     private String state;
     private String city;
-    private int zip;
+    private String zip;
     private long availablebalance;
     private long totalbalance;
 	public boolean checkPassword(String password) {
@@ -27,7 +27,6 @@ public class Customer extends User {
     public String getState()        { return state; }
     public String getCity()        { return city; }
     public int getCustomer_id(){return customer_id;}
-    public int getZip(){return zip;}
     public long getAvailablebalance(){return availablebalance;}
     public long getTotalbalance(){return totalbalance;}
     
@@ -41,12 +40,17 @@ public class Customer extends User {
     public void setCustomer_id(int s)        { customer_id=s; }
     public void setAvailablebalance(long s)        { availablebalance=s; }
     public void setTotalbalance(long s)        { totalbalance=s; }
-    public void setzip(int s)        { zip=s; }
 	public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	public String getZip() {
+		return zip;
+	}
+	public void setZip(String zip) {
+		this.zip = zip;
 	}
 
 }

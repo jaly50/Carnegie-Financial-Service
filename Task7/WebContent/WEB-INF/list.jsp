@@ -7,7 +7,7 @@
     
 	<c:forEach var="cus" items="${customerList}">
 		<tr>
-			<td><h4 style = "margin-left:380px"><a href="viewcustomerdetails.do?customer_id=${cus.customer_id}">${cus.firstname} ${cus.firstname}</a></td>
+			<td><h4 style = "margin-left:380px"><a href="viewcustomerdetails.do?customer_id=${cus.customer_id}">${cus.firstname} ${cus.lastname}</a></td>
 		</tr>
 		</h4>
 

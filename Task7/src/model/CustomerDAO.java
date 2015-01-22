@@ -53,6 +53,7 @@ public class CustomerDAO extends GenericDAO<Customer> {
 	}
 
     public void setPassword(Customer cus) throws RollbackException {
+    	System.out.println("check 1"+cus.getCustomer_id());
     	update(cus);
     }
 	

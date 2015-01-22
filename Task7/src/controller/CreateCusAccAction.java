@@ -69,9 +69,9 @@ public class CreateCusAccAction extends Action {
             cus.setAddr_line2(form.getAddr_line2());
             cus.setCity(form.getCity());
             cus.setState(form.getState());
-            cus.setzip(form.getZip());
-            cus.setTotalbalance(form.getTotalbalance());
-            cus.setAvailablebalance(form.getAvailablebalance());
+            cus.setZip(form.getZip());
+            cus.setTotalbalance(form.getTotalBalanceAsLong());
+            cus.setAvailablebalance(form.getAvailablebalanceAsLong());
             
 	        customerDAO.createCustomer(cus);
 	        

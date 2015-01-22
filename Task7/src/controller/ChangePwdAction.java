@@ -59,12 +59,13 @@ public class ChangePwdAction extends Action {
              System.out.println("Attribute test" + user);
 			// Change the password
              
-             user.setPassword(form.getNewPassword());
+         
              if (user instanceof Customer) {
 
  				 String oldpass=request.getParameter("oldPassword");
             	 if(customerDAO.checkPassword(user.getUsername(), oldpass))
-            	 { customerDAO.setPassword((Customer) user);
+            	 {   user.setPassword(form.getNewPassword());
+            		 customerDAO.setPassword((Customer) user);
  				return "viewAccAction.do";
              }
             	 else
@@ -77,6 +78,7 @@ public class ChangePwdAction extends Action {
  	            System.out.println("Username and old pass" + user.getUsername()+oldpass);
  	            if(employeeDAO.checkPassword(user.getUsername(), oldpass))
  	            {//employeeDAO.setPassword(user.getUsername(), form.getNewPassword());
+ 	            	user.setPassword(form.getNewPassword());
  				employeeDAO.setPassword((Employee)user);
  				return "createFund.do";
  	            }
