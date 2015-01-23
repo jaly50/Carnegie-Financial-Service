@@ -19,10 +19,17 @@ public class BuyFundTable {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	
 
 	public void setSymbol(String symbol) {
 		this.symbol = symbol;
 	}
+	public String getSymbol() {
+		return symbol;
+	}
+	
+	
 
 	public void setLatestPrice(String latestPrice) {
 		this.latestPrice = latestPrice;
@@ -32,9 +39,6 @@ public class BuyFundTable {
 		return name;
 	}
 
-	public String getSymbol() {
-		return symbol;
-	}
 
 	public String getLatestPrice() {
 		return latestPrice;

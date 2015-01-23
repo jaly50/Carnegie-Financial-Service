@@ -4,47 +4,41 @@ public class SellFundTable {
 	private String fundName;
 	private String symbol;
 	private String latestPrice;
-	private String shares;
-	private String marketValue;
+	private String availableShares;
 
+	
 	public void setFundName(String fundName) {
 		this.fundName = fundName;
 	}
-
-	public void setSymbol(String symbol) {
-		this.symbol = symbol;
-	}
-
-	public void setLatestPrice(String latestPrice) {
-		this.latestPrice = latestPrice;
-	}
-
-	public void setShares(String shares) {
-		this.shares = shares;
-	}
-
-	public void setMarketValue(String marketValue) {
-		this.marketValue = marketValue;
-	}
-
 	public String getFundName() {
 		return fundName;
 	}
 
+	
+	public void setSymbol(String symbol) {
+		this.symbol = symbol;
+	}
 	public String getSymbol() {
 		return symbol;
 	}
+	
+	
 
+	public void setLatestPrice(String latestPrice) {
+		this.latestPrice = latestPrice;
+	}
 	public String getLatestPrice() {
 		return latestPrice;
 	}
-
-	public String getShares() {
-		return shares;
+	
+	
+	public String getAvailableShares() {
+		return availableShares;
+	}
+	public void setAvailableShares(String availableShares) {
+		this.availableShares = availableShares;
 	}
 
-	public String getMarketValue() {
-		return marketValue;
-	}
+	
 
 }
