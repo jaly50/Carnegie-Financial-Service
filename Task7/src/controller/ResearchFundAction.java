@@ -63,7 +63,7 @@ public class ResearchFundAction extends Action {
 		HttpSession session = request.getSession();
 		
 		// get customer
-		Customer customer = (Customer) session.getAttribute("Customer");
+		Customer customer = (Customer) session.getAttribute("user");
 		
 		// set error attribute
 		List<String> errors = new ArrayList<String>();
@@ -104,23 +104,18 @@ public class ResearchFundAction extends Action {
 			// set fund attribute
 			request.setAttribute("fund", fund);
 			
-			/*choice one
-			// get that fund history. from past 20-day to the latest day
 			int fund_id = form.getIdAsInt();
-			Date price_date_start = null;
-			Date price_date_end = null;
-			Fund_Price_History[] fundPriceHistory = 
-					fundPriceHistoryDAO.getFundPrice(fund_id, price_date_start, price_date_end);
-			*/
+			Fund_Price_History[] fundPriceHistoryOrigin = fundPriceHistoryDAO.getFundPrice(fund_id);
+			Fund_Price_History[] fundPriceHistory = new Fund_Price_History[20];
 			
-			/*choice two
-			 * get all result of this fund 
-			 */
-			int fund_id = form.getIdAsInt();
-			Fund_Price_History[] fundPriceHistory = fundPriceHistoryDAO.getFundPrice(fund_id);
+			if (fundPriceHistoryOrigin.length == 0) errors.add("Fund item does not have history");
 			
-			// set fund price history attribute
-			request.setAttribute("fundPriceHistory", fundPriceHistory);
+			if (fundPriceHistoryOrigin.length > 20) {
+				for (int i = 0; i < 20; i++) {
+					fundPriceHistory[i] = fundPriceHistoryOrigin[fundPriceHistoryOrigin.length - 20 + i];
+				}
+				request.setAttribute("fundPriceHistory", fundPriceHistory);
+			} else request.setAttribute("fundPriceHistory", fundPriceHistoryOrigin);
 			return "research-fund-detail.jsp";
 		} catch (FormBeanException e) {
 			return "research-fund.jsp";

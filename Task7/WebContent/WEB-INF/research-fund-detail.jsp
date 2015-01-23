@@ -16,42 +16,23 @@
 <div class="container">
   <h2>Research Funds</h2>
     </br>
-  <h5>Funds Performance:</h5>            
+  <h5>Funds Name: <c:out value = '${user.name}' escapeXml='true' /></h5> 
+  <h5>Funds Symbol: <c:out value = '${user.symbol}' escapeXml='true' /></h5>            
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th>Fund Name</th>
-        <th>Fund Symbol</th>
-        <th>One-Quarter Return</th>
-        <th>One-Year Return</th>
-        <th>Three-Year Return</th>
+        
+        <th>Date</th>
+        <th>Price</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Ebiz Mutual Fund</td>
-        <td>000960</td>
-        <td>+9.18%</td>
-        <td>+70.70%</td>
-        <td>+330.33%</td>
-      </tr>
-
-      <tr>
-        <td>Dow Jones Index Fund</td>
-        <td>600000</td>
-        <td>+3.37%</td>
-        <td>+20.60%</td>
-        <td>+40.45%</td>
-      </tr>
-   
-      <tr>
-        <td>Pimco Total Return</td>
-        <td>630720</td>
-        <td>+2.46%</td>
-        <td>+10.73%</td>
-        <td>+23.63%</td>
-      </tr>
-
+     <c:forEach var="fundPriceHistory" items="${fundPriceHistory}">    
+    	<tr> 
+        <td><c:out value = '${fundPriceHistory.price_date}' escapeXml='true' /></td>
+        <td><c:out value = '${fundPriceHistory.price}' escapeXml='true' /></td>
+	</tr>			    
+	</c:forEach>   	
     </tbody>
   </table>
   </br>

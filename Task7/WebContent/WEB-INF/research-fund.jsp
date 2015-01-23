@@ -15,46 +15,25 @@
 <div class="container">
 <div class="container">
   <h2>Research Funds</h2>
-    </br>
-  <h5>Funds Performance:</h5>            
+  <form method="post" action="researchFundAction.do">          
   <table class="table table-bordered">
     <thead>
       <tr>
         <th>Fund Name</th>
         <th>Fund Symbol</th>
-        <th>One-Quarter Return</th>
-        <th>One-Year Return</th>
-        <th>Three-Year Return</th>
+  
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Ebiz Mutual Fund</td>
-        <td>000960</td>
-        <td>+9.18%</td>
-        <td>+70.70%</td>
-        <td>+330.33%</td>
-      </tr>
-
-      <tr>
-        <td>Dow Jones Index Fund</td>
-        <td>600000</td>
-        <td>+3.37%</td>
-        <td>+20.60%</td>
-        <td>+40.45%</td>
-      </tr>
-   
-      <tr>
-        <td>Pimco Total Return</td>
-        <td>630720</td>
-        <td>+2.46%</td>
-        <td>+10.73%</td>
-        <td>+23.63%</td>
-      </tr>
-
+    <c:forEach var="fund" items="${fundList}">    
+    	<tr> 
+	    <td><c:out value = '${fund.name}' escapeXml='true' /></td>       
+        <td><c:out value = '${fund.symbol}' escapeXml='true' /></td>
+	</tr>			    
+	</c:forEach>   	
     </tbody>
   </table>
-  </br>
+  </form>
 
   
 </div>

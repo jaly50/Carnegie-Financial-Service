@@ -27,7 +27,7 @@
         <th>State</th>
         <th>City</th>
         <th>Zip Code</th>
-        <th>Data of Last Trading</th>
+        <th>Date of Last Trading</th>
         <th>Cash Balance</th>
 
       </tr>
@@ -60,28 +60,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Ebiz Mutual Fund</td>
-        <td>000960</td>
-        <td>$6.66</td>
-        <td>100</td>
-        <td>$666</td>
-
-      </tr>
-      <tr>
-        <td>Dow Jones Index Fund</td>
-        <td>600000</td>
-        <td>$2.10</td>
-        <td>300</td>
-        <td>$630</td>
-      </tr>
-      <tr>
-        <td>Pimco Total Return</td>
-        <td>630720</td>
-        <td>$10.20</td>
-        <td>150</td>
-        <td>$1309.5</td>
-      </tr>
+      <c:forEach var="fund" items="${funds}">    
+    	<tr> 
+	    <td><c:out value = '${fund.name}' escapeXml='true' /></td>
+        <td><c:out value = '${fund.symbol}' escapeXml='true' /></td>
+        <td><c:out value = '${fund.name}' escapeXml='true' /></td>
+        <td><c:out value = '${fund.name}' escapeXml='true' /></td>
+        <td><c:out value = '${fund.name}' escapeXml='true' /></td>
+	</tr>			    
+	</c:forEach>   	
     </tbody>
   </table>
 
