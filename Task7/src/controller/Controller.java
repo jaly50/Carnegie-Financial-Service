@@ -1,13 +1,12 @@
 /*
- * 08-600
- * Homework #9
- * Jiali Chen
- * andrewID: jialic
- * Dec 4, 2014
+ * Task 7-Team 12
+ * edited by Scarlett Chen
  */
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,6 +21,13 @@ import javax.servlet.http.HttpSession;
 
 
 
+
+
+
+
+
+import databeans.Customer;
+import databeans.Employee;
 import databeans.User;
 import model.Model;
 
@@ -31,7 +37,7 @@ public class Controller extends HttpServlet {
 		Model model = new Model(getServletConfig());
 
 		Action.add(new ChangePwdAction(model));
-		Action.add(new CreateFundAction(model));
+		Action.add(new TransitionDayAction(model));
 		Action.add(new LoginAction(model));
 		Action.add(new LogoutAction(model));
 		Action.add(new DepositCheckAction(model));
@@ -42,13 +48,15 @@ public class Controller extends HttpServlet {
 		Action.add(new ResetCusPwdAction(model));
 		Action.add(new CreateEmpAccAction(model));
 		Action.add(new CreateCusAccAction(model));
-		//Action.add(new SellFundAction(model));
+		Action.add(new SellFundAction(model));
         Action.add(new TransactionHistoryAction(model));
         Action.add(new ViewCusDetailAccAction(model));
         Action.add(new ViewCusAccAction(model));
         Action.add(new ViewCusTransactionHistoryAction(model));
 		Action.add(new BuyFundAction(model));
 		Action.add(new ResearchFundAction(model));
+		Action.add(new TransitionDayAction(model));
+		Action.add(new MessageAction(model));
 
 	}
 
@@ -76,13 +84,42 @@ public class Controller extends HttpServlet {
 		String servletPath = request.getServletPath();
 		User user = (User) session.getAttribute("user");
 		String action = getActionName(servletPath);
-
+		List<String> errors = new ArrayList<String>();
+		
+       
 		if (user == null) {
 			// If the user hasn't logged in, direct him to the login page
+			request.setAttribute("errors", errors);
+			if (!action.equals("login.do")) {
+				errors.add("Permission denied, please LOGIN first.");
+			}
 			return Action.perform("login.do", request);
 		}
+		if (!(user instanceof Customer)) {
+			// If not the class type, the operation would be denied
+			if (action.equals("viewAccAction.do") || action.equals("buyFund.do")
+					|| action.equals("sellFund.do") || action.equals("TransactionHistoryAction.do")
+					|| action.equals("researchFundAction.do") || action.equals("requestCheck.do")) {
+				request.setAttribute("errors", errors);
+				errors.add("You are not a customer, permission denied.");
+				return Action.perform("message.do", request);
+			}
 
+		}
+		if (!(user instanceof Employee)) {
+			// If not the class type, the operation would be denied
+			if (action.equals("create_employee.do") || action.equals("create_customer.do")
+					|| action.equals("resetCustomerPassword.do") || action.equals("viewCustomerList.do")
+					|| action.equals("depositCheck.do") || action.equals("createFund.do")
+					|| action.equals("TransitionDay.do")) {
+				request.setAttribute("errors", errors);
+				errors.add("You are not a employee, permission denied.");
+				return Action.perform("message.do", request);
+			}
 
+		}
+
+        
 		// Let the logged in user run his chosen action
 		return Action.perform(action, request);
 	}
