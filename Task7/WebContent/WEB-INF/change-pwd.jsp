@@ -1,6 +1,8 @@
 
 <jsp:include page="template-top.jsp" />
 <jsp:include page="error-list.jsp" />
+<div class="container">
+
 <p style="font-size:medium">
 	Enter your new password
 </p>
@@ -23,7 +25,7 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
- 					<h6 align = "center">
+ 					<h6 align = "center" style = "margin-left:380px">
 					<input align = "center" class="btn btn-default" type="submit" name="button" value="Change Password"/>
 					</h6>
 				</td>
@@ -32,5 +34,5 @@
 		</table>
 	</form>
 </p>
-
+</div>
 <jsp:include page="template-bottom.jsp" />

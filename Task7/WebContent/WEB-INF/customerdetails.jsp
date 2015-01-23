@@ -1,42 +1,62 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="template-top.jsp" />
+<h4 style = "margin-left:380px">
 
+<table border="1">
 
-<table>
-
-        <h4 style = "margin-left:380px">	
+        <h4>	
 		<tr>
-			<td><h4 style = "margin-left:380px">${customerdetails.customer_id}</td>
+			<td align="center"><h4>Customer_id:</td>
+	
+			<td align="center"><h4>${customerdetails.customer_id}</td>
 		</tr>
 		<tr>
-			<td><h4 style = "margin-left:380px">${customerdetails.firstname}</td>
+		    
+			<td align="center"><h4>First Name:</td>
+			<td align="center"><h4>${customerdetails.firstname}</td>
 		</tr>
 		<tr>
-			<td><h4 style = "margin-left:380px">${customerdetails.lastname}</td>
+		    
+			<td align="center"><h4>Last Name:</td>		
+			<td align="center"><h4>${customerdetails.lastname}</td>
 		</tr>
 		<tr>
-			<td><h4 style = "margin-left:380px">${customerdetails.addr_line1}</td>
+		    
+			<td align="center"><h4>Address Line1:</td>
+			<td align="center"><h4>${customerdetails.addr_line1}</td>
 		</tr>
 		<tr>
-			<td><h4 style = "margin-left:380px">${customerdetails.addr_line2}</td>
+		     
+			<td align="center"><h4>Address Line2:</td>			
+			<td align="center"><h4>${customerdetails.addr_line2}</td>
 		</tr>
 		<tr>
-			<td><h4 style = "margin-left:380px">${customerdetails.city}</td>
+		    
+			<td align="center"><h4>City:</td>
+			<td align="center"><h4>${customerdetails.city}</td>
 		</tr>
 		<tr>
-			<td><h4 style = "margin-left:380px">${customerdetails.state}</td>
+			
+			<td align="center"><h4>State:</td>
+			<td align="center"><h4>${customerdetails.state}</td>
 		</tr>
 		<tr>
-			<td><h4 style = "margin-left:380px">${customerdetails.zip}</td>
+		
+			<td align="center"><h4>Zip:</td>	
+			<td align="center"><h4>${customerdetails.zip}</td>
 		</tr>
 		<tr>
-			<td><h4 style = "margin-left:380px">${customerdetails.availablebalance}</td>
+		
+			<td align="center"><h4>Available Balance:</td>
+			<td align="center"><h4>${customerdetails.availablebalance}</td>
 		</tr>
 		<tr>
-			<td><h4 style = "margin-left:380px">${customerdetails.totalbalance}</td>
+		    
+			<td align="center"><h4>Total Balance:</td>
+			<td align="center"><h4>${customerdetails.totalbalance}</td>
 		</tr>
 		
 </table>
-
+</h4>
 <jsp:include page="template-bottom.jsp" />

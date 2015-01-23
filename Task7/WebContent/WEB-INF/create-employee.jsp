@@ -1,9 +1,9 @@
 <jsp:include page="template-top.jsp" />
 <jsp:include page="error-list.jsp" />
-<p style="font-size: medium">To register, enter the following
-	information. (All fields required.)</p>
 
 <p>
+<div class="container">
+
 <form method="post">
 	<input type="hidden" name="redirect" value="${redirect}" />
 	<table>
@@ -31,13 +31,13 @@
 			<td><input type="password" name="confirm" value="" /></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center"><h6 align = "center">
+			<td colspan="2" align="center"><h6 align = "center" style = "margin-left:380px">
  <input align = "center" class="btn btn-default" type="submit" name="button" value="Register" /></td>
 		</h6>
 		</tr>
 	</table>
 </form>
 </p>
-
+</div>
 <jsp:include page="template-bottom.jsp" />
 

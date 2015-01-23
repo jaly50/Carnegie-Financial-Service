@@ -7,8 +7,8 @@ import org.mybeans.form.FormBean;
 
 public class CreateCusAccForm extends FormBean {
 	private String username;
-	private String firstname;
-	private String lastname;
+	private String firstName;
+	private String lastName;
 	private String password;
 	private String confirm;
 	private String addr_line1;
@@ -16,13 +16,20 @@ public class CreateCusAccForm extends FormBean {
 	private String state;
 	private String city;
 	private String zip;
-	private String availablebalance;
-	private String totalbalance;
+	private String cash;
+	//private String totalbalance;
 	
 	public String getUsername() {
 		return username;
 	}
 
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
 
 	public String getPassword() {
 		return password;
@@ -57,11 +64,11 @@ public class CreateCusAccForm extends FormBean {
 	}
 
 	public void setFirstName(String s) {
-		firstname = trimAndConvert(s, "<>\"");
+		firstName = trimAndConvert(s, "<>\"");
 	}
 
 	public void setLastName(String s) {
-		lastname = trimAndConvert(s, "<>\"");
+		lastName = trimAndConvert(s, "<>\"");
 	}
 	public void setState(String s) {
 		state = trimAndConvert(s, "<>\"");
@@ -99,11 +106,11 @@ public class CreateCusAccForm extends FormBean {
 			errors.add("Email is required");
 		}
 
-		if (firstname == null || firstname.length() == 0) {
+		if (firstName == null || firstName.length() == 0) {
 			errors.add("First Name is required");
 		}
 
-		if (lastname == null || lastname.length() == 0) {
+		if (lastName == null || lastName.length() == 0) {
 			errors.add("Last Name is required");
 		}
 
@@ -126,46 +133,18 @@ public class CreateCusAccForm extends FormBean {
 		return errors;
 	}
     
-	public long getAvailablebalanceAsLong() {
-		long availableLong = Long.parseLong(availablebalance);
-		return availableLong;
+	public String getCash() {
+		return cash;
 	}
-
-
-	public String getTotalbalance() {
-		return totalbalance;
-	}
-	public long getTotalBalanceAsLong() {
-		long totalLong = Long.parseLong(totalbalance);
-		return totalLong;
+	public long getCashAsLong() {
+		long cashLong = Long.parseLong(cash);
+		return cashLong;
 		
 	}
 
-	public void setTotalbalance(String totalbalance) {
-		this.totalbalance = totalbalance;
+	public void setcash(String cash) {
+		this.cash = cash;
 	}
 
-	public String getAvailablebalance() {
-		return availablebalance;
-	}
 
-	public void setAvailablebalance(String availablebalance) {
-		this.availablebalance = availablebalance;
-	}
-
-	public String getFirstname() {
-		return firstname;
-	}
-
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
 }

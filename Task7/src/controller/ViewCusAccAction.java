@@ -19,6 +19,7 @@ import org.mybeans.form.FormBeanFactory;
 import databeans.*;
 import model.*;
 import employeeFormbeans.*;
+import employeeFormbeans.ChangePwdForm;
 import customerFormbeans.*;
 
 /*
@@ -32,8 +33,8 @@ import customerFormbeans.*;
  *   (3) Forwards to list.jsp.
  */
 public class ViewCusAccAction extends Action {
-	//private FormBeanFactory<UserIDForm> formBeanFactory = FormBeanFactory
-		//	.getInstance(UserIDForm.class);
+	private FormBeanFactory<ViewCustomerForm> formBeanFactory = FormBeanFactory
+			.getInstance(ViewCustomerForm.class);
 
 	private EmployeeDAO employeeDAO;
 	private CustomerDAO customerDAO;
@@ -53,32 +54,46 @@ public class ViewCusAccAction extends Action {
 		// correct)
 		List<String> errors = new ArrayList<String>();
 		request.setAttribute("errors", errors);
+		
+		// If no params were passed, return with no errors so that the form
+		// will be
+		// presented (we assume for the first time).
+		
 
 		try {
 			// Set up user list for nav bar
-			request.setAttribute("customerList", customerDAO.getCustomers());
-
-			/*UserIDForm form = formBeanFactory.create(request);
-
-			int userID = form.getUserIDAsInt();
-
-			// Set up photo list
-			User user = userDAO.read(userID);
-			if (user == null) {
-				errors.add("Invalid User: " + userID);
-				return "error.jsp";
+			ViewCustomerForm form = formBeanFactory.create(request);
+			if (!form.isPresent()) {
+				return "list.jsp";
 			}
 
-			Customer[] customerList = customerDAO
-					.getFavorites(user.getUserID());
-			request.setAttribute("customerList", customerList);*/
-			return "list.jsp";
+			// Check for any validation errors
+			errors.addAll(form.getValidationErrors());
+			if (errors.size() != 0) {
+				return "list.jsp";
+			}
+			String a=form.getUsername();
+            System.out.println("In view"+a); 
+			Customer b=customerDAO.getCustomer(a);
+            
+            if(b==null)
+            {
+            	errors.add("No such username exists");
+            	return "list.jsp";
+            }
+            System.out.println("b user check"+b.getUsername());
+			request.setAttribute("customerdetails", b);
+            return "customerdetails.jsp";
 		} catch (RollbackException e) {
 			errors.add(e.getMessage());
 			return "error.jsp";
 		} /*catch (FormBeanException e) {
 			errors.add(e.getMessage());
 			return "error.jsp";
-		}*/
+		}*/ catch (FormBeanException e) {
+			// TODO Auto-generated catch block
+			errors.add(e.getMessage());
+			return "error.jsp";
+		}
 	}
 }
