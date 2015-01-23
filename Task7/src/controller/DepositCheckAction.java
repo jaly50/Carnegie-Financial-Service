@@ -33,6 +33,7 @@ public class DepositCheckAction  extends Action  {
 	private CustomerDAO customerDAO;
 	public DepositCheckAction(Model model) {
 		transactionDAO = model.getTransactionDAO();
+		customerDAO = model.getCustomerDAO();
 	}
 	
 	public String getName() {
@@ -72,10 +73,10 @@ public class DepositCheckAction  extends Action  {
 			}
             
 			Transaction transaction;
-			System.out.println("the user name is" + form.getUsername());
-			Customer customer = customerDAO.getCustomer(form.getUsername());
+			Customer customer;
+			customer = customerDAO.getCustomer(form.getUsername());
 			if (customer==null) {
-				errors.add("Customer Username " +form.getUsername()+" does not exist");
+				errors.add("Customer Username \"" +form.getUsername()+"\" does not exist");
 				return "depositCheck.jsp";
 			}
 			// Create the transaction bean
@@ -86,8 +87,10 @@ public class DepositCheckAction  extends Action  {
 			transaction.setAmount(form.getDatabaseAmount());
 			
 			transactionDAO.create(transaction);
-     
-
+            
+			customer.setTotalbalance(customer.getTotalbalance()+form.getDatabaseAmount());
+            customerDAO.update(customer);
+            
 			return "viewCustomerList.do";
 		} catch (RollbackException e) {
 			errors.add(e.getMessage());

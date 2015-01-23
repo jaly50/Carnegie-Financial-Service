@@ -47,7 +47,6 @@ public class CustomerDAO extends GenericDAO<Customer> {
 	}
 	public Customer getCustomer(String username) throws RollbackException {
 		Customer[] customer = match(MatchArg.equals("username", username));
-		System.out.println(customer+" in the dao");
 		if (customer==null || customer.length <1 )
 			return null;
 		return customer[0];
