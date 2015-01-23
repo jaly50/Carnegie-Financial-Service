@@ -38,7 +38,7 @@ public class BuyFundAction extends Action {
 		this.transactionDAO = model.getTransactionDAO();
 		this.customerDAO = model.getCustomerDAO();
 		this.fundPriceHistoryDAO = model.getFund_Price_HistoryDAO();
-	}
+		}
 
 	public String getName() {
 		return "buyFund.do";
@@ -111,6 +111,13 @@ public class BuyFundAction extends Action {
 				errors.add("Please input buy amount");
 				return "buyFund.jsp";
 			}
+			
+			if(buyFundForm.getAmountAsDouble() > customer.getAvailablebalance()) {
+				errors.add("Your available balance is not enough");
+				return "buyFund.jsp";
+			}
+			
+			customerDAO.update((long)buyFundForm.getAmountAsDouble(),customer);
 			
 			
 			Transaction transaction = new Transaction();
