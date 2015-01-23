@@ -4,7 +4,24 @@
 
 <jsp:include page="error-list.jsp" />
 <script type="text/javascript">	
+function myfilter(e) {
+	 var obj=e.srcElement || e.target;
+	 var dot=obj.value.indexOf(".");//alert(e.which);
+	 var  key=e.keyCode|| e.which;
+	 if(key==8 || key==9 || key==46 || (key>=37  && key<=40))//to satisfy certain keys.
+	  return true;
+	 if (key<=57 && key>=48) { //number
+	  if(dot==-1)//dot
+	     return true;
+	    else if(obj.value.length<=dot+2)//two decimal
+	  return true;
+	 } else if((key==46) && dot==-1){//dot number
+	  return true;
+	 }        
+	    return false;
+	}
 </script>
+
 
 
 <div class="container">
@@ -42,7 +59,8 @@
 
  <br />
  <h4 align="center">   Amount to buy: 
-      <input type="text" id="buyAmount" name="buyAmount"> 
+      <input type="text" id="buyAmount" name="buyAmount"
+      style="ime-mode:disabled" onkeypress="return myfilter(event)"> 
       <input class="btn btn-default" type="submit" value="Buy!" onClick="return validataForm()">
  </h4>
  

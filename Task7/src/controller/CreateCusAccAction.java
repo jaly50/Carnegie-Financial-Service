@@ -62,16 +62,16 @@ public class CreateCusAccAction extends Action {
 			}
 			cus=new Customer();
             cus.setUsername(form.getUsername());
-            cus.setFirstname(form.getFirstname());
-            cus.setLastname(form.getLastname());
+            cus.setFirstname(form.getFirstName());
+            cus.setLastname(form.getFirstName());
             cus.setPassword(form.getPassword());
             cus.setAddr_line1(form.getAddr_line1());
             cus.setAddr_line2(form.getAddr_line2());
             cus.setCity(form.getCity());
             cus.setState(form.getState());
             cus.setZip(form.getZip());
-            cus.setTotalbalance(form.getTotalBalanceAsLong());
-            cus.setAvailablebalance(form.getAvailablebalanceAsLong());
+           // cus.setTotalbalance(form.getTotalBalanceAsLong());
+           // cus.setAvailablebalance(form.getAvailablebalanceAsLong());
             
 	        customerDAO.createCustomer(cus);
 	        

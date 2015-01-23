@@ -51,8 +51,7 @@ public class BuyFundAction extends Action {
 		HttpSession session = request.getSession();
 
 		DecimalFormat latestPrice = new DecimalFormat("#,##0.00");
-		DecimalFormat shares = new DecimalFormat("#,##0.000");
-
+		
 		try {
 			if (request.getSession().getAttribute("user") == null) {
 				errors.add("Please Log in first");
@@ -85,8 +84,6 @@ public class BuyFundAction extends Action {
 					System.out.println("89");
 					if (fundPriceHistoryDAO.getFundPrice(fundList[i]
 							.getFund_id()) != null) {
-						System.out.println(fundList[i].getFund_id());
-						System.out.println(fundPriceHistoryDAO.getCurrentPrice(1));
 						displayPrice = (double) fundPriceHistoryDAO
 								.getCurrentPrice(fundList[i].getFund_id());
 					}
@@ -103,6 +100,18 @@ public class BuyFundAction extends Action {
 				return "buyFund.jsp";
 			}
 			System.out.println("105");
+			
+			
+			if(buyFundForm.getSymbol() == null) {
+				errors.add("Please select one fund");
+				return "buyFund.jsp";
+			}
+			
+			if(buyFundForm.getAmountAsDouble() == -1.0) {
+				errors.add("Please input buy amount");
+				return "buyFund.jsp";
+			}
+			
 			
 			Transaction transaction = new Transaction();
 			transaction.setAmount(buyFundForm.getAmountAsDouble());
@@ -126,5 +135,4 @@ public class BuyFundAction extends Action {
 			return "buyFund.jsp";
 		}
 	}
-
 }

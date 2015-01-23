@@ -108,13 +108,21 @@ public class SellFundAction extends Action {
 				pos.setAvailableShares(newAvailableShares);
 
 			}
+			if(sellFundForm.getSymbol() == null) {
+				errors.add("Please select one fund");
+				return "buyFund.jsp";
+			}
+			
+			if(sellFundForm.getShares() == null) {
+				errors.add("Please input sell shares");
+				return "buyFund.jsp";
+			}
 			System.out.println(pos.getCustomer_id());
 			System.out.println(pos.getFund_id());
 			System.out.println(pos.getAvailableShares());
 			System.out.println(pos.getShares());
 			// update position table
 			positionDAO.update((long)doubleSellShares, pos);
-			//positionDAO.update(pos);
 			System.out.println("106");
 			// insert into transaction table
 			Transaction transaction = new Transaction();

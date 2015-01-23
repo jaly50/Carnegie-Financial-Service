@@ -44,11 +44,20 @@ public class Fund_Price_HistoryDAO extends GenericDAO<Fund_Price_History> {
 	}
 	
 	
+	
 	public long getCurrentPrice(String Symbol) throws RollbackException{
 		
 		long prices = 0;
 		Fund_Price_History[] fundPriceHistorys = this.getFundPrice(Symbol);
 		prices = fundPriceHistorys[fundPriceHistorys.length-1].getPrice();
+		return prices;
+	}
+	
+	public long getCurrentPrice(int fund_id) throws RollbackException {
+
+		long prices = 0;
+		Fund_Price_History[] fundPriceHistorys = this.getFundPrice(fund_id);
+		prices = fundPriceHistorys[fundPriceHistorys.length - 1].getPrice();
 		return prices;
 	}
 	

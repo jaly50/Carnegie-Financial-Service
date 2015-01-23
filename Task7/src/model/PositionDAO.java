@@ -4,6 +4,7 @@ import org.genericdao.DAOException;
 import org.genericdao.GenericDAO;
 import org.genericdao.MatchArg;
 import org.genericdao.RollbackException;
+import org.genericdao.Transaction;
 
 import databeans.Position;
 
@@ -27,7 +28,34 @@ public class PositionDAO  extends GenericDAO<Position> {
 	 * while customer id and fund id remain the same
 	 * equals to : Update Position set share = newValue where costomer_id and fund_id keep same
 	 */
-	public void update(Position newPosition) throws RollbackException {
-		update(newPosition);
-	}
+	public void update(long value, Position pos) throws RollbackException {
+		// TODO Auto-generated method stub
+		try {
+
+			if (pos.getAvailableShares() >= value) {
+				Transaction.begin();
+				update(pos);
+				Transaction.commit();
+			} else {
+				throw new RollbackException(
+						"Available share less than shares to be sold");
+			}
+
+		} finally {
+			if (Transaction.isActive())
+				Transaction.rollback();
+		}
+	}	
+		
+	
+		
+	public Position getCustomerShares(int customer_id, int fund_id)
+				throws RollbackException {
+			Position[] position = match(MatchArg.and(
+					MatchArg.equals("customer_id", customer_id),
+					MatchArg.equals("fund_id", fund_id)));
+			if (position.length == 0)
+				return null;
+			return position[0];
+		}
 }
