@@ -57,6 +57,7 @@ public class Controller extends HttpServlet {
 		Action.add(new ResearchFundAction(model));
 		Action.add(new TransitionDayAction(model));
 		Action.add(new MessageAction(model));
+		Action.add(new CreateFundAction(model));
 
 	}
 
@@ -111,7 +112,7 @@ public class Controller extends HttpServlet {
 			if (action.equals("create_employee.do") || action.equals("create_customer.do")
 					|| action.equals("resetCustomerPassword.do") || action.equals("viewCustomerList.do")
 					|| action.equals("depositCheck.do") || action.equals("createFund.do")
-					|| action.equals("TransitionDay.do")) {
+					|| action.equals("transitionDay.do")) {
 				request.setAttribute("errors", errors);
 				errors.add("You are not a employee, permission denied.");
 				return Action.perform("message.do", request);
@@ -119,7 +120,6 @@ public class Controller extends HttpServlet {
 
 		}
 
-        
 		// Let the logged in user run his chosen action
 		return Action.perform(action, request);
 	}
