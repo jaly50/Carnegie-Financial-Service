@@ -21,19 +21,19 @@
     <thead>
       <tr>
         <th>Fund Name</th>
-        <th>Fund ID</th>
+        <th>Fund Symbol</th>
         <th>Current Price</th>
         <th>Select to Buy</th>
       </tr>
     </thead>
     <tbody>
       
-     <c:forEach var="f" items="${fundTable}">    
+     <c:forEach var="f" items="${buyFundTable}">    
       <tr>
-        <td>${f.name }</td>
-        <td>${f.symbol }</td>
-        <td>${f.latestPrice} }</td>
-        <td align="center"><input type="radio" name="chooseFund" value="${f.id }"></td>
+        <td>${f.name}</td>
+        <td>${f.symbol}</td>
+        <td>${f.latestPrice}</td>
+        <td align="center"><input type="radio" name="symbol" value="${f.symbol}"/></td>
       </tr>
 	</c:forEach>
     </tbody>
