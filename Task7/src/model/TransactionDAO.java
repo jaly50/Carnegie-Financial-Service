@@ -29,5 +29,11 @@ public class TransactionDAO  extends GenericDAO<Transaction>  {
 		Transaction[] list =  match(MatchArg.and(matchArg1,matchArg2));
 		return list;
 	}
+	
+	public Transaction[] getTransactions(int customer_id) throws RollbackException {
+		MatchArg matchArg = MatchArg.equals("customer_id", customer_id);
+		Transaction[] list =  match(MatchArg.and(matchArg));
+		return list;
+	}
 
 }

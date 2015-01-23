@@ -4,15 +4,12 @@
  */
 
 /* Customer view his own account
- * 1. get customer attribute of current session
- * 2. use customer id to get position
- * 3. use position to get fund
- * 4. set customer attribute to request
- * 5. set fund attribute to request
- * 6. calculate some other values? Where????????
+ * Attribute: User user; Date date; tradeFund[] funds; HashMap pricesMap;
+ * 				HashMap sharesMap; HashMap valuesMap;
  */
 package controller;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,15 +22,15 @@ import model.Fund_Price_HistoryDAO;
 import model.Model;
 import model.FundDAO;
 import model.PositionDAO;
+import model.TransactionDAO;
 
 import org.genericdao.RollbackException;
-import org.mybeans.form.FormBeanException;
-import org.mybeans.form.FormBeanFactory;
 
 import databeans.Customer;
 import databeans.Fund_Price_History;
 import databeans.Position;
 import databeans.Fund;
+import databeans.Transaction;
 
 public class ViewAccAction extends Action {
 	
@@ -41,12 +38,15 @@ public class ViewAccAction extends Action {
 	private PositionDAO positionDAO;
 	private FundDAO fundDAO;
 	private Fund_Price_HistoryDAO fundPriceHistoryDAO;
+	private TransactionDAO transactionDAO;
 	
 	// constructor
 	public ViewAccAction(Model model) {
 		customerDAO = model.getCustomerDAO();
 		positionDAO = model.getPositionDAO();
 		fundDAO = model.getFundDAO();
+		fundPriceHistoryDAO = model.getFund_Price_HistoryDAO();
+		transactionDAO = model.getTransactionDAO();
 	}
 	
 	// get action name
@@ -67,25 +67,74 @@ public class ViewAccAction extends Action {
 		
 		if (customer == null) return "login.jsp";
 		
-		// get position
+		// get positions
 		try {
 			Position[] positions = positionDAO.getPositions(customer.getCustomer_id());
 			
-			// set position attribute
-			request.setAttribute("positions", positions);
+			// check position null
+			if (positions.length == 0) return "view-account.jsp";
 			
-			// set fundMap attribute and priceMap attribute
-			HashMap<Integer, Fund> fundMap = new HashMap<Integer, Fund>();
-			HashMap<Integer, Fund_Price_History> priceMap = 
-					new HashMap<Integer, Fund_Price_History>();
+			Fund[] funds = new Fund[positions.length];
+			
+			// set sharesMap attribute, pricesMap attribute, valuesMap attribute
+			HashMap<Integer, String> sharesMap = new HashMap<Integer, String>();
+			HashMap<Integer, String> pricesMap = new HashMap<Integer, String>();
+			HashMap<Integer, String> valuesMap = new HashMap<Integer, String>();
+					
+			// get funds and shares, set funds, sharesMap, priceMap attribute
 			for (int i = 0; i < positions.length; i++) {
 				int fund_id = positions[i].getFund_id();
-				fundMap.put(fund_id, fundDAO.getFund(fund_id));
-				priceMap.put(fund_id, fundPriceHistoryDAO.getLatestFundPrice(fund_id));
-			}
-			request.setAttribute("fundMap", fundMap);
-			request.setAttribute("priceMap", priceMap);
+				
+				// get fund: Fund object
+				funds[i] = fundDAO.getFund(fund_id);
+				
+				// check fund null
+				if (funds[i] == null) {
+					errors.add("Invalid fund");
+					return "view-account.jsp";
+				}
+				
+				// get share : Long to double 
+				long sharesOrigin = positions[i].getShares();
+				double shares = (double) sharesOrigin / 1000;
+				String sharesStr = Double.toString(shares);
+				sharesMap.put(fund_id, sharesOrigin == 0 ? "pending" : sharesStr);
 		
+				// get price: Long to double 
+				Fund_Price_History fundPrice = fundPriceHistoryDAO.getLatestFundPrice(fund_id);
+				
+				long priceOrigin = 0;
+				double price = 0;
+				String priceStr = "";
+				
+				if (fundPrice != null) {
+					priceOrigin =  fundPrice.getPrice();
+					price = (double) priceOrigin / 1000;
+					priceStr = Double.toString(price);
+				}
+			
+				pricesMap.put(fund_id, fundPrice == null ? "pending" : priceStr);		
+			
+				// get value: double 
+				double value = price * shares;
+				String valueStr = Double.toString(value);
+				valuesMap.put(fund_id, valueStr.equals("0") ? "pending" : valueStr);
+			}
+
+			request.setAttribute("funds", funds);
+			request.setAttribute("sharesMap", sharesMap);
+			request.setAttribute("pricesMap", pricesMap);
+			request.setAttribute("valuesMap", valuesMap);
+			
+			// set last trade date attribute: Date
+			Transaction[] transactions = 
+					transactionDAO.getTransactions(customer.getCustomer_id());
+			Date date = null;
+			if (transactions.length != 0) {
+				date = (Date) transactions[transactions.length - 1].getExecute_date();
+			}
+			request.setAttribute("date", date);
+			
 			return "view-account.jsp";
 		} catch (RollbackException e) {
 			errors.add(e.getMessage());
@@ -93,4 +142,3 @@ public class ViewAccAction extends Action {
 		}
 	}
 }
-
