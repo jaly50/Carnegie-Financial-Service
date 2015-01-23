@@ -56,6 +56,26 @@ public class CustomerDAO extends GenericDAO<Customer> {
     	System.out.println("check 1"+cus.getCustomer_id());
     	update(cus);
     }
+    
+    public void update(long value, Customer cus) throws RollbackException {
+		// TODO Auto-generated method stub
+		try {
+
+			if (cus.getAvailablebalance() >= value) {
+				Transaction.begin();
+				cus.setAvailablebalance(cus.getAvailablebalance()-value);
+				update(cus);
+				Transaction.commit();
+			} else {
+				throw new RollbackException(
+						"Available amount less than mount to buy");
+			}
+
+		} finally {
+			if (Transaction.isActive())
+				Transaction.rollback();
+		}
+	}
 	
 
 
