@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import model.CustomerDAO;
 import model.FundDAO;
@@ -30,13 +31,13 @@ public class BuyFundAction extends Action {
 	private CustomerDAO customerDAO;
 	private FundDAO fundDAO;
 	private TransactionDAO transactionDAO;
-	private Fund_Price_HistoryDAO fundPriceHisotryDAO;
+	private Fund_Price_HistoryDAO fundPriceHistoryDAO;
 
 	public BuyFundAction(Model model) {
 		this.fundDAO = model.getFundDAO();
 		this.transactionDAO = model.getTransactionDAO();
 		this.customerDAO = model.getCustomerDAO();
-		this.fundPriceHisotryDAO = model.getFund_Price_HistoryDAO();
+		this.fundPriceHistoryDAO = model.getFund_Price_HistoryDAO();
 	}
 
 	public String getName() {
@@ -46,8 +47,8 @@ public class BuyFundAction extends Action {
 	public String perform(HttpServletRequest request) {
 		List<String> errors = new ArrayList<String>();
 		request.setAttribute("errors", errors);
-	
 
+		HttpSession session = request.getSession();
 
 		DecimalFormat latestPrice = new DecimalFormat("#,##0.00");
 		DecimalFormat shares = new DecimalFormat("#,##0.000");
@@ -55,19 +56,25 @@ public class BuyFundAction extends Action {
 		try {
 			if (request.getSession().getAttribute("user") == null) {
 				errors.add("Please Log in first");
-				return "login.jsp";
+				return "login.do";
 			}
-
-			Customer customer = customerDAO.getCustomer(((Customer) request
-					.getSession().getAttribute("customer")).getUsername());
-			BuyFundForm form = formBeanFactory.create(request);
-			request.setAttribute("form", form);
-
+			
+			Customer customer = (Customer) session.getAttribute("user");
+			System.out.println(customer.getCustomer_id());
+			BuyFundForm buyFundForm = formBeanFactory.create(request);
+			request.setAttribute("buyFundForm", buyFundForm);
+			
+			
 			// get fund name;
 			Fund[] fundList = fundDAO.getFunds();
+			for (Fund f : fundList) {
+				System.out.print(f.getName() + " ");
+			}
 
 			// fundTable to show funds information
-			List<BuyFundTable> fundTable = new ArrayList<BuyFundTable>();
+			List<BuyFundTable> buyFundTable = new ArrayList<BuyFundTable>();
+			int num = 0;
+			System.out.print(num++);
 			// add fund table rows
 			if (fundDAO.getFunds() != null && fundDAO.getFunds().length > 0) {
 				for (int i = 0; i < fundList.length; i++) {
@@ -75,30 +82,41 @@ public class BuyFundAction extends Action {
 					tableRow.setName(fundList[i].getName());
 					tableRow.setSymbol(fundList[i].getSymbol());
 					double displayPrice = 0;
-					if (fundPriceHisotryDAO.getLatestFundPrice(fundList[i]
-							.getSymbol()) != null) {
-						displayPrice = fundPriceHisotryDAO.getLatestFundPrice(
-								fundList[i].getSymbol()).getPrice();
+					System.out.println("89");
+					if (fundPriceHistoryDAO.getFundPrice(fundList[i]
+							.getFund_id()) != null) {
+						System.out.println(fundList[i].getFund_id());
+						System.out.println(fundPriceHistoryDAO.getCurrentPrice(1));
+						displayPrice = (double) fundPriceHistoryDAO
+								.getCurrentPrice(fundList[i].getFund_id());
 					}
+					System.out.println("94");
 					displayPrice = displayPrice / 100;
 					tableRow.setLatestPrice(latestPrice.format(displayPrice));
-					fundTable.add(tableRow);
+					buyFundTable.add(tableRow);
+					System.out.println("96");
 				}
 			}
 
-			request.setAttribute("fundTable", fundTable);
-
+			request.setAttribute("buyFundTable", buyFundTable);
+			if (!buyFundForm.isPresent()) {
+				return "buyFund.jsp";
+			}
+			System.out.println("105");
+			
 			Transaction transaction = new Transaction();
+			transaction.setAmount(buyFundForm.getAmountAsDouble());
 			transaction.setCustomer_id(customer.getCustomer_id());
-			transaction.setFund_id(form.getFund_id());
+			transaction.setFund_id(fundDAO.getFund_ID(buyFundForm.getSymbol()));
 			transaction.setExecute_date(null);
 			transaction.setShares(0);
 			transaction.setTransaction_type("buy");
-			transaction.setAmount(form.getAmountAsDouble());
+			System.out.println("113");
+			
 
 			transactionDAO.create(transaction);
 
-			return "transactionHistory.do";
+			return "viewAccAction.do";
 
 		} catch (RollbackException e) {
 			errors.add(e.getMessage());

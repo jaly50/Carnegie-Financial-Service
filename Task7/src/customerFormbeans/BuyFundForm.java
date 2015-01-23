@@ -11,6 +11,7 @@ public class BuyFundForm extends FormBean {
 	private String buyAmount;
 	private String chooseFund;
 	private int    fund_id;
+	private String symbol;
 
 	public String getBuyAmount() {
 		return buyAmount;
@@ -28,7 +29,15 @@ public class BuyFundForm extends FormBean {
 	public void setBuyAmount(String buyAmount) {
 		this.buyAmount = buyAmount;
 	}
+	
+	public void setSymbol(String symbol) {
+		this.symbol = symbol;
+	}
 
+	public String getSymbol() {
+		return symbol;
+	}
+	
 	public String getChooseFund() {
 		return chooseFund;
 	}
