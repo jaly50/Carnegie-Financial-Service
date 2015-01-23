@@ -6,13 +6,13 @@ import org.genericdao.PrimaryKey;
 
 @PrimaryKey("transaction_id")
 public class Transaction {
-	private int transaction_id = -1;
-	private int customer_id = -1;
-	private int fund_id = -1;
+	private int transaction_id;
+	private int customer_id;
+	private int fund_id;
 	private Date execute_date = null;
-	private long shares = 0;
-	private String transaction_type = null;
-	private double amount = 0;
+	private long shares;
+	private String transaction_type;
+	private double amount;
 
 	public int getCustomer_id() {
 		return customer_id;

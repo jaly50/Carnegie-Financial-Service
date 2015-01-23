@@ -1,5 +1,7 @@
 <jsp:include page="template-top.jsp" />
 
+<jsp:include page="error-list.jsp" />
+
 <div class="container">
 <br />
  <br />

@@ -27,13 +27,22 @@ public class FundDAO extends GenericDAO<Fund> {
 	}
 	
 	public Fund getFund(int fund_id) throws RollbackException {
-		Fund[] fund = match(MatchArg.equals("fund_id", fund_id));
-		return fund[0];
+		return read(fund_id);
 	}
 	
 	public Fund getFund(String symbol) throws RollbackException {
 		Fund[] fund = match(MatchArg.equals("symbol", symbol));
+		if (fund ==null) {
+			return null;
+		}
 		return fund[0];
+	}
+	public Fund getFundFromName(String name) throws RollbackException {
+		Fund[] fund = match(MatchArg.equals("name", name));
+		if (fund ==null) {
+			return null;
+		}
+		return fund[0];	
 	}
 	
 	public int getFund_ID(String symbol) throws RollbackException {

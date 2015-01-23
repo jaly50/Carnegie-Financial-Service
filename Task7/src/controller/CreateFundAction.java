@@ -63,8 +63,18 @@ public class CreateFundAction extends Action {
 				return "createFund.jsp";
 			}
 
-			Fund fund;
+			Fund fund = null;
 			// Create the fund bean
+			fund = fundDAO.getFundFromName(form.getName());
+			if (fund !=null) {
+				errors.add("The fund name already exists. Please use another fund name.");
+				return "createFund.jsp";
+			}
+			fund = fundDAO.getFund(form.getSymbol());
+			if (fund !=null) {
+				errors.add("The fund symbol already exists. Please use another fund symbol.");
+				return "createFund.jsp";
+			}
 			fund = new Fund();
 			fund.setName(form.getName());
 			fund.setSymbol(form.getSymbol());

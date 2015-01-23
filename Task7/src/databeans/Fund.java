@@ -5,9 +5,9 @@ import org.genericdao.PrimaryKey;
 @PrimaryKey("fund_id")
 
 public class Fund {
-	private int fund_id = -1;
-	private String name = null;
-	private String symbol = null;
+	private int fund_id;
+	private String name;
+	private String symbol;
 	
 	public int getFund_id() {
 		return fund_id;

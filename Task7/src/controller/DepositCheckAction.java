@@ -72,6 +72,7 @@ public class DepositCheckAction  extends Action  {
 			}
             
 			Transaction transaction;
+			System.out.println("the user name is" + form.getUsername());
 			Customer customer = customerDAO.getCustomer(form.getUsername());
 			if (customer==null) {
 				errors.add("Customer Username " +form.getUsername()+" does not exist");
@@ -80,11 +81,9 @@ public class DepositCheckAction  extends Action  {
 			// Create the transaction bean
 			transaction = new Transaction();
 			transaction.setCustomer_id(customer.getCustomer_id());
-			transaction.setFund_id(-1); // means it is not a fund
 			transaction.setExecute_date(null);
-			transaction.setShares(-1);
-			transaction.setTransaction_type("Check");
-			transaction.setAmount(form.getAmountAsDouble());
+			transaction.setTransaction_type("DepositCheck");
+			transaction.setAmount(form.getDatabaseAmount());
 			
 			transactionDAO.create(transaction);
      
