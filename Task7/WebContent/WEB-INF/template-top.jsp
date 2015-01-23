@@ -83,7 +83,7 @@
                       <li><a href="viewCustomerList.do">View Customer Account</a><span> </span></li>
                          <li><a href="depositCheck.do">Deposit Check</a><span> </span></li>
                        <li><a href="createFund.do">Create Fund</a><span> </span></li>
-                         <li><a href="TransitionDay.do">Transition Day</a><span> </span></li>    		
+                         <li><a href="transitionDay.do">Transition Day</a><span> </span></li>    		
 						</c:when>
 						<c:otherwise>
 						<!-- For customer -->

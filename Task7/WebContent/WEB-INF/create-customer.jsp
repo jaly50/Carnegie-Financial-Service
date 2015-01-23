@@ -15,11 +15,11 @@
 		<tr>
 			<td><h4 style = "margin-left:380px">First Name:</td>
 			<td><input type="text" name="firstName"
-				value="${form.firstName}" /></td>
+				value="${form.firstname}" /></td>
 		</tr>
 		<tr>
 			<td><h4 style = "margin-left:380px">Last Name:</td>
-			<td><input type="text" name="lastName" value="${form.lastName}" /></td>
+			<td><input type="text" name="lastName" value="${form.lastname}" /></td>
 		</tr>
 		
 		<tr>
