@@ -45,16 +45,12 @@ public class TransactionDAO  extends GenericDAO<Transaction>  {
 		return list;
 	}
 	
-<<<<<<< HEAD
-=======
 	public Transaction[] getWorkedTransactions(Date execute_date) throws RollbackException {
 		MatchArg matchArg = MatchArg.equals("execute_date", execute_date);
 		Transaction[] list =  match(MatchArg.and(matchArg));
 		return list;
 	}
 	
-	
->>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
 	
 	
 	public Transaction[] getPendingBuyTransacs() throws RollbackException {
@@ -107,8 +103,6 @@ public class TransactionDAO  extends GenericDAO<Transaction>  {
 		}
 	}
 	
-<<<<<<< HEAD
-=======
 	public void transactionDepositUpdate(Date execute_date,Transaction transaction) throws RollbackException {
 		// TODO Auto-generated method stub
 		try {
@@ -137,7 +131,6 @@ public class TransactionDAO  extends GenericDAO<Transaction>  {
 		}
 	}
 	
->>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
 	
 	
 	
