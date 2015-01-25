@@ -141,8 +141,14 @@ public class TransitionDayAction extends Action {
 
 			System.out.println(String.valueOf(newDate));
 
+			// deal with transaction table first;
 			Transaction[] pendingTransactions = transactionDAO
 					.getPendingTransactions();
+			pendingTransactionsUpdate(pendingTransactions, fidPriceMap, newDate);
+			
+			// deal with 
+			
+			
 
 		} catch (RollbackException e) {
 			// TODO Auto-generated catch block
@@ -151,16 +157,17 @@ public class TransitionDayAction extends Action {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		return "transitionDay.jsp";
 
 	}
 
-	private void pendingTransactionsUpdate(Transaction[] pendingTransactions,
+	public void pendingTransactionsUpdate(Transaction[] pendingTransactions,
 			HashMap<Integer, String> fidPriceMap, Date newDate) {
 
 		for (int i = 0; i < pendingTransactions.length; i++) {
-			
-			if (pendingTransactions[i].getTransaction_type().equals("buy")) {
+			// buy transaction case
+			if (pendingTransactions[i].getTransaction_type().equals("BuyFund")) {
 				long shares = (long) (pendingTransactions[i].getAmount() / Double
 						.valueOf(fidPriceMap.get(pendingTransactions[i]
 								.getFund_id())));
@@ -170,79 +177,44 @@ public class TransitionDayAction extends Action {
 				} catch (RollbackException e) {
 					e.printStackTrace();
 				}
-				break;
-			}
 
-			else if (pendingTransactions[i].getTransaction_type()
-					.equals("sell")) {
+			}
+			// sell transaction case;
+			else if (pendingTransactions[i].getTransaction_type().equals(
+					"SellFund")) {
 				long amount = (long) (pendingTransactions[i].getShares() * Double
 						.valueOf(fidPriceMap.get(pendingTransactions[i]
 								.getFund_id())));
 				try {
-					transactionDAO.transactionBuyUpdate(newDate, amount,
+					transactionDAO.transactionSellUpdate(newDate, amount,
 							pendingTransactions[i]);
 				} catch (RollbackException e) {
 					e.printStackTrace();
 				}
-				break;
+
 			}
-
+			// deposit transaction case;
 			else if (pendingTransactions[i].getTransaction_type().equals(
-					"deposit"))
-				break;
+					"DepositCheck")) {
+				try {
+					transactionDAO.transactionDepositUpdate(newDate,
+							pendingTransactions[i]);
+				} catch (RollbackException e) {
+					e.printStackTrace();
+				}
+			}
+			// check transaction case;
 			else if (pendingTransactions[i].getTransaction_type().equals(
-					"check"))
-
-				break;
-
-		}
-
-	}
-
-	private void buyUpdate(Transaction[] pendingBuyTransacs,
-			Integer[] fund_ids, String[] prices, Date newDate) {
-		// Transaction table: execute_date, shares;
-		// Customer: totalbalance = availablebalance;
-		// Position table: shares , availableShares;
-
-		for (int i = 0; i < fund_ids.length; i++) {
-
-			for (Transaction t : pendingBuyTransacs) {
-				if (t.getFund_id() == fund_ids[i]) {
-					long shares = (long) (t.getAmount()
-							/ Double.valueOf(prices[i]) * 1000);
-					try {
-						transactionDAO.transactionBuyUpdate(newDate, shares, t);
-
-					} catch (RollbackException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					"RequestCheck")) {
+				try {
+					transactionDAO.transactionCheckUpdate(newDate,
+							pendingTransactions[i]);
+				} catch (RollbackException e) {
+					e.printStackTrace();
 				}
 
 			}
-
 		}
-
-	}
-
-	private void sellUpdate(Transaction[] pendingSellTransacs,
-			Integer[] fund_ids, String[] prices, Date newDate) {
-		// Transaction table, execute_date, amount;
-		// Customer : totalbalance, availablebalance
-		// Position shares = availableShares
-
-	}
-
-	private void depositUpdate(Date newDate) {
-
-	}
-
-	private void checkUpdate(Date newDate) {
-
-	}
-
-	private void fundPriceHistoryUpdate(String[] symbols, String[] prices) {
 
 	}
 

@@ -133,7 +133,7 @@ public class BuyFundAction extends Action {
 			transaction.setFund_id(fundDAO.getFund_ID(buyFundForm.getSymbol()));
 			transaction.setExecute_date(null);
 			transaction.setShares(0);
-			transaction.setTransaction_type("buy");
+			transaction.setTransaction_type("BuyFund");
 			System.out.println("113");
 
 			transactionDAO.create(transaction);
