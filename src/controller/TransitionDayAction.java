@@ -141,10 +141,7 @@ public class TransitionDayAction extends Action {
 
 			System.out.println(String.valueOf(newDate));
 
-<<<<<<< HEAD
-			Transaction[] pendingTransactions = transactionDAO
-					.getPendingTransactions();
-=======
+
 			// deal with pending transaction table first;
 			Transaction[] pendingTransactions = transactionDAO
 					.getPendingTransactions();
@@ -153,8 +150,6 @@ public class TransitionDayAction extends Action {
 			// deal with worked transaction table;
 			Transaction[] workedTransactions = transactionDAO.getWorkedTransactions(newDate);
 			
-			
->>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
 
 		} catch (RollbackException e) {
 			// TODO Auto-generated catch block
@@ -163,29 +158,17 @@ public class TransitionDayAction extends Action {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-<<<<<<< HEAD
-=======
-
->>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
+		
 		return "transitionDay.jsp";
 
 	}
 
-<<<<<<< HEAD
-	private void pendingTransactionsUpdate(Transaction[] pendingTransactions,
-			HashMap<Integer, String> fidPriceMap, Date newDate) {
-
-		for (int i = 0; i < pendingTransactions.length; i++) {
-			
-			if (pendingTransactions[i].getTransaction_type().equals("buy")) {
-=======
 	public void pendingTransactionsHandler(Transaction[] pendingTransactions,
 			HashMap<Integer, String> fidPriceMap, Date newDate) {
 
 		for (int i = 0; i < pendingTransactions.length; i++) {
 			// buy transaction case
 			if (pendingTransactions[i].getTransaction_type().equals("BuyFund")) {
->>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
 				long shares = (long) (pendingTransactions[i].getAmount() / Double
 						.valueOf(fidPriceMap.get(pendingTransactions[i]
 								.getFund_id())));
@@ -195,96 +178,19 @@ public class TransitionDayAction extends Action {
 				} catch (RollbackException e) {
 					e.printStackTrace();
 				}
-<<<<<<< HEAD
-				break;
-			}
-
-			else if (pendingTransactions[i].getTransaction_type()
-					.equals("sell")) {
-=======
-
 			}
 			// sell transaction case;
 			else if (pendingTransactions[i].getTransaction_type().equals(
 					"SellFund")) {
->>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
 				long amount = (long) (pendingTransactions[i].getShares() * Double
 						.valueOf(fidPriceMap.get(pendingTransactions[i]
 								.getFund_id())));
 				try {
-<<<<<<< HEAD
-					transactionDAO.transactionBuyUpdate(newDate, amount,
-=======
-					transactionDAO.transactionSellUpdate(newDate, amount,
->>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
-							pendingTransactions[i]);
+
+					transactionDAO.transactionSellUpdate(newDate, amount,pendingTransactions[i]);
 				} catch (RollbackException e) {
 					e.printStackTrace();
 				}
-<<<<<<< HEAD
-				break;
-			}
-
-			else if (pendingTransactions[i].getTransaction_type().equals(
-					"deposit"))
-				break;
-			else if (pendingTransactions[i].getTransaction_type().equals(
-					"check"))
-
-				break;
-
-		}
-
-	}
-
-	private void buyUpdate(Transaction[] pendingBuyTransacs,
-			Integer[] fund_ids, String[] prices, Date newDate) {
-		// Transaction table: execute_date, shares;
-		// Customer: totalbalance = availablebalance;
-		// Position table: shares , availableShares;
-
-		for (int i = 0; i < fund_ids.length; i++) {
-
-			for (Transaction t : pendingBuyTransacs) {
-				if (t.getFund_id() == fund_ids[i]) {
-					long shares = (long) (t.getAmount()
-							/ Double.valueOf(prices[i]) * 1000);
-					try {
-						transactionDAO.transactionBuyUpdate(newDate, shares, t);
-
-					} catch (RollbackException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-
-			}
-
-		}
-
-	}
-
-	private void sellUpdate(Transaction[] pendingSellTransacs,
-			Integer[] fund_ids, String[] prices, Date newDate) {
-		// Transaction table, execute_date, amount;
-		// Customer : totalbalance, availablebalance
-		// Position shares = availableShares
-
-	}
-
-	private void depositUpdate(Date newDate) {
-
-	}
-
-	private void checkUpdate(Date newDate) {
-
-	}
-
-	private void fundPriceHistoryUpdate(String[] symbols, String[] prices) {
-
-	}
-=======
-
 			}
 			// deposit transaction case;
 			else if (pendingTransactions[i].getTransaction_type().equals(
@@ -365,6 +271,5 @@ public class TransitionDayAction extends Action {
 		
 	}
 	
->>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
 
 }
