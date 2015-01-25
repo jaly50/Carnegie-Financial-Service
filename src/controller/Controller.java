@@ -119,7 +119,7 @@ public class Controller extends HttpServlet {
 
 
 
-		}
+		
 		if (!(user instanceof Employee)) {
 			// If not the class type, the operation would be denied
 			if (action.equals("create_employee.do") || action.equals("create_customer.do")
