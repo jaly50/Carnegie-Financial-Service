@@ -141,12 +141,13 @@ public class TransitionDayAction extends Action {
 
 			System.out.println(String.valueOf(newDate));
 
-			// deal with transaction table first;
+			// deal with pending transaction table first;
 			Transaction[] pendingTransactions = transactionDAO
 					.getPendingTransactions();
-			pendingTransactionsUpdate(pendingTransactions, fidPriceMap, newDate);
+			pendingTransactionsHandler(pendingTransactions, fidPriceMap, newDate);
 			
-			// deal with 
+			// deal with worked transaction table;
+			Transaction[] workedTransactions = transactionDAO.getWorkedTransactions(newDate);
 			
 			
 
@@ -162,7 +163,7 @@ public class TransitionDayAction extends Action {
 
 	}
 
-	public void pendingTransactionsUpdate(Transaction[] pendingTransactions,
+	public void pendingTransactionsHandler(Transaction[] pendingTransactions,
 			HashMap<Integer, String> fidPriceMap, Date newDate) {
 
 		for (int i = 0; i < pendingTransactions.length; i++) {
@@ -217,5 +218,60 @@ public class TransitionDayAction extends Action {
 		}
 
 	}
+	
+	public void workedTransactionHandler(Transaction[] workedTransactions,Date newDate) {
+		
+		for (int i = 0; i < workedTransactions.length; i++) {
+			// buy transaction case
+			if (workedTransactions[i].getTransaction_type().equals("BuyFund")) {
+				
+				try {
+					transactionDAO.transactionBuyUpdate(newDate, shares,
+							pendingTransactions[i]);
+				} catch (RollbackException e) {
+					e.printStackTrace();
+				}
+
+			}
+			// sell transaction case;
+			else if (workedTransactions[i].getTransaction_type().equals(
+					"SellFund")) {
+				long amount = (long) (pendingTransactions[i].getShares() * Double
+						.valueOf(fidPriceMap.get(pendingTransactions[i]
+								.getFund_id())));
+				try {
+					transactionDAO.transactionSellUpdate(newDate, amount,
+							pendingTransactions[i]);
+				} catch (RollbackException e) {
+					e.printStackTrace();
+				}
+
+			}
+			// deposit transaction case;
+			else if (workedTransactions[i].getTransaction_type().equals(
+					"DepositCheck")) {
+				try {
+					transactionDAO.transactionDepositUpdate(newDate,
+							pendingTransactions[i]);
+				} catch (RollbackException e) {
+					e.printStackTrace();
+				}
+			}
+			// check transaction case;
+			else if (workedTransactions[i].getTransaction_type().equals(
+					"RequestCheck")) {
+				try {
+					transactionDAO.transactionCheckUpdate(newDate,
+							pendingTransactions[i]);
+				} catch (RollbackException e) {
+					e.printStackTrace();
+				}
+
+			}
+		}
+		
+		
+	}
+	
 
 }
