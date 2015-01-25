@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -141,15 +142,17 @@ public class TransitionDayAction extends Action {
 
 			System.out.println(String.valueOf(newDate));
 
-
 			// deal with pending transaction table first;
 			Transaction[] pendingTransactions = transactionDAO
 					.getPendingTransactions();
-			pendingTransactionsHandler(pendingTransactions, fidPriceMap, newDate);
-			
+			pendingTransactionsHandler(pendingTransactions, fidPriceMap,
+					newDate);
+
 			// deal with worked transaction table;
-			Transaction[] workedTransactions = transactionDAO.getWorkedTransactions(newDate);
-			
+			Transaction[] workedTransactions = transactionDAO
+					.getWorkedTransactions(newDate);
+			Customer[] cusUpdate = customerDAO.getCustomers();
+			workedTransactionHandler(cusUpdate, workedTransactions, newDate);
 
 		} catch (RollbackException e) {
 			// TODO Auto-generated catch block
@@ -158,7 +161,7 @@ public class TransitionDayAction extends Action {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return "transitionDay.jsp";
 
 	}
@@ -187,66 +190,14 @@ public class TransitionDayAction extends Action {
 								.getFund_id())));
 				try {
 
-					transactionDAO.transactionSellUpdate(newDate, amount,pendingTransactions[i]);
-				} catch (RollbackException e) {
-					e.printStackTrace();
-				}
-			}
-			// deposit transaction case;
-			else if (pendingTransactions[i].getTransaction_type().equals(
-					"DepositCheck")) {
-				try {
-					transactionDAO.transactionDepositUpdate(newDate,
-							pendingTransactions[i]);
-				} catch (RollbackException e) {
-					e.printStackTrace();
-				}
-			}
-			// check transaction case;
-			else if (pendingTransactions[i].getTransaction_type().equals(
-					"RequestCheck")) {
-				try {
-					transactionDAO.transactionCheckUpdate(newDate,
-							pendingTransactions[i]);
-				} catch (RollbackException e) {
-					e.printStackTrace();
-				}
-
-			}
-		}
-
-	}
-	
-	public void workedTransactionHandler(Transaction[] workedTransactions,Date newDate) {
-		
-		for (int i = 0; i < workedTransactions.length; i++) {
-			// buy transaction case
-			if (workedTransactions[i].getTransaction_type().equals("BuyFund")) {
-				
-				try {
-					transactionDAO.transactionBuyUpdate(newDate, shares,
-							pendingTransactions[i]);
-				} catch (RollbackException e) {
-					e.printStackTrace();
-				}
-
-			}
-			// sell transaction case;
-			else if (workedTransactions[i].getTransaction_type().equals(
-					"SellFund")) {
-				long amount = (long) (pendingTransactions[i].getShares() * Double
-						.valueOf(fidPriceMap.get(pendingTransactions[i]
-								.getFund_id())));
-				try {
 					transactionDAO.transactionSellUpdate(newDate, amount,
 							pendingTransactions[i]);
 				} catch (RollbackException e) {
 					e.printStackTrace();
 				}
-
 			}
 			// deposit transaction case;
-			else if (workedTransactions[i].getTransaction_type().equals(
+			else if (pendingTransactions[i].getTransaction_type().equals(
 					"DepositCheck")) {
 				try {
 					transactionDAO.transactionDepositUpdate(newDate,
@@ -256,7 +207,7 @@ public class TransitionDayAction extends Action {
 				}
 			}
 			// check transaction case;
-			else if (workedTransactions[i].getTransaction_type().equals(
+			else if (pendingTransactions[i].getTransaction_type().equals(
 					"RequestCheck")) {
 				try {
 					transactionDAO.transactionCheckUpdate(newDate,
@@ -267,9 +218,87 @@ public class TransitionDayAction extends Action {
 
 			}
 		}
-		
-		
+
 	}
-	
+
+	public void workedTransactionHandler(Customer[] cusUpdate,
+			Transaction[] workedTransactions, Date newDate) {
+		for (int i = 0; i < cusUpdate.length; i++) {
+			long balanceIncre = 0;
+			HashMap<Integer, Long> shareIncreMap = new HashMap<Integer, Long>();
+			for (int j = 0; j < workedTransactions.length; j++) {
+				if (cusUpdate[i].getCustomer_id() == workedTransactions[i]
+						.getCustomer_id()) {
+
+					// buy transaction case, edit shares.
+					if (workedTransactions[j].getTransaction_type().equals(
+							"BuyFund")) {
+						long tempShareIncre = shareIncreMap
+								.get(workedTransactions[j].getFund_id());
+						tempShareIncre += workedTransactions[j].getShares();
+						shareIncreMap.put(workedTransactions[j].getFund_id(),
+								tempShareIncre);
+
+					}
+					// sell transaction case; edit amount
+					else if (workedTransactions[i].getTransaction_type()
+							.equals("SellFund")) {
+						balanceIncre += workedTransactions[j].getAmount();
+
+					}
+					// deposit transaction case;
+					else if (workedTransactions[i].getTransaction_type()
+							.equals("DepositCheck")) {
+
+					}
+					// check transaction case;
+					else if (workedTransactions[i].getTransaction_type()
+							.equals("RequestCheck")) {
+					}
+				}
+			}
+			// update blanceIncre to customer table
+			try {
+				customerDAO.transiUpdate(balanceIncre, cusUpdate[i]);
+			} catch (RollbackException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// update shareIncre to position table 
+			// traverse hashmap shareIncreMap
+			for (Entry<Integer, Long> entry : shareIncreMap.entrySet()) {
+				int fund_id = entry.getKey();
+				long shareIncre = entry.getValue();
+				Position position = null;
+				try {
+					position = positionDAO.getPosition(
+							cusUpdate[i].getCustomer_id(), fund_id);
+				} catch (RollbackException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				try {
+					positionDAO.transiUpdate(position, shareIncre);
+				} catch (RollbackException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				try {
+					positionDAO.totalShareUpdate(position);
+				} catch (RollbackException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+			
+			cusUpdate[i].setTotalbalance(cusUpdate[i].getAvailablebalance());
+			
+
+		}
+
+	}
 
 }

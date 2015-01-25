@@ -1,5 +1,6 @@
 package model;
 import java.util.Date;
+import java.util.HashMap;
 
 import org.genericdao.ConnectionPool;
 import org.genericdao.DAOException;
@@ -9,6 +10,7 @@ import org.genericdao.RollbackException;
 import org.genericdao.Transaction;
 
 import databeans.Customer;
+import databeans.Fund_Price_History;
 import databeans.Position;
 
 public class PositionDAO  extends GenericDAO<Position> {
@@ -25,6 +27,13 @@ public class PositionDAO  extends GenericDAO<Position> {
 	public Position[] getPositions(int customer_id) throws RollbackException {
 		Position[] list = match(MatchArg.equals("customer_id", customer_id));
 		return list;
+	}
+	
+	public Position getPosition(int customer_id, int fund_id)  throws RollbackException {
+		MatchArg matchArg1 = MatchArg.equals("customer_id", customer_id);
+		MatchArg matchArg2 = MatchArg.equals("fund_id", fund_id);
+		Position[] position = match(MatchArg.and(matchArg1,matchArg2));
+		return position[0];
 	}
 	/*
 	 * Given a new position whose share is different from what in the database table, 
@@ -49,6 +58,41 @@ public class PositionDAO  extends GenericDAO<Position> {
 				Transaction.rollback();
 		}
 	}
+	
+	public void transiUpdate(Position pos, long shareIncre) throws RollbackException {
+		// TODO Auto-generated method stub
+		try {
+
+				Transaction.begin();
+				pos.setAvailableShares(shareIncre);
+				update(pos);
+				Transaction.commit();
+			} 
+
+		finally {
+			if (Transaction.isActive())
+				Transaction.rollback();
+		}
+	}
+	
+	public void totalShareUpdate(Position pos) throws RollbackException {
+		// TODO Auto-generated method stub
+		try {
+
+				Transaction.begin();
+				pos.setShares(pos.getAvailableShares());
+				update(pos);
+				Transaction.commit();
+			} 
+
+		finally {
+			if (Transaction.isActive())
+				Transaction.rollback();
+		}
+	}
+	
+	
+	
 		
 	public Position getCustomerShares(int customer_id, int fund_id)
 				throws RollbackException {
