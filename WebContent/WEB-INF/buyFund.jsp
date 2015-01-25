@@ -47,7 +47,11 @@ function verification() {
       <tr>
         <td>${f.name}</td>
         <td>${f.symbol}</td>
+<<<<<<< HEAD
+        <td align = "right">${f.latestPrice}</td>
+=======
         <td align = "right"><fmt:formatNumber type="number" value="${f.latestPrice/100}" minFractionDigits="2" maxFractionDigits="2"/></td>
+>>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
         <td align="center"><input type="radio" name="symbol" value="${f.symbol}"/></td>
       </tr>
 	</c:forEach>

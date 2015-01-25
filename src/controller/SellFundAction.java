@@ -130,7 +130,11 @@ public class SellFundAction extends Action {
 			transaction.setFund_id(pos.getFund_id());
 			transaction.setExecute_date(null);
 			transaction.setShares(sellFundForm.getShares());
+<<<<<<< HEAD
+			transaction.setTransaction_type("sell");
+=======
 			transaction.setTransaction_type("SellFund");
+>>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
 			transaction.setAmount(0);
 			try {
 				transactionDAO.create(transaction);

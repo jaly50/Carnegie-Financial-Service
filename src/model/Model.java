@@ -14,6 +14,10 @@ import org.genericdao.ConnectionPool;
 import org.genericdao.DAOException;
 import org.genericdao.RollbackException;
 
+<<<<<<< HEAD
+import databeans.Customer;
+=======
+>>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
 import databeans.Employee;
 import databeans.Fund;
 
@@ -58,11 +62,28 @@ public class Model {
 			   e.setPassword("adminj");
 		       employeeDAO.create(e);
 		   }
+<<<<<<< HEAD
+		   // Just for test
+           // If everything works, we will delete it before submit
+=======
+>>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
 		   if (fundDAO.getCount()==0) {
 			   Fund f = new Fund();
 			   f.setName("xy");
 			   f.setSymbol("interset");
 		   }
+<<<<<<< HEAD
+		   if (customerDAO.getCount()==0) {
+			   Customer c = new Customer();
+			   c.setUsername("yirenz");
+			   c.setFirstname("yiren");
+			   c.setLastname("zeng");
+			   c.setTotalbalance(3232);
+			   c.setPassword("xyz");
+		   }
+		   
+=======
+>>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
 		}
 	
 	// get 

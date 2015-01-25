@@ -31,7 +31,11 @@ import customerFormbeans.BuyFundForm;
 public class BuyFundAction extends Action {
 	private FormBeanFactory<BuyFundForm> formBeanFactory = FormBeanFactory
 			.getInstance(BuyFundForm.class);
+<<<<<<< HEAD
+	static DecimalFormat displayMoney = new DecimalFormat("$#,##0.00"); 
+=======
 
+>>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
 	private CustomerDAO customerDAO;
 	private FundDAO fundDAO;
 	private TransactionDAO transactionDAO;
@@ -68,6 +72,12 @@ public class BuyFundAction extends Action {
 
 			// get fund name;
 			Fund[] fundList = fundDAO.getFunds();
+<<<<<<< HEAD
+			if (fundList==null) {
+				return "buyFund.jsp";
+			}
+=======
+>>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
 			for (Fund f : fundList) {
 				System.out.print(f.getName() + " ");
 			}
@@ -77,6 +87,31 @@ public class BuyFundAction extends Action {
 			int num = 0;
 			System.out.print(num++);
 			// add fund table rows
+<<<<<<< HEAD
+			Fund fund;
+			int fund_id;
+			if (fundDAO.getFunds() != null && fundDAO.getFunds().length > 0) {
+				for (int i = 0; i < fundList.length; i++) {
+					fund = fundList[i];
+					fund_id = fund.getFund_id();
+					BuyFundTable tableRow = new BuyFundTable();
+					tableRow.setName(fund.getName());
+					tableRow.setSymbol(fund.getSymbol());
+					double displayPrice = 0;
+					System.out.println("89");
+					if (fundPriceHistoryDAO.getFundPrice(fund_id) == null) {
+						tableRow.setLatestPrice("N/A");
+					}
+					else {
+					
+						displayPrice = (double) fundPriceHistoryDAO
+								.getCurrentPrice(fundList[i].getFund_id());
+				
+					System.out.println("94");
+					displayPrice = displayPrice / 100;
+					tableRow.setLatestPrice(displayMoney.format(displayPrice));
+					}
+=======
 			if (fundDAO.getFunds() != null && fundDAO.getFunds().length > 0) {
 				for (int i = 0; i < fundList.length; i++) {
 					BuyFundTable tableRow = new BuyFundTable();
@@ -93,6 +128,7 @@ public class BuyFundAction extends Action {
 					displayPrice = displayPrice / 100;
 					tableRow.setLatestPrice(String.valueOf(fundPriceHistoryDAO
 							.getCurrentPrice(fundList[i].getFund_id())));
+>>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
 					buyFundTable.add(tableRow);
 					System.out.println("96");
 				}
@@ -133,12 +169,20 @@ public class BuyFundAction extends Action {
 			transaction.setFund_id(fundDAO.getFund_ID(buyFundForm.getSymbol()));
 			transaction.setExecute_date(null);
 			transaction.setShares(0);
+<<<<<<< HEAD
+			transaction.setTransaction_type("buy");
+=======
 			transaction.setTransaction_type("BuyFund");
+>>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
 			System.out.println("113");
 
 			transactionDAO.create(transaction);
 
+<<<<<<< HEAD
+			return "buyFund.jsp";
+=======
 			return "buyFund.do";
+>>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
 
 		} catch (RollbackException e) {
 			errors.add(e.getMessage());

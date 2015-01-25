@@ -22,7 +22,12 @@ public class FundDAO extends GenericDAO<Fund> {
 
 	public Fund[] getFunds() throws RollbackException {
 		Fund[] funds = match();
+<<<<<<< HEAD
+		if(funds==null || funds.length == 0) 
+			return null;
+=======
 		if(funds==null || funds.length == 0) return null;
+>>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
 		return funds;
 	}
 	
