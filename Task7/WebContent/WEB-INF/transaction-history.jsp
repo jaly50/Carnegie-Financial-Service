@@ -3,6 +3,8 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page import="databeans.Customer"%>
+<%@ page import="databeans.TransactionHistory"%>
 
 <jsp:include page="template-top.jsp" />
 
@@ -14,65 +16,36 @@
 <div class="container">
 <div class="container">
 <div class="container">
-  <h2>Transaction History</h2>
+  <h2>${user.firstname} ${user.lastname}'s Transaction History</h2>
     </br>
-
-  <h5>Funds Transactions</h5>            
+  
   <table class="table table-bordered">
     <thead> 
     <tr>
         <th>Date</th>
-        <th>Fund Symbol</th>
-        <th>Fund Name</th>
         <th>Operation</th>
-        <th>Transaction Price</th>
-        <th>Transaction Shares</th>
+        <th>Fund Name</th>
+        <th>Fund Symbol</th>
+        <th>Shares</th>
+        <th>Price</th>
         <th>Amount</th>
-        <th>Status</th>
       </tr>      
     </thead>
     
     <tbody>
-    	<c:forEach var="transaction1" items="${transaction1}">    
+    	<c:forEach var="transactionInfo" items="${transactionInfo}">    
     	<tr> 
-	    <td><c:out value = '${transaction1.execute_date}' escapeXml='true' /></td>
-        <td>000960</td>
-        <td>Ebiz Mutual Fund</td>
-        <td><c:out value = '${transaction1.transaction_type}' escapeXml='true' /></td>
-        <td>$2.13</td>
-        <td><c:out value = '${transaction1.shares}' escapeXml='true' /></td>
-        <td><c:out value = '${transaction1.amount}' escapeXml='true' /></td>
-        <td>Confirmed</td>
+	    <td><c:out value = '${transactionInfo.date}' escapeXml='true' /></td>
+        <td><c:out value = '${transactionInfo.operation}' escapeXml='true' /></td>
+        <td><c:out value = '${transactionInfo.name}' escapeXml='true' /></td>
+        <td><c:out value = '${transactionInfo.symbol}' escapeXml='true' /></td>
+        <td><c:out value = '${transactionInfo.shares}' escapeXml='true' /></td>
+        <td><c:out value = '${transactionInfo.price}' escapeXml='true' /></td>
+        <td><c:out value = '${transactionInfo.amount}' escapeXml='true' /></td>
 	</tr>			    
 	</c:forEach>   	 
     </tbody>
   </table>
-  <h5>Deposit and Check Transactions</h5>            
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Operation</th>
-        <th>Amount</th>
-        <th>Balance</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <c:forEach var="transaction1" items="${transaction2}">    
-    	<tr> 
-	    <td><c:out value = '${transaction2.execute_date}' escapeXml='true' /></td>
-        
-        <td><c:out value = '${transaction2.transaction_type}' escapeXml='true' /></td>
-        <td><c:out value = '${transaction2.amount}' escapeXml='true' /></td>
-        <td><c:out value = '${transaction1.shares}' escapeXml='true' /></td>
-        <td><c:out value = '${transaction1.amount}' escapeXml='true' /></td>
-        <td>Confirmed</td>
-	</tr>			    
-	</c:forEach>   	
-    </tbody>
-  </table>
- 
 </div>
 </div>
    
