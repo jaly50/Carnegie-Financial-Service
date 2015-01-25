@@ -104,7 +104,6 @@ public class Controller extends HttpServlet {
 				errors.add("You are not a customer, permission denied.");
 				return Action.perform("message.do", request);
 			}
-<<<<<<< HEAD
 			//When type the url directly in employee pages
 			if (action.equals("TransactionHistoryAction.do")) {
 				Customer customer;
@@ -118,19 +117,9 @@ public class Controller extends HttpServlet {
 
 		}
 
-=======
+
 
 		}
-		if (action.equals("TransactionHistoryAction.do")) {
-			Customer customer;
-			 customer = (Customer) session.getAttribute("customer");
-			 if (customer == null) {
-				 request.setAttribute("errors", errors);
-					errors.add("For viewing transaction history, please select one customer.");
-					return Action.perform("viewCustomerList.do", request); 
-			 }
-		}
->>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
 		if (!(user instanceof Employee)) {
 			// If not the class type, the operation would be denied
 			if (action.equals("create_employee.do") || action.equals("create_customer.do")
