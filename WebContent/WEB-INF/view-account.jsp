@@ -3,6 +3,8 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page import="databeans.Customer"%>
+<%@ page import="databeans.ViewAccountFund"%>
 
 <jsp:include page="template-top.jsp" />
 
@@ -20,29 +22,24 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>UserName</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>User Name</th>
         <th>Address</th>
-        <th>State</th>
-        <th>City</th>
-        <th>Zip Code</th>
         <th>Date of Last Trading</th>
-        <th>Cash Balance</th>
-
+        <th>Available Balance</th>
+        <th>Total Balance</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><c:out value = '${customer.firstname}' escapeXml='true' /></td>
-        <td><c:out value = '${customer.lastname}' escapeXml='true' /></td>
-        <td><c:out value = '${customer.addr_line1}' escapeXml='true' /></td>
-        <td><c:out value = '${customer.addr_line1}' escapeXml='true' /></td>
-        <td><c:out value = '${customer.addr_line2}' escapeXml='true' /></td>
-        <td><c:out value = '${customer.addr_line2}' escapeXml='true' /></td>
-        <td><c:out value = '${customer.zip}' escapeXml='true' /></td>
-        <td><c:out value = '${customer.availablebalance}' escapeXml='true' /></td>
-        <td><c:out value = '${customer.totalbalance}' escapeXml='true' /></td>
+        <td><c:out value = '${user.firstname}' escapeXml='true' /></td>
+        <td><c:out value = '${user.lastname}' escapeXml='true' /></td>
+        <td><c:out value = '${user.username}' escapeXml='true' /></td>
+        <td><c:out value = '${user.addr_line1}${user.addr_line2}${user.zip}${user.state}' escapeXml='true' /></td>
+        <td><c:out value = '${date}' escapeXml='true' /></td>
+        <td><c:out value = '${user.availablebalance}' escapeXml='true' /></td>
+        <td><c:out value = '${user.totalbalance}' escapeXml='true' /></td>
       </tr>
     </tbody>
   </table>
@@ -55,18 +52,17 @@
         <th>Fund Symbol</th>
         <th>Price</th>
         <th>Shares</th>
-        <th>Total Value</th>
-        
+        <th>Value</th>    
       </tr>
     </thead>
     <tbody>
-      <c:forEach var="fund" items="${funds}">    
+      <c:forEach var="fundInfo" items="${fundInfo}">    
     	<tr> 
-	    <td><c:out value = '${fund.name}' escapeXml='true' /></td>
-        <td><c:out value = '${fund.symbol}' escapeXml='true' /></td>
-        <td><c:out value = '${fund.name}' escapeXml='true' /></td>
-        <td><c:out value = '${fund.name}' escapeXml='true' /></td>
-        <td><c:out value = '${fund.name}' escapeXml='true' /></td>
+	    <td><c:out value = '${fundInfo.name}' escapeXml='true' /></td>
+        <td><c:out value = '${fundInfo.symbol}' escapeXml='true' /></td>
+        <td><c:out value = '${fundInfo.price}' escapeXml='true' /></td>
+        <td><c:out value = '${fundInfo.shares}' escapeXml='true' /></td>
+        <td><c:out value = '${fundInfo.value}' escapeXml='true' /></td>
 	</tr>			    
 	</c:forEach>   	
     </tbody>
@@ -82,7 +78,4 @@
     <br />
     <br />
 </div>
-
-  
-
 <jsp:include page="template-bottom.jsp" />

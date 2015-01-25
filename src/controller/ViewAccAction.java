@@ -9,8 +9,9 @@
  */
 package controller;
 
-import java.sql.Date;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,6 +32,7 @@ import databeans.Fund_Price_History;
 import databeans.Position;
 import databeans.Fund;
 import databeans.Transaction;
+import databeans.ViewAccountFund;
 
 public class ViewAccAction extends Action {
 	
@@ -48,6 +50,9 @@ public class ViewAccAction extends Action {
 		fundPriceHistoryDAO = model.getFund_Price_HistoryDAO();
 		transactionDAO = model.getTransactionDAO();
 	}
+	
+	DecimalFormat priceFormat = new DecimalFormat("#,##0.00");
+	DecimalFormat sharesFormat = new DecimalFormat("#,##0.000");
 	
 	// get action name
 	public String getName() {
@@ -67,74 +72,63 @@ public class ViewAccAction extends Action {
 		
 		if (customer == null) return "login.jsp";
 		
-		// get positions
+		// set date
 		try {
-			Position[] positions = positionDAO.getPositions(customer.getCustomer_id());
-			
-			// check position null
-			if (positions.length == 0) return "view-account.jsp";
-			
-			Fund[] funds = new Fund[positions.length];
-			
-			// set sharesMap attribute, pricesMap attribute, valuesMap attribute
-			HashMap<Integer, String> sharesMap = new HashMap<Integer, String>();
-			HashMap<Integer, String> pricesMap = new HashMap<Integer, String>();
-			HashMap<Integer, String> valuesMap = new HashMap<Integer, String>();
-					
-			// get funds and shares, set funds, sharesMap, priceMap attribute
-			for (int i = 0; i < positions.length; i++) {
-				int fund_id = positions[i].getFund_id();
-				
-				// get fund: Fund object
-				funds[i] = fundDAO.getFund(fund_id);
-				
-				// check fund null
-				if (funds[i] == null) {
-					errors.add("Invalid fund");
-					return "view-account.jsp";
-				}
-				
-				// get share : Long to double 
-				long sharesOrigin = positions[i].getShares();
-				double shares = (double) sharesOrigin / 1000;
-				String sharesStr = Double.toString(shares);
-				sharesMap.put(fund_id, sharesOrigin == 0 ? "pending" : sharesStr);
-		
-				// get price: Long to double 
-				Fund_Price_History fundPrice = fundPriceHistoryDAO.getLatestFundPrice(fund_id);
-				
-				long priceOrigin = 0;
-				double price = 0;
-				String priceStr = "";
-				
-				if (fundPrice != null) {
-					priceOrigin =  fundPrice.getPrice();
-					price = (double) priceOrigin / 1000;
-					priceStr = Double.toString(price);
-				}
-			
-				pricesMap.put(fund_id, fundPrice == null ? "pending" : priceStr);		
-			
-				// get value: double 
-				double value = price * shares;
-				String valueStr = Double.toString(value);
-				valuesMap.put(fund_id, valueStr.equals("0") ? "pending" : valueStr);
-			}
-
-			request.setAttribute("funds", funds);
-			request.setAttribute("sharesMap", sharesMap);
-			request.setAttribute("pricesMap", pricesMap);
-			request.setAttribute("valuesMap", valuesMap);
-			
-			// set last trade date attribute: Date
 			Transaction[] transactions = 
 					transactionDAO.getTransactions(customer.getCustomer_id());
 			Date date = null;
-			if (transactions.length != 0) {
+			if (transactions.length == 0) {
+				session.setAttribute("date", "No transaction record");
+			} else {
 				date = (Date) transactions[transactions.length - 1].getExecute_date();
+				session.setAttribute("date", date);
 			}
-			request.setAttribute("date", date);
+		} catch (RollbackException e) {
+			e.printStackTrace();
+		}
+		
+		// get positions
+		try {
+			Position[] positions = positionDAO.getPositions(customer.getCustomer_id());
+			// check position null
+			if (positions.length == 0) return "view-account.jsp";			
+			ArrayList<ViewAccountFund> fundInfo = new ArrayList<ViewAccountFund>();
 			
+			for (Position position : positions) {
+				ViewAccountFund item = new ViewAccountFund();
+				int fund_id = position.getFund_id();				
+				Fund fund = fundDAO.getFund(fund_id);
+				if (fund == null) {
+					errors.add("Invalid fund");
+					return "view-account.jsp";
+				}
+				item.setName(fundDAO.getFund(fund_id).getName());
+				item.setSymbol(fundDAO.getFund(fund_id).getSymbol());
+				
+				// get share : Long to double 
+				long sharesOrigin = position.getShares();
+				String shares = sharesFormat.format((double) sharesOrigin / 1000);
+				item.setShares(shares);
+				
+				// get price: Long to double 
+				long priceOrigin = 0;
+				Fund_Price_History fundPrice = fundPriceHistoryDAO.getLatestFundPrice(fund_id);
+				if (fundPrice == null) item.setPrice("pending");
+				else {
+					priceOrigin = fundPrice.getPrice();;
+					String price = priceFormat.format((double) priceOrigin / 100);
+					item.setPrice(price);
+				}
+				
+				// get value: double 
+				double valueOrigin = (double) ((sharesOrigin / 1000) * (priceOrigin / 100));
+				String value = priceFormat.format(valueOrigin);
+				item.setValue(fundPrice == null ? "pending" : value);
+				
+				// add to arraylist
+				fundInfo.add(item);
+			}
+			session.setAttribute("fundInfo", fundInfo);
 			return "view-account.jsp";
 		} catch (RollbackException e) {
 			errors.add(e.getMessage());
