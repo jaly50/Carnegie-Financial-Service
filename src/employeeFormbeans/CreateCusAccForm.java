@@ -99,11 +99,16 @@ public class CreateCusAccForm extends FormBean {
 		confirm = s.trim();
 	}
 
+
 	public List<String> getValidationErrors() {
 		List<String> errors = new ArrayList<String>();
 
 		if (username == null || username.length() == 0) {
-			errors.add("Email is required");
+			errors.add("Username is required");
+		}
+		if(username.substring(0, 1).matches("[0-9]"))
+		{
+			errors.add("The first character of the username can't be a number");
 		}
 
 		if (firstName == null || firstName.length() == 0) {
@@ -113,9 +118,28 @@ public class CreateCusAccForm extends FormBean {
 		if (lastName == null || lastName.length() == 0) {
 			errors.add("Last Name is required");
 		}
+		if (addr_line1 == null || addr_line1.length() == 0) {
+			errors.add("Address Line 1 is required");
+		}
+
+		if (city == null || city.length() == 0) {
+			errors.add("City is required");
+		}
+
+		if (state == null || state.length() == 0) {
+			errors.add("State is required");
+		}
 
 		if (password == null || password.length() == 0) {
 			errors.add("Password is required");
+		}
+		if(password.length()<6)
+		{
+			errors.add("Password is too short");
+		}
+		if(password.length()>15)
+		{
+			errors.add("Password can't be more than 15 characters");
 		}
 
 		if (confirm == null || confirm.length() == 0) {
@@ -129,15 +153,43 @@ public class CreateCusAccForm extends FormBean {
 		if (!password.equals(confirm)) {
 			errors.add("Passwords are not the same");
 		}
-
+		if(!(firstName.matches("[a-zA-Z]+")))
+		{
+			errors.add("There should be no other characters than alphabets in first name");
+		}
+		if(!(lastName.matches("[a-zA-Z]+")))
+		{
+			errors.add("There should be no other characters than alphabets in last name");
+		}
+		if(!(city.matches("[a-zA-Z]+")))
+		{
+			errors.add("There should be no other characters than alphabets in city");
+		}
+		if(!(state.matches("[a-zA-Z]+")))
+		{
+			errors.add("There should be no other characters than alphabets in state");
+		}
+		if(!(zip.matches("[0-9]+")))
+		{
+			errors.add("Zip should only contain numbers");
+		}
+		if(!(cash.matches("^\\d+\\.\\d{1,2}$")))
+		{
+			errors.add("Should be decimal");
+		}
+			if(zip.length()>5)
+		{
+			errors.add("Zip can't ba more than 5 characters");
+		}
 		return errors;
 	}
+    
     
 	public String getCash() {
 		return cash;
 	}
 	public long getCashAsLong() {
-		long cashLong = Long.parseLong(cash);
+		long cashLong = 100*(Long.parseLong(cash));
 		return cashLong;
 		
 	}

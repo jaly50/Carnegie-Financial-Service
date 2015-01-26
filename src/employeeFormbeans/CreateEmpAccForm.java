@@ -58,7 +58,10 @@ public class CreateEmpAccForm extends FormBean {
 		if (username == null || username.length() == 0) {
 			errors.add("Email is required");
 		}
-
+		if(username.substring(0, 1).matches("[0-9]"))
+		{
+			errors.add("The first character of the username can't be a number");
+		}
 		if (firstName == null || firstName.length() == 0) {
 			errors.add("First Name is required");
 		}
@@ -70,9 +73,25 @@ public class CreateEmpAccForm extends FormBean {
 		if (password == null || password.length() == 0) {
 			errors.add("Password is required");
 		}
+		if(password.length()<6)
+		{
+			errors.add("Password is too short");
+		}
+		if(password.length()>15)
+		{
+			errors.add("Password can't be more than 15 characters");
+		}
 
 		if (confirm == null || confirm.length() == 0) {
 			errors.add("Confirm Password is required");
+		}
+		if(!(firstName.matches("[a-zA-Z]+")))
+		{
+			errors.add("There should be no other characters than alphabets in first name");
+		}
+		if(!(lastName.matches("[a-zA-Z]+")))
+		{
+			errors.add("There should be no other characters than alphabets in last name");
 		}
 
 		if (errors.size() > 0) {
