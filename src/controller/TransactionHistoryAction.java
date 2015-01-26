@@ -8,6 +8,8 @@ package controller;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +27,9 @@ import model.TransactionDAO;
 import org.genericdao.RollbackException;
 import org.mybeans.form.FormBeanException;
 import org.mybeans.form.FormBeanFactory;
+
+
+
 
 import databeans.Customer;
 import databeans.Fund_Price_History;
@@ -102,6 +107,7 @@ public class TransactionHistoryAction extends Action {
 				}
 				
 				Date dateOrigin = (Date) trans.getExecute_date();
+				item.setDateForSort(dateOrigin);
 				
 				// get share : Long to double 
 				long sharesOrigin = trans.getShares();
@@ -129,7 +135,7 @@ public class TransactionHistoryAction extends Action {
 					item.setPrice("pending");
 				} else {
 					long priceOrigin = 0;
-					Fund_Price_History fundPrice = fundPriceHistoryDAO.getLatestFundPrice(fund_id);
+					Fund_Price_History fundPrice = fundPriceHistoryDAO.getFundPrice(dateOrigin, fund_id);
 					if (fundPrice == null) item.setPrice("pending");
 					else {
 						priceOrigin = fundPrice.getPrice();
@@ -165,19 +171,21 @@ public class TransactionHistoryAction extends Action {
 				}
 				
 				Date dateOrigin = (Date) trans.getExecute_date();
+				item.setDateForSort(dateOrigin);
 				
 				// get share : Long to double 
 				long sharesOrigin = trans.getShares();
-				if (dateOrigin == null) item.setShares("pending");
-				else {
-					String shares = sharesFormat.format((double) sharesOrigin / 1000);
-					item.setShares(shares);
-				}
+				String shares = sharesFormat.format((double) sharesOrigin / 1000);
+				item.setShares(shares);
 				
 				// amount
-				double amountOrigin = trans.getAmount();
-				String amount = priceFormat.format(amountOrigin / 100);
-				item.setAmount(amount);
+				if (dateOrigin == null) {
+					item.setAmount("pending");
+				} else {
+					double amountOrigin = trans.getAmount();
+					String amount = priceFormat.format(amountOrigin / 100);
+					item.setAmount(amount);
+				}
 				
 				// date
 				if (dateOrigin == null) {
@@ -192,11 +200,12 @@ public class TransactionHistoryAction extends Action {
 					item.setPrice("pending");
 				} else {
 					long priceOrigin = 0;
-					Fund_Price_History fundPrice = fundPriceHistoryDAO.getLatestFundPrice(fund_id);
+					Fund_Price_History fundPrice = fundPriceHistoryDAO.getFundPrice(dateOrigin, fund_id);
 					if (fundPrice == null) item.setPrice("pending");
 					else {
 						priceOrigin = fundPrice.getPrice();
 						String price = priceFormat.format((double) priceOrigin / 100);
+						System.out.println("That day Price:" + price);
 						item.setPrice(price);
 					}
 				}
@@ -236,9 +245,10 @@ public class TransactionHistoryAction extends Action {
 				
 				// date
 				Date dateOrigin = (Date) trans.getExecute_date();
+				item.setDateForSort(dateOrigin);
 			
 				if (dateOrigin == null) {
-					item.setDate("No date");
+					item.setDate("pending");
 				} else {
 					String date = sdf.format(dateOrigin);
 					item.setDate(date);
@@ -277,9 +287,10 @@ public class TransactionHistoryAction extends Action {
 				
 				// date
 				Date dateOrigin = (Date) trans.getExecute_date();
+				item.setDateForSort(dateOrigin);
 			
 				if (dateOrigin == null) {
-					item.setDate("No date");
+					item.setDate("pending");
 				} else {
 					String date = sdf.format(dateOrigin);
 					item.setDate(date);
@@ -298,6 +309,20 @@ public class TransactionHistoryAction extends Action {
 				transactionInfo.add(item);
 			}
 			
+			Comparator<TransactionHistory> comparator = new Comparator<TransactionHistory>() {
+				public int compare(TransactionHistory trans1, TransactionHistory trans2) {
+					if (trans1 == null || trans2 == null) return -1;
+					if (trans1.getDateForSort() == null) return -1;
+					if (trans2.getDateForSort() == null) return 1;
+					if (trans1.getDateForSort().after(trans2.getDateForSort())) {
+						return -1;
+					} else if (trans2.getDateForSort().equals(trans2.getDateForSort())) {
+						return 0;
+					} else return 1;
+				}
+			};
+			
+			Collections.sort(transactionInfo, comparator);
  			request.setAttribute("transactionInfo", transactionInfo);
  			
 			return "transaction-history.jsp";

@@ -78,7 +78,7 @@ public class ViewCusAccAction extends Action {
 			int customer_id = form.getCustomer_id();
 			request.setAttribute("customer", customerDAO.getCustomer(customer_id));
 				if (operation.equals("View Account")) {
-					return "view-account.jsp";
+					return "viewAccAction.do";
 				}
 				else if (operation.equals("Deposit Check")) {
 					return "depositCheck.jsp";

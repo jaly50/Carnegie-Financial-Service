@@ -1,5 +1,7 @@
 package databeans;
 
+import java.util.Date;
+
 public class TransactionHistory {
 	private String date;
 	private String operation;
@@ -8,6 +10,7 @@ public class TransactionHistory {
 	private String shares;
 	private String price;
 	private String amount;
+	private Date dateForSort;
 	
 	public String getDate() {
 		return date;
@@ -21,6 +24,13 @@ public class TransactionHistory {
 	}
 	public void setOperation(String operation) {
 		this.operation = operation;
+	}
+	
+	public Date getDateForSort() {
+		return dateForSort;
+	}
+	public void setDateForSort(Date dateForSort) {
+		this.dateForSort = dateForSort;
 	}
 	
 	public String getName() {
