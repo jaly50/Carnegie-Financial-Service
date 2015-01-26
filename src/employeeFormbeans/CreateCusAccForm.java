@@ -173,9 +173,9 @@ public class CreateCusAccForm extends FormBean {
 		{
 			errors.add("Zip should only contain numbers");
 		}
-		if(!(cash.matches("^\\d+\\.\\d{1,2}$")))
+		if(!(cash.matches("^\\d+(\\.\\d{1,2})?$")))
 		{
-			errors.add("Should be decimal");
+			errors.add("Should be a number with upto two decimal places");
 		}
 			if(zip.length()>5)
 		{
