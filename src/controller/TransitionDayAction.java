@@ -379,6 +379,10 @@ public class TransitionDayAction extends Action {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		if (LatestDate == null){
+			return true;
+		}
 
 		if (newDate.after(LatestDate))
 			return true;
