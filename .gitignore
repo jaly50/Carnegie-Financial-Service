@@ -19,3 +19,5 @@ WebContent/WEB-INF/classes
 .project
 .settings
 .classpath
+
+bin/
