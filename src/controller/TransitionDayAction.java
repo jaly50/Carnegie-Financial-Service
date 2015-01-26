@@ -273,7 +273,7 @@ public class TransitionDayAction extends Action {
 			HashMap<Integer, Long> shareIncreMap = new HashMap<Integer, Long>();
 
 			for (int j = 0; j < workedTransactions.length; j++) {
-				if (cusUpdate[i].getCustomer_id() == workedTransactions[i]
+				if (cusUpdate[i].getCustomer_id() == workedTransactions[j]
 						.getCustomer_id()) {
 
 					// buy transaction case, edit shares.
@@ -291,18 +291,18 @@ public class TransitionDayAction extends Action {
 
 					}
 					// sell transaction case; edit amount
-					else if (workedTransactions[i].getTransaction_type()
+					else if (workedTransactions[j].getTransaction_type()
 							.equals("SellFund")) {
 						balanceIncre += workedTransactions[j].getAmount();
 
 					}
 					// deposit transaction case;
-					else if (workedTransactions[i].getTransaction_type()
+					else if (workedTransactions[j].getTransaction_type()
 							.equals("DepositCheck")) {
 
 					}
 					// check transaction case;
-					else if (workedTransactions[i].getTransaction_type()
+					else if (workedTransactions[j].getTransaction_type()
 							.equals("RequestCheck")) {
 					}
 				}
