@@ -17,11 +17,7 @@
 					&nbsp;&nbsp;&nbsp; ${customer.firstname}&nbsp; ${customer.lastname}</h4>
 			<br />
 				<h4 style="margin-left: 380px">Customer Username:
-<<<<<<< HEAD
 					&nbsp;&nbsp;&nbsp; <input type="hidden"  name = "username" value="${customer.username}" > ${customer.username}</h4>
-=======
-					&nbsp;&nbsp;&nbsp; ${customer.username}</h4>
->>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
 			</c:otherwise>
 		</c:choose>
 		<br />
@@ -37,12 +33,7 @@
 		</h4>
 		<br />
 		<h6 align="center">
-			<input align="center" class="btn btn-default" type="submit"
-<<<<<<< HEAD
-				value="Reset">
-=======
-				value="Create">
->>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
+			<input align="center" class="btn btn-default" type="submit" value="Reset">
 		</h6>
 
 		<br /> <br /> <br />
