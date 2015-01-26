@@ -67,12 +67,12 @@ public class CreateFundAction extends Action {
 			// Create the fund bean
 			fund = fundDAO.getFundFromName(form.getName());
 			if (fund !=null) {
-				errors.add("The fund name already exists. Please use another fund name.");
+				errors.add("The fund name "+form.getName()+" already exists. Please use another fund name.");
 				return "createFund.jsp";
 			}
 			fund = fundDAO.getFund(form.getSymbol());
 			if (fund !=null) {
-				errors.add("The fund symbol already exists. Please use another fund symbol.");
+				errors.add("The fund symbol "+form.getSymbol()+" already exists. Please use another fund symbol.");
 				return "createFund.jsp";
 			}
 			fund = new Fund();
@@ -80,8 +80,9 @@ public class CreateFundAction extends Action {
 			fund.setSymbol(form.getSymbol());
             fundDAO.create(fund);
 
-
-			return "transitionDay.do";
+            String message = "You successfully create a new fund \""+fund.getName()+"\".";
+            request.setAttribute("messages", message);
+			return "successMessage.jsp";
 		} catch (RollbackException e) {
 			errors.add(e.getMessage());
 			return "createFund.jsp";
