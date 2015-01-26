@@ -69,6 +69,7 @@ public class Model {
 			   Fund f = new Fund();
 			   f.setName("xy");
 			   f.setSymbol("interset");
+			   fundDAO.create(f);
 		   }
 
 		   if (customerDAO.getCount()==0) {
@@ -78,6 +79,7 @@ public class Model {
 			   c.setLastname("zeng");
 			   c.setTotalbalance(3232);
 			   c.setPassword("xyz");
+			   customerDAO.createCustomer(c);
 		   }
 		   
 

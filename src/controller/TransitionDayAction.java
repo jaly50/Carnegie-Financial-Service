@@ -162,6 +162,7 @@ public class TransitionDayAction extends Action {
 				errors.addAll(transitionDayForm.validateDate(date[0]));
 
 			Date newDate = null;
+			Date oldDate = null;
 			System.out.println("165 " + date[0]);
 			try {
 
@@ -175,10 +176,12 @@ public class TransitionDayAction extends Action {
 			System.out.println("175 " + newDate);
 
 			// validate Date time
-			if (!compareLatestDate(newDate)) {
-				errors.add("New Date must be after the latest Date");
-				return "transitionDay.jsp";
+			oldDate =  fundPriceHistoryDAO.getLatestDate();
+			if (oldDate!=null && !newDate.after(oldDate)) {
+					errors.add("New Date must be after the latest Date "+oldDate);
+					return "transitionDay.jsp";	
 			}
+
 
 			// deal with Fund_Price_History table;
 			System.out.println("185");

@@ -107,7 +107,7 @@ public class Fund_Price_HistoryDAO extends GenericDAO<Fund_Price_History> {
 
 	public Date getLatestDate() throws RollbackException {
 		Fund_Price_History[] fundPriceHistorys = match();
-		if (fundPriceHistorys.length == 0)
+		if (fundPriceHistorys==null || fundPriceHistorys.length == 0)
 			return null;
 		return fundPriceHistorys[fundPriceHistorys.length - 1]
 				.getPrice_date();
