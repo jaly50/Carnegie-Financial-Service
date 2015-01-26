@@ -189,7 +189,11 @@ public class CreateCusAccForm extends FormBean {
 		return cash;
 	}
 	public long getCashAsLong() {
+<<<<<<< HEAD
 		long cashLong = (long) (100*(Double.parseDouble(cash)));
+=======
+		long cashLong = 100 * Long.parseLong(cash);
+>>>>>>> origin/master
 		return cashLong;
 		
 	}

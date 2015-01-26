@@ -176,12 +176,11 @@ public class TransitionDayAction extends Action {
 			System.out.println("175 " + newDate);
 
 			// validate Date time
-			oldDate =  fundPriceHistoryDAO.getLatestDate();
-			if (oldDate!=null && !newDate.after(oldDate)) {
-					errors.add("New Date must be after the latest Date "+oldDate);
-					return "transitionDay.jsp";	
+			oldDate = fundPriceHistoryDAO.getLatestDate();
+			if (oldDate != null && !newDate.after(oldDate)) {
+				errors.add("New Date must be after the latest Date " + oldDate);
+				return "transitionDay.jsp";
 			}
-
 
 			// 1.deal with Fund_Price_History table;
 			System.out.println("185");
@@ -199,9 +198,7 @@ public class TransitionDayAction extends Action {
 			Customer[] cusUpdate = customerDAO.getCustomers();
 			workedTransactionHandler(cusUpdate, workedTransactions, newDate);
 			System.out.println("198");
-			
-			
-			
+
 		} catch (RollbackException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -216,13 +213,19 @@ public class TransitionDayAction extends Action {
 
 	public void pendingTransactionsHandler(Transaction[] pendingTransactions,
 			HashMap<Integer, String> fidPriceMap, Date newDate) {
-
+        Transaction t;
 		for (int i = 0; i < pendingTransactions.length; i++) {
+			t = pendingTransactions[i];
+			String type = t.getTransaction_type();
+			long amount = t.getAmount();
+			int fund_id = t.getFund_id();
+			String getPrice = fidPriceMap.get(fund_id);
+			double realPrice = Double.valueOf(getPrice);
+			long databasePrice = (long)realPrice *100;
+			long shares;
 			// buy transaction case
-			if (pendingTransactions[i].getTransaction_type().equals("BuyFund")) {
-				long shares = (long) (pendingTransactions[i].getAmount() / Double
-						.valueOf(fidPriceMap.get(pendingTransactions[i]
-								.getFund_id())));
+			if (type.equals("BuyFund")) {
+				shares = amount / databasePrice;
 				try {
 					transactionDAO.transactionBuyUpdate(newDate, shares,
 							pendingTransactions[i]);
@@ -233,7 +236,7 @@ public class TransitionDayAction extends Action {
 			// sell transaction case;
 			else if (pendingTransactions[i].getTransaction_type().equals(
 					"SellFund")) {
-				long amount = (long) (pendingTransactions[i].getShares() * Double
+				amount = (long) (pendingTransactions[i].getShares() * Double
 						.valueOf(fidPriceMap.get(pendingTransactions[i]
 								.getFund_id())));
 				try {
@@ -274,6 +277,7 @@ public class TransitionDayAction extends Action {
 		for (int i = 0; i < cusUpdate.length; i++) {
 			long balanceIncre = 0;
 			HashMap<Integer, Long> shareIncreMap = new HashMap<Integer, Long>();
+
 			for (int j = 0; j < workedTransactions.length; j++) {
 				if (cusUpdate[i].getCustomer_id() == workedTransactions[i]
 						.getCustomer_id()) {
@@ -281,8 +285,12 @@ public class TransitionDayAction extends Action {
 					// buy transaction case, edit shares.
 					if (workedTransactions[j].getTransaction_type().equals(
 							"BuyFund")) {
-						long tempShareIncre = shareIncreMap
-								.get(workedTransactions[j].getFund_id());
+						long tempShareIncre = 0;
+						if (shareIncreMap.get(workedTransactions[j]
+								.getFund_id()) != null) {
+							tempShareIncre = shareIncreMap
+									.get(workedTransactions[j].getFund_id());
+						}
 						tempShareIncre += workedTransactions[j].getShares();
 						shareIncreMap.put(workedTransactions[j].getFund_id(),
 								tempShareIncre);
@@ -307,7 +315,7 @@ public class TransitionDayAction extends Action {
 			}
 			// update blanceIncre to customer table
 			try {
-				System.out.println("Customer : " + cusUpdate[i]);
+				System.out.println("Customer : " + cusUpdate[i].getCustomer_id());
 				System.out.println("balanceIncre: " + balanceIncre);
 				customerDAO.transiUpdate(balanceIncre, cusUpdate[i]);
 			} catch (RollbackException e) {
@@ -329,10 +337,12 @@ public class TransitionDayAction extends Action {
 				}
 
 				try {
-					System.out.println("Position : " + position.getCustomer_id());
-					System.out.println("Position : " + position.getAvailableShares());
-					System.out.println("Position : " + position.getFund_id());
-					System.out.println("shareIncre : " + shareIncre);
+					System.out.println("Position CusId: "
+							+ position.getCustomer_id());
+					System.out.println("Position FundId: " + position.getFund_id());
+					System.out.println("Position AvailShares: "
+							+ position.getAvailableShares());
+					System.out.println("Position shareIncre : " + shareIncre);
 					positionDAO.transiUpdate(position, shareIncre);
 				} catch (RollbackException e) {
 					// TODO Auto-generated catch block
@@ -347,7 +357,9 @@ public class TransitionDayAction extends Action {
 				}
 
 			}
-			System.out.println("347");
+			System.out.println("Line 354");
+			System.out.println(cusUpdate[i].getCustomer_id());
+			System.out.println(cusUpdate[i].getAvailablebalance());
 			cusUpdate[i].setTotalbalance(cusUpdate[i].getAvailablebalance());
 
 		}
@@ -388,8 +400,8 @@ public class TransitionDayAction extends Action {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		if (LatestDate == null){
+
+		if (LatestDate == null) {
 			return true;
 		}
 
