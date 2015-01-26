@@ -40,8 +40,7 @@ public class Model {
 		try {
 			String jdbcDriver = config.getInitParameter("jdbcDriverName");
 			String jdbcURL    = config.getInitParameter("jdbcURL");			
-			ConnectionPool pool = new ConnectionPool(jdbcDriver, jdbcURL);
-			Connection con = (Connection) DriverManager.getConnection(jdbcURL, "root", "");
+			ConnectionPool pool = new ConnectionPool(jdbcDriver, jdbcURL,"root", "");
 			
 			customerDAO  = new CustomerDAO("Customer", pool);
 			employeeDAO = new EmployeeDAO("Employee", pool);
@@ -53,9 +52,6 @@ public class Model {
 		} catch (DAOException e) {
 			throw new ServletException(e);
 		} catch (RollbackException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
