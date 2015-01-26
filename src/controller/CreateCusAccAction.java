@@ -70,8 +70,8 @@ public class CreateCusAccAction extends Action {
             cus.setCity(form.getCity());
             cus.setState(form.getState());
             cus.setZip(form.getZip());
-            cus.setTotalbalance(form.getCashAsLong());
-            cus.setAvailablebalance(form.getCashAsLong());
+            cus.setTotalbalance(form.getCashAsLong() * 100);
+            cus.setAvailablebalance(form.getCashAsLong() * 100);
             
 	        customerDAO.createCustomer(cus);
 	        
