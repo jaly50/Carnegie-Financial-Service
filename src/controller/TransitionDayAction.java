@@ -183,23 +183,23 @@ public class TransitionDayAction extends Action {
 			}
 
 
-			// deal with Fund_Price_History table;
+			// 1.deal with Fund_Price_History table;
 			System.out.println("185");
 			fund_Price_HistoryHandler(newDate, fidPriceMap);
 			System.out.println("186");
-			// deal with pending transaction table first;
+			// 2.deal with pending transaction table first;
 			Transaction[] pendingTransactions = transactionDAO
 					.getPendingTransactions();
 			pendingTransactionsHandler(pendingTransactions, fidPriceMap,
 					newDate);
 
-			// deal with worked transaction table;
+			// 3.deal with worked transaction table;
 			Transaction[] workedTransactions = transactionDAO
 					.getWorkedTransactions(newDate);
 			Customer[] cusUpdate = customerDAO.getCustomers();
 			workedTransactionHandler(cusUpdate, workedTransactions, newDate);
 			System.out.println("198");
-			// deal with 
+			
 			
 			
 		} catch (RollbackException e) {
@@ -307,6 +307,8 @@ public class TransitionDayAction extends Action {
 			}
 			// update blanceIncre to customer table
 			try {
+				System.out.println("Customer : " + cusUpdate[i]);
+				System.out.println("balanceIncre: " + balanceIncre);
 				customerDAO.transiUpdate(balanceIncre, cusUpdate[i]);
 			} catch (RollbackException e) {
 				// TODO Auto-generated catch block
@@ -327,6 +329,10 @@ public class TransitionDayAction extends Action {
 				}
 
 				try {
+					System.out.println("Position : " + position.getCustomer_id());
+					System.out.println("Position : " + position.getAvailableShares());
+					System.out.println("Position : " + position.getFund_id());
+					System.out.println("shareIncre : " + shareIncre);
 					positionDAO.transiUpdate(position, shareIncre);
 				} catch (RollbackException e) {
 					// TODO Auto-generated catch block
@@ -341,7 +347,7 @@ public class TransitionDayAction extends Action {
 				}
 
 			}
-
+			System.out.println("347");
 			cusUpdate[i].setTotalbalance(cusUpdate[i].getAvailablebalance());
 
 		}
