@@ -31,6 +31,8 @@ public class PositionDAO  extends GenericDAO<Position> {
 		MatchArg matchArg1 = MatchArg.equals("customer_id", customer_id);
 		MatchArg matchArg2 = MatchArg.equals("fund_id", fund_id);
 		Position[] position = match(MatchArg.and(matchArg1,matchArg2));
+		if (position == null || position.length == 0)
+			return null;
 		return position[0];
 	}
 	/*

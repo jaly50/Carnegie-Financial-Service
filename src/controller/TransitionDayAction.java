@@ -335,8 +335,19 @@ public class TransitionDayAction extends Action {
 				long shareIncre = entry.getValue();
 				Position position = new Position();
 				try {
-					position = positionDAO.getPosition(
-							cusUpdate[i].getCustomer_id(), fund_id);
+					if (positionDAO.getPosition(cusUpdate[i].getCustomer_id(),
+							fund_id) == null) {
+						position.setFund_id(fund_id);
+						position.setCustomer_id(cusUpdate[i].getCustomer_id());
+						position.setShares(shareIncre);
+						position.setAvailableShares(shareIncre);
+						positionDAO.create(position);
+					}
+						
+					else {
+						position = positionDAO.getPosition(
+								cusUpdate[i].getCustomer_id(), fund_id);
+					}
 				} catch (RollbackException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -364,8 +375,8 @@ public class TransitionDayAction extends Action {
 				}
 
 			}
-			System.out.println("Line 354");
-			
+			System.out.println("Line 78");
+
 			try {
 				customerDAO.totalBalanceUpdate(cusUpdate[i]);
 			} catch (RollbackException e) {
