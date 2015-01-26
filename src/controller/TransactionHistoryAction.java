@@ -115,6 +115,9 @@ public class TransactionHistoryAction extends Action {
 				
 				// date
 				Date dateOrigin = (Date) trans.getExecute_date();
+				
+				System.out.println("Date:" + trans.getExecute_date());
+				
 				if (dateOrigin == null) {
 					item.setDate("No date");
 				} else {
@@ -202,6 +205,9 @@ public class TransactionHistoryAction extends Action {
 				
 				// date
 				Date dateOrigin = (Date) trans.getExecute_date();
+				
+				System.out.println("Date:" + trans.getExecute_date());
+				
 				if (dateOrigin == null) {
 					item.setDate("No date");
 				} else {
@@ -242,6 +248,8 @@ public class TransactionHistoryAction extends Action {
 				
 				// date
 				Date dateOrigin = (Date) trans.getExecute_date();
+				System.out.println("Date:" + trans.getExecute_date());
+				
 				if (dateOrigin == null) {
 					item.setDate("No date");
 				} else {

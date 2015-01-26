@@ -3,6 +3,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <%@ page import="databeans.Customer"%>
 <%@ page import="databeans.ViewAccountFund"%>
 
@@ -39,8 +40,8 @@
         <td><c:out value = '${customer.addr_line1}' escapeXml='true' />
         <c:out value = '${customer.addr_line2}' escapeXml='true' /></td>
         <td><c:out value = '${date}' escapeXml='true' /></td>
-        <td><c:out value = '${customer.availablebalance}' escapeXml='true' /></td>
-        <td><c:out value = '${customer.totalbalance}' escapeXml='true' /></td>
+        <td> <fmt:formatNumber type="number" maxFractionDigits="2" value="${customer.availablebalance}" /></td>
+        <td> <fmt:formatNumber type="number" maxFractionDigits="2" value="${customer.totalbalance}" /></td>
       </tr>
     </tbody>
   </table>
