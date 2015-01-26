@@ -101,9 +101,11 @@ public class TransactionHistoryAction extends Action {
 					return "transaction-history.jsp";
 				}
 				
+				Date dateOrigin = (Date) trans.getExecute_date();
+				
 				// get share : Long to double 
 				long sharesOrigin = trans.getShares();
-				if (sharesOrigin == 0) item.setShares("pending");
+				if (dateOrigin == null) item.setShares("pending");
 				else {
 					String shares = sharesFormat.format((double) sharesOrigin / 1000);
 					item.setShares(shares);
@@ -115,10 +117,8 @@ public class TransactionHistoryAction extends Action {
 				item.setAmount(amount);
 				
 				// date
-				Date dateOrigin = (Date) trans.getExecute_date();
-			
 				if (dateOrigin == null) {
-					item.setDate("No date");
+					item.setDate("pending");
 				} else {
 					String date = sdf.format(dateOrigin);
 					item.setDate(date);
@@ -164,9 +164,11 @@ public class TransactionHistoryAction extends Action {
 					return "transaction-history.jsp";
 				}
 				
+				Date dateOrigin = (Date) trans.getExecute_date();
+				
 				// get share : Long to double 
 				long sharesOrigin = trans.getShares();
-				if (sharesOrigin == 0) item.setShares("pending");
+				if (dateOrigin == null) item.setShares("pending");
 				else {
 					String shares = sharesFormat.format((double) sharesOrigin / 1000);
 					item.setShares(shares);
@@ -178,10 +180,8 @@ public class TransactionHistoryAction extends Action {
 				item.setAmount(amount);
 				
 				// date
-				Date dateOrigin = (Date) trans.getExecute_date();
-			
 				if (dateOrigin == null) {
-					item.setDate("No date");
+					item.setDate("pending");
 				} else {
 					String date = sdf.format(dateOrigin);
 					item.setDate(date);
