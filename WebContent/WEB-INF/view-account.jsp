@@ -33,14 +33,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><c:out value = '${user.firstname}' escapeXml='true' /></td>
-        <td><c:out value = '${user.lastname}' escapeXml='true' /></td>
-        <td><c:out value = '${user.username}' escapeXml='true' /></td>
-        <td><c:out value = '${user.addr_line1}' escapeXml='true' />
-        <c:out value = '${user.addr_line2}' escapeXml='true' /></td>
+        <td><c:out value = '${customer.firstname}' escapeXml='true' /></td>
+        <td><c:out value = '${customer.lastname}' escapeXml='true' /></td>
+        <td><c:out value = '${customer.username}' escapeXml='true' /></td>
+        <td><c:out value = '${customer.addr_line1}' escapeXml='true' />
+        <c:out value = '${customer.addr_line2}' escapeXml='true' /></td>
         <td><c:out value = '${date}' escapeXml='true' /></td>
-        <td><c:out value = '${user.availablebalance}' escapeXml='true' /></td>
-        <td><c:out value = '${user.totalbalance}' escapeXml='true' /></td>
+        <td><c:out value = '${customer.availablebalance}' escapeXml='true' /></td>
+        <td><c:out value = '${customer.totalbalance}' escapeXml='true' /></td>
       </tr>
     </tbody>
   </table>

@@ -69,7 +69,7 @@ public class ViewAccAction extends Action {
 		
 		// get customer
 		Customer customer = (Customer) session.getAttribute("user");
-		
+		request.setAttribute("customer", customer);
 		if (customer == null) return "login.jsp";
 		
 		// set date
