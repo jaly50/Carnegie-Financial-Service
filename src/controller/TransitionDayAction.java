@@ -176,10 +176,10 @@ public class TransitionDayAction extends Action {
 			System.out.println("162 " + newDate);
 
 			// validate Date time
-			/*if (!compareLatestDate(newDate)) {
+			if (!compareLatestDate(newDate)) {
 				errors.add("New Date must be after the latest Date");
 				return "transitionDay.jsp";
-			}*/
+			}	
 
 			// deal with Fund_Price_History table;
 			System.out.println("185");
@@ -380,10 +380,12 @@ public class TransitionDayAction extends Action {
 		}
 		if (tempLatestDate == null)
 			return true;
-
+     
 		try {
-
-			SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMDD");
+			System.out.println();
+			System.out.println("new " + newDate);
+			System.out.println("old " + tempLatestDate);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 			LatestDate = sdf.parse(tempLatestDate);
 
 		} catch (ParseException | java.text.ParseException e) {
