@@ -27,7 +27,7 @@
      <c:forEach var="fundPriceHistory" items="${fundPriceHistory}">    
     	<tr> 
         <td><c:out value = '${fundPriceHistory.price_date}' escapeXml='true' /></td>
-        <td> <fmt:formatNumber value="${fundPriceHistory.price / 100}" pattern = "#,###.00" type="number"/></td>
+        <td> <fmt:formatNumber value="${fundPriceHistory.price / 100}" pattern = "#,##0.00" type="number"/></td>
 	</tr>			    
 	</c:forEach>   	
     </tbody>

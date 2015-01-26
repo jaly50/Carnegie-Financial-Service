@@ -39,8 +39,10 @@ public class Model {
 	public Model(ServletConfig config) throws ServletException {
 		try {
 			String jdbcDriver = config.getInitParameter("jdbcDriverName");
-			String jdbcURL    = config.getInitParameter("jdbcURL");			
+
+			String jdbcURL    = config.getInitParameter("jdbcURL");		
 			ConnectionPool pool = new ConnectionPool(jdbcDriver, jdbcURL);
+			//ConnectionPool pool = new ConnectionPool(jdbcDriver, jdbcURL,"root", "");
 			
 			customerDAO  = new CustomerDAO("Customer", pool);
 			employeeDAO = new EmployeeDAO("Employee", pool);
