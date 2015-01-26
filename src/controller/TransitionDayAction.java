@@ -368,7 +368,11 @@ public class TransitionDayAction extends Action {
 				}
 
 				try {
+					System.out.println("371");
+					System.out.println(position.getAvailableShares());
+					System.out.println(position.getShares());
 					positionDAO.totalShareUpdate(position);
+					System.out.println(position.getShares());
 				} catch (RollbackException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

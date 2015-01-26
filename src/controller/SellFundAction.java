@@ -142,7 +142,7 @@ public class SellFundAction extends Action {
 			
 			sellFundTable = getSellFundTable(customer);
 			request.setAttribute("sellFundTable", sellFundTable);
-			return "buyFund.do";
+			return "sellFund.do";
 
 		} catch (FormBeanException e) {
 			return "error.jsp";
