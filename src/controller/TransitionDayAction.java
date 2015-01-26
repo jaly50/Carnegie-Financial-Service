@@ -195,7 +195,10 @@ public class TransitionDayAction extends Action {
 					.getWorkedTransactions(newDate);
 			Customer[] cusUpdate = customerDAO.getCustomers();
 			workedTransactionHandler(cusUpdate, workedTransactions, newDate);
-
+			System.out.println("198");
+			// deal with 
+			
+			
 		} catch (RollbackException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
