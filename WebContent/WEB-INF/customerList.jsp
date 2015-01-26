@@ -1,8 +1,5 @@
 <!--View Customer Account-->
-<<<<<<< HEAD
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-=======
->>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="template-top.jsp" />
 
@@ -42,15 +39,10 @@
 						value="${c.customer_id}" /> ${c.firstname}&nbsp;${c.lastname}
 			</td>
 			 <td>${c.username}</td>
-<<<<<<< HEAD
         <td><fmt:formatNumber type="number" 
-            pattern="#,###.00" value="${c.totalbalance/100}" /></td>
+            pattern="#,##0.00" value="${c.totalbalance/100}" /></td>
         <td><fmt:formatNumber type="number" 
-            pattern="#,###.00" value="${c.availablebalance/100}" /></td>
-=======
-        <td>${c.totalbalance}</td>
-        <td>${c.availablebalance}</td>
->>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
+            pattern="#,##0.00" value="${c.availablebalance/100}" /></td>
         <td align="center"><input type="radio" name="select" value="${c.customer_id}"></td>
 		</tr>
 	</c:forEach>
