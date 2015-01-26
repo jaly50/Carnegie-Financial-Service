@@ -110,7 +110,7 @@ public class TransactionHistoryAction extends Action {
 				
 				// amount
 				double amountOrigin = trans.getAmount();
-				String amount = priceFormat.format(amountOrigin);
+				String amount = priceFormat.format(amountOrigin / 100);
 				item.setAmount(amount);
 				
 				// date
@@ -163,7 +163,7 @@ public class TransactionHistoryAction extends Action {
 				
 				// amount
 				double amountOrigin = trans.getAmount();
-				String amount = priceFormat.format(amountOrigin);
+				String amount = priceFormat.format(amountOrigin / 100);
 				item.setAmount(amount);
 				
 				// date
@@ -200,7 +200,7 @@ public class TransactionHistoryAction extends Action {
 				
 				// amount
 				double amountOrigin = trans.getAmount();
-				String amount = priceFormat.format(amountOrigin);
+				String amount = priceFormat.format(amountOrigin / 100);
 				item.setAmount(amount);
 				
 				// date
@@ -243,7 +243,7 @@ public class TransactionHistoryAction extends Action {
 				
 				// amount
 				double amountOrigin = trans.getAmount();
-				String amount = priceFormat.format(amountOrigin);
+				String amount = priceFormat.format(amountOrigin / 100);
 				item.setAmount(amount);
 				
 				// date

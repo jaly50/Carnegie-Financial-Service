@@ -75,7 +75,7 @@ public class RequestCheckAction   extends Action  {
             customerDAO.update(customer);
      
             
-			return "transactionHistory.do";
+			return "TransactionHistoryAction.do";
 		} catch (RollbackException e) {
 			errors.add(e.getMessage());
 			return "requestCheck.jsp";
