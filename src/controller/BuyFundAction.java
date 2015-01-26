@@ -90,21 +90,17 @@ public class BuyFundAction extends Action {
 					tableRow.setName(fund.getName());
 					tableRow.setSymbol(fund.getSymbol());
 					double displayPrice = 0;
-					System.out.println("89");
 					if (fundPriceHistoryDAO.getFundPrice(fund_id) == null) {
 						tableRow.setLatestPrice("N/A");
 					}
 					else {
-					
 						displayPrice = (double) fundPriceHistoryDAO
 								.getCurrentPrice(fundList[i].getFund_id());
 				
-					System.out.println("94");
 					displayPrice = displayPrice / 100;
 					tableRow.setLatestPrice(displayMoney.format(displayPrice));
 					}
 					buyFundTable.add(tableRow);
-					System.out.println("96");
 				}
 			}
 			System.out.println("101");
@@ -142,11 +138,10 @@ public class BuyFundAction extends Action {
 			transaction.setCustomer_id(customer.getCustomer_id());
 			transaction.setFund_id(fundDAO.getFund_ID(buyFundForm.getSymbol()));
 			transaction.setExecute_date(null);
-			transaction.setShares(0);
+			transaction.setShares(-1);
 			transaction.setTransaction_type("BuyFund");
 			System.out.println(buyFundForm.getAmountAsLong());
 			
-			System.out.println("113");
 
 			transactionDAO.create(transaction);
 

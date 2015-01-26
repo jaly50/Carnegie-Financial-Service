@@ -10,7 +10,7 @@ public class Transaction {
 	private int customer_id;
 	private int fund_id;
 	private Date execute_date = null;
-	private long shares;
+	private long shares = -1;
 	private String transaction_type;
 	private long amount;
 
