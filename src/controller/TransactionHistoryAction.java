@@ -114,8 +114,13 @@ public class TransactionHistoryAction extends Action {
 				item.setAmount(amount);
 				
 				// date
-				String date = trans.getExecute_date().toString();
-				item.setDate(date);
+				Date dateOrigin = (Date) trans.getExecute_date();
+				if (dateOrigin == null) {
+					item.setDate("No date");
+				} else {
+					String date = dateOrigin.toString();
+					item.setDate(date);
+				}
 				
 				// name
 				String name = fund.getName();
@@ -236,8 +241,13 @@ public class TransactionHistoryAction extends Action {
 				item.setAmount(amount);
 				
 				// date
-				String date = trans.getExecute_date().toString();
-				item.setDate(date);
+				Date dateOrigin = (Date) trans.getExecute_date();
+				if (dateOrigin == null) {
+					item.setDate("No date");
+				} else {
+					String date = dateOrigin.toString();
+					item.setDate(date);
+				}
 				
 				// name
 				item.setName("");
