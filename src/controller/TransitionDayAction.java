@@ -328,10 +328,12 @@ public class TransitionDayAction extends Action {
 			}
 			// update shareIncre to position table
 			// traverse hashmap shareIncreMap
+			int num = 1;
 			for (Entry<Integer, Long> entry : shareIncreMap.entrySet()) {
+				System.out.println(num++);
 				int fund_id = entry.getKey();
 				long shareIncre = entry.getValue();
-				Position position = null;
+				Position position = new Position();
 				try {
 					position = positionDAO.getPosition(
 							cusUpdate[i].getCustomer_id(), fund_id);

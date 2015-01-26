@@ -83,7 +83,7 @@ function check(lbl){
       <tr>
         <td>${f.fundName }</td>
         <td>${f.symbol }</td>
-        <td align="right"><fmt:formatNumber type="number" value="${f.availableShares/1000}" minFractionDigits="3" maxFractionDigits="3"/></td>
+        <td align = "right">${f.availableShares}</td>
         <td align="center"><input type="radio" id="symbol" name="symbol" value="${f.symbol}"></td>
      
       </tr>
