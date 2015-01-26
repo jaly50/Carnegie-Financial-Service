@@ -162,7 +162,7 @@ public class TransitionDayAction extends Action {
 				errors.addAll(transitionDayForm.validateDate(date[0]));
 
 			Date newDate = null;
-			System.out.println("152 " + date[0]);
+			System.out.println("165 " + date[0]);
 			try {
 
 				SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMDD");
@@ -172,7 +172,7 @@ public class TransitionDayAction extends Action {
 
 			}
 
-			System.out.println("162 " + newDate);
+			System.out.println("175 " + newDate);
 
 			// validate Date time
 			if (!compareLatestDate(newDate)) {
@@ -183,7 +183,7 @@ public class TransitionDayAction extends Action {
 			// deal with Fund_Price_History table;
 			System.out.println("185");
 			fund_Price_HistoryHandler(newDate, fidPriceMap);
-
+			System.out.println("186");
 			// deal with pending transaction table first;
 			Transaction[] pendingTransactions = transactionDAO
 					.getPendingTransactions();
