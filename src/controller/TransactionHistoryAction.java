@@ -105,9 +105,12 @@ public class TransactionHistoryAction extends Action {
 				
 				// get share : Long to double 
 				long sharesOrigin = trans.getShares();
-				String shares = sharesFormat.format((double) sharesOrigin / 1000);
-				item.setShares(shares);
-				
+				if (sharesOrigin == 0) item.setShares("pending");
+				else {
+					String shares = sharesFormat.format((double) sharesOrigin / 1000);
+					item.setShares(shares);
+				}
+		
 				// amount
 				double amountOrigin = trans.getAmount();
 				String amount = priceFormat.format(amountOrigin / 100);
@@ -158,8 +161,11 @@ public class TransactionHistoryAction extends Action {
 				
 				// get share : Long to double 
 				long sharesOrigin = trans.getShares();
-				String shares = sharesFormat.format((double) sharesOrigin / 1000);
-				item.setShares(shares);
+				if (sharesOrigin == 0) item.setShares("pending");
+				else {
+					String shares = sharesFormat.format((double) sharesOrigin / 1000);
+					item.setShares(shares);
+				}
 				
 				// amount
 				double amountOrigin = trans.getAmount();

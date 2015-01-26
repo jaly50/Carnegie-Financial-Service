@@ -1,11 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="template-top.jsp" />
-
-<<<<<<< HEAD
 <jsp:include page="error-list.jsp" />
 
-=======
->>>>>>> 6e1539b78ee53ced185ef9d67ea8d1e2aa1c063f
 <div class="container">
 	<br /> <br /> <br />
 	<form method="post" action="resetCustomerPassword.do">
