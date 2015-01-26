@@ -43,7 +43,7 @@ public class PositionDAO  extends GenericDAO<Position> {
 	public void update(long value, Position pos) throws RollbackException {
 		// TODO Auto-generated method stub
 		try {
-
+			
 			if (pos.getAvailableShares() >= value) {
 				Transaction.begin();
 				update(pos);

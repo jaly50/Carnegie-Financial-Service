@@ -207,7 +207,7 @@ public class TransitionDayAction extends Action {
 			e.printStackTrace();
 		}
 
-		return "transitionDay.jsp";
+		return "transitionDay.do";
 
 	}
 
