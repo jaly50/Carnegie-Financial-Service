@@ -57,7 +57,7 @@ public class SellFundAction extends Action {
 		System.out.println("SellFund Action get performed");
 
 		HttpSession session = request.getSession();
-		SellFundForm sellFundForm;
+		SellFundForm form;
 		DecimalFormat latestPrice = new DecimalFormat("#,##0.00");
 		DecimalFormat shares = new DecimalFormat("#,##0.000");
 
@@ -68,6 +68,7 @@ public class SellFundAction extends Action {
 		}
 
 		Customer customer = (Customer) session.getAttribute("user");
+		int customer_id = customer.getCustomer_id();
 
 		// get sell fund table
 		ArrayList<SellFundTable> sellFundTable = getSellFundTable(customer);
@@ -79,77 +80,51 @@ public class SellFundAction extends Action {
 		System.out.println("79");
 		try {
 			// button
-			sellFundForm = formBeanFactory.create(request);
-			request.setAttribute("sellFundForm", sellFundForm);
-			System.out.println("82");
-			if (!sellFundForm.isPresent()) {
+			form = formBeanFactory.create(request);
+			request.setAttribute("sellFundForm", form);
+			if (!form.isPresent()) {
 				return "sellFund.jsp";
 			}
-			System.out.println("86");
-			errors.addAll(sellFundForm.getValidationErrors());
+			
+			errors.addAll(form.getValidationErrors());
 			if (errors.size() != 0) {
 				return "sellFund.jsp";
 			}
-			System.out.println("91");
-			double doubleSellShares = Double.valueOf(sellFundForm.getShares());
-			System.out.println("96");
-			System.out.println(customer.getCustomer_id());
-			System.out.println(sellFundForm.getSymbol());
-			
-			Position pos = positionDAO.getCustomerShares(
-					customer.getCustomer_id(), fundDAO.getFund(sellFundForm.getSymbol()).getFund_id());
-			System.out.println(pos.getAvailableShares());
-			double availableShares = Double.valueOf(pos.getAvailableShares());
-			System.out.println("101");
-			if (availableShares < doubleSellShares) {
-				return "sellFund.jsp";
-			} else {
-				long newAvailableShares = (long) (availableShares - doubleSellShares);
-				pos.setAvailableShares(newAvailableShares);
-
-			}
-			if(sellFundForm.getSymbol() == null) {
-				errors.add("Please select one fund");
-				return "buyFund.jsp";
-			}
-			
-			if(sellFundForm.getShares() == null) {
-				errors.add("Please input sell shares");
-				return "buyFund.jsp";
-			}
-			System.out.println(pos.getCustomer_id());
-			System.out.println(pos.getFund_id());
-			System.out.println(pos.getAvailableShares());
-			System.out.println(pos.getShares());
-			// update position table
-			positionDAO.update((long)doubleSellShares, pos);
-			System.out.println("106");
-			// insert into transaction table
-			Transaction transaction = new Transaction();
-			transaction.setCustomer_id(customer.getCustomer_id());
-			transaction.setFund_id(pos.getFund_id());
+            long sellShares = form.getDatabaseShares();
+			Transaction transaction;
+			// Create the transaction bean
+			transaction = new Transaction();
+			transaction.setCustomer_id(customer_id);
+			transaction.setFund_id(form.getFun_id());
 			transaction.setExecute_date(null);
-			transaction.setShares(sellFundForm.getShares());
-
 			transaction.setTransaction_type("SellFund");
-			transaction.setAmount(0);
-			try {
-				transactionDAO.create(transaction);
-			} catch (RollbackException e) {
-				e.printStackTrace();
+			transaction.setShares(form.getDatabaseShares());
+			transaction.setAmount(-1);
+			
+			transactionDAO.create(transaction);
+			
+			Position pos;
+			pos =positionDAO.read(customer_id,form.getFun_id());
+			long oldShares = pos.getAvailableShares();
+			if (sellShares > oldShares) {
+				errors.add("You don't have enough shares");
 				return "sellFund.jsp";
 			}
+			pos.setAvailableShares(oldShares - sellShares);
+            positionDAO.update(pos);
+			
 			
 			sellFundTable = getSellFundTable(customer);
 			request.setAttribute("sellFundTable", sellFundTable);
-			return "sellFund.do";
+			
 
 		} catch (FormBeanException e) {
-			return "error.jsp";
+			errors.add("Formbean Exception, please contact the administrator.");
 
 		} catch (RollbackException e1) {
-			return "error.jsp";
+			errors.add(e1.getMessage());
 		}
+		return "sellFund.do";
 
 	}
 
@@ -164,8 +139,6 @@ public class SellFundAction extends Action {
 
 				return sellFundTable;
 			}
-			//System.out.println(position[1].getAvailableShares());
-			//System.out.println(position[0].getAvailableShares());
 			for (Position p : position) {
 
 				if (p.getShares() == 0) {
@@ -185,9 +158,9 @@ public class SellFundAction extends Action {
 				tableRow.setSymbol(fund.getSymbol());
 				tableRow.setLatestPrice(priceShow.toString());
 				tableRow.setAvailableShares(String.valueOf(p.getAvailableShares()));
+				tableRow.setFund_id(fund.getFund_id());
 				//System.out.println("172");
 				sellFundTable.add(tableRow);
-				//System.out.println("Num: " + num);
 			}
 			//System.out.println("Num: " + num);
 		} catch (RollbackException e) {

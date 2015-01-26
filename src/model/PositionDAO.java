@@ -30,12 +30,15 @@ public class PositionDAO extends GenericDAO<Position> {
 
 	public Position getPosition(int customer_id, int fund_id)
 			throws RollbackException {
+		return read(customer_id, fund_id);
+		/*
 		MatchArg matchArg1 = MatchArg.equals("customer_id", customer_id);
 		MatchArg matchArg2 = MatchArg.equals("fund_id", fund_id);
 		Position[] position = match(MatchArg.and(matchArg1, matchArg2));
 		if (position == null || position.length == 0)
 			return null;
 		return position[0];
+		*/
 	}
 
 	public void updatePosition(int customer_id) throws RollbackException {

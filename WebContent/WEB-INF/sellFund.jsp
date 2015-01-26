@@ -84,7 +84,7 @@ function check(lbl){
         <td>${f.fundName }</td>
         <td>${f.symbol }</td>
         <td align = "right">${f.availableShares}</td>
-        <td align="center"><input type="radio" id="symbol" name="symbol" value="${f.symbol}"></td>
+        <td align="center"><input type="radio" id="symbol" name="select" value="${f.fund_id}"></td>
      
       </tr>
   </c:forEach>

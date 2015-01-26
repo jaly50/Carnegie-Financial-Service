@@ -5,6 +5,7 @@ public class SellFundTable {
 	private String symbol;
 	private String latestPrice;
 	private String availableShares;
+	private int fund_id;
 
 	
 	public void setFundName(String fundName) {
@@ -38,7 +39,13 @@ public class SellFundTable {
 	public void setAvailableShares(String availableShares) {
 		this.availableShares = availableShares;
 	}
-
+	public int getFund_id() {
+		return fund_id;
+	}
+	public void setFund_id(int fund_id) {
+		this.fund_id = fund_id;
+	}
+	
 	
 
 }
