@@ -96,7 +96,7 @@ public class LoginAction extends Action {
 			if (user instanceof Customer) {
 				return "viewAccAction.do";
 			} else if (user instanceof Employee) {
-				return "createFund.do";
+				return "viewCustomerList.do";
 			} else {
 				errors.add("No such a user type");
 				return "login.jsp";

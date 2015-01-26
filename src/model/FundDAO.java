@@ -34,14 +34,14 @@ public class FundDAO extends GenericDAO<Fund> {
 	
 	public Fund getFund(String symbol) throws RollbackException {
 		Fund[] fund = match(MatchArg.equals("symbol", symbol));
-		if (fund ==null) {
+		if (fund ==null || fund.length<1) {
 			return null;
 		}
 		return fund[0];
 	}
 	public Fund getFundFromName(String name) throws RollbackException {
 		Fund[] fund = match(MatchArg.equals("name", name));
-		if (fund ==null) {
+		if (fund ==null || fund.length<1) {
 			return null;
 		}
 		return fund[0];	
