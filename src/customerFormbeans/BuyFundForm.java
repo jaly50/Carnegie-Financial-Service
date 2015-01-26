@@ -56,7 +56,7 @@ public class BuyFundForm extends FormBean {
 		if (buyAmount == null || buyAmount.length() == 0) {
 			errors.add("Please enter an amount.");
 		}
-		if (chooseFund == null || chooseFund.length() == 0) {
+		if (symbol == null || symbol.length() == 0) {
 			errors.add("Please choose a fund");
 		}
 		if (buyAmount != null && buyAmount.matches(".*[<>\"].*"))

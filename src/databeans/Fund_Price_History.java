@@ -6,6 +6,7 @@ import org.genericdao.PrimaryKey;
 
 @PrimaryKey("fund_id,price_date")
 public class Fund_Price_History {
+	private int fph_id;
 	private int fund_id = -1;
 	private Date price_date = null;
 	private long price = 0;

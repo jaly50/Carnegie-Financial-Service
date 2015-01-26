@@ -25,6 +25,7 @@ import org.mybeans.form.FormBeanFactory;
 import databeans.BuyFundTable;
 import databeans.Customer;
 import databeans.Fund;
+import databeans.Position;
 import databeans.Transaction;
 import customerFormbeans.BuyFundForm;
 
@@ -36,12 +37,14 @@ public class BuyFundAction extends Action {
 	private FundDAO fundDAO;
 	private TransactionDAO transactionDAO;
 	private Fund_Price_HistoryDAO fundPriceHistoryDAO;
+	private PositionDAO positionDAO;
 
 	public BuyFundAction(Model model) {
 		this.fundDAO = model.getFundDAO();
 		this.transactionDAO = model.getTransactionDAO();
 		this.customerDAO = model.getCustomerDAO();
 		this.fundPriceHistoryDAO = model.getFund_Price_HistoryDAO();
+		this.positionDAO = model.getPositionDAO();
 	}
 
 	public String getName() {
@@ -68,7 +71,7 @@ public class BuyFundAction extends Action {
 
 			// get fund name;
 			Fund[] fundList = fundDAO.getFunds();
-			if (fundList==null) {
+			if (fundList==null || fundList.length == 0) {
 				return "buyFund.jsp";
 			}
 

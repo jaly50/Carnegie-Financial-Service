@@ -4,9 +4,10 @@
  */
 package controller;
 
-import java.sql.Date;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -195,9 +196,14 @@ public class TransactionHistoryAction extends Action {
 				item.setAmount(amount);
 				
 				// date
-				String date = trans.getExecute_date().toString();
-				item.setDate(date);
-				
+				Date dateOrigin = (Date) trans.getExecute_date();
+				if (dateOrigin == null) {
+					item.setDate("No date");
+				} else {
+					String date = dateOrigin.toString();
+					item.setDate(date);
+				}
+	
 				// name
 				item.setName("");
 				

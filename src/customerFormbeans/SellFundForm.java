@@ -41,6 +41,12 @@ public class SellFundForm extends FormBean {
 	public int getFun_id() {
 		return fund_id;
 	}
+	
+	public List<String> getValidationErrors() {
+		List<String> errors = new ArrayList<String>();
+		return errors;
+		
+	}
 
 	
 }

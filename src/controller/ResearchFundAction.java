@@ -71,7 +71,7 @@ public class ResearchFundAction extends Action {
 		// get fund list
 		try {
 			Fund[] fundList = (Fund[]) fundDAO.getFunds();
-			if (fundList.length == 0) {
+			if (fundList == null || fundList.length == 0) {
 				errors.add("No available fund");
 				return "research-fund.jsp";
 			}
@@ -110,7 +110,7 @@ public class ResearchFundAction extends Action {
 			int fund_id = form.getIdAsInt();
 			Fund_Price_History[] fundPriceHistory = fundPriceHistoryDAO.getFundPrice(fund_id);
 			
-			if (fundPriceHistory.length == 0) {
+			if (fundPriceHistory == null || fundPriceHistory.length == 0) {
 				errors.add("Fund item does not have history");
 				return "research-fund-detail.jsp";
 			}

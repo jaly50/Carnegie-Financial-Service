@@ -27,6 +27,7 @@ import customerFormbeans.BuyFundForm;
 import databeans.Customer;
 import databeans.Employee;
 import databeans.Fund;
+import databeans.Fund_Price_History;
 import databeans.Position;
 import databeans.Transaction;
 import databeans.TransiFundTable;
@@ -78,6 +79,11 @@ public class TransitionDayAction extends Action {
 			request.setAttribute("transitionDayForm", transitionDayForm);
 
 			Fund[] fundList = fundDAO.getFunds();
+			
+			if (fundList == null || fundList.length ==0) {
+				
+			}
+			
 			for (Fund f : fundList) {
 				System.out.print(f.getName() + " ");
 			}
@@ -118,19 +124,46 @@ public class TransitionDayAction extends Action {
 			Integer[] fund_ids = new Integer[fundList.length];
 			String[] symbols = new String[fundList.length];
 			String[] prices = request.getParameterValues("price");
+			// validate prices;
+			
 			HashMap<Integer, String> fidPriceMap = new HashMap<Integer, String>();
-			for (int i = 0; i < fund_ids.length; i++) {
-				fidPriceMap.put(fund_ids[i], prices[i]);
-			}
-
+			
+			// assign symbols and fund_ids;
 			for (int i = 0; i < prices.length; i++) {
 				symbols[i] = fundList[i].getSymbol();
-				System.out.println(symbols[i] + "'s new price is : "
-						+ prices[i]);
+				fund_ids[i] = fundList[i].getFund_id();
 			}
-			String[] date = request.getParameterValues("newDate");
-			Date newDate = null;
+			/*
+			for (Entry<Integer, String> entry : fidPriceMap.entrySet()) {
+				int fund_id = entry.getKey();
+				String price = entry.getValue();
+				Position position = null;
+				System.out.println(fund_id + "'s price is " + price);
 
+			}*/
+			
+			for (int i = 0; i < fund_ids.length; i++) {
+				System.out.print("No" + i + "  ");
+				System.out.print("fund name: " + fund_ids[i] + "  ");
+				System.out.println("fund price: " + prices[i]);
+				fidPriceMap.put(fund_ids[i], prices[i]);
+				System.out.println("hash" + i);
+			}
+			
+
+			String[] date = request.getParameterValues("newDate");
+			if (date==null || date.length <1) {
+				errors.add("no date here");
+				return "transitionDay.jsp";
+			}
+			List<String> dateErrors;
+			dateErrors = transitionDayForm.validateDate(date[0]);
+			if (dateErrors!=null)
+			// validate Date format;
+			errors.addAll(transitionDayForm.validateDate(date[0]));
+			
+			Date newDate = null;
+			System.out.println("152 " + date[0]);
 			try {
 
 				SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMDD");
@@ -140,7 +173,17 @@ public class TransitionDayAction extends Action {
 
 			}
 
-			System.out.println(String.valueOf(newDate));
+			System.out.println("162 " + newDate);
+
+			// validate Date time
+			/*if (!compareLatestDate(newDate)) {
+				errors.add("New Date must be after the latest Date");
+				return "transitionDay.jsp";
+			}*/
+
+			// deal with Fund_Price_History table;
+			System.out.println("185");
+			fund_Price_HistoryHandler(newDate, fidPriceMap);
 
 			// deal with pending transaction table first;
 			Transaction[] pendingTransactions = transactionDAO
@@ -264,7 +307,7 @@ public class TransitionDayAction extends Action {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			// update shareIncre to position table 
+			// update shareIncre to position table
 			// traverse hashmap shareIncreMap
 			for (Entry<Integer, Long> entry : shareIncreMap.entrySet()) {
 				int fund_id = entry.getKey();
@@ -284,7 +327,7 @@ public class TransitionDayAction extends Action {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+
 				try {
 					positionDAO.totalShareUpdate(position);
 				} catch (RollbackException e) {
@@ -293,11 +336,64 @@ public class TransitionDayAction extends Action {
 				}
 
 			}
-			
+
 			cusUpdate[i].setTotalbalance(cusUpdate[i].getAvailablebalance());
-			
 
 		}
+
+	}
+
+	@SuppressWarnings("null")
+	public void fund_Price_HistoryHandler(Date newDate,
+			HashMap<Integer, String> fidPriceMap) {
+			int fund_id = 0;
+			Long fundPrice = (long) 0;
+		for (Entry<Integer, String> entry : fidPriceMap.entrySet()) {
+			fund_id = entry.getKey();
+			fundPrice = Long.parseLong(entry.getValue());
+			Fund_Price_History fund_Price_History = new Fund_Price_History();
+			fund_Price_History.setFund_id(fund_id);
+			fund_Price_History.setPrice(fundPrice * 100);
+			fund_Price_History.setPrice_date(newDate);
+			System.out.println(fund_Price_History.getFund_id());
+			System.out.println(fund_Price_History.getPrice());
+			System.out.println(fund_Price_History.getPrice_date());
+			try {
+				fundPriceHistoryDAO.create(fund_Price_History);
+			} catch (RollbackException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+
+	public boolean compareLatestDate(Date newDate) {
+		String tempLatestDate = null;
+		Date LatestDate = null;
+		try {
+			tempLatestDate = fundPriceHistoryDAO.getLatestDate();
+		} catch (RollbackException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (tempLatestDate == null)
+			return true;
+
+		try {
+
+			SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMDD");
+			LatestDate = sdf.parse(tempLatestDate);
+
+		} catch (ParseException | java.text.ParseException e) {
+
+		}
+
+		if (newDate.after(LatestDate))
+			return true;
+
+		return false;
 
 	}
 

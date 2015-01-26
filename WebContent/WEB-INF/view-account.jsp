@@ -36,7 +36,8 @@
         <td><c:out value = '${user.firstname}' escapeXml='true' /></td>
         <td><c:out value = '${user.lastname}' escapeXml='true' /></td>
         <td><c:out value = '${user.username}' escapeXml='true' /></td>
-        <td><c:out value = '${user.addr_line1}${user.addr_line2}${user.zip}${user.state}' escapeXml='true' /></td>
+        <td><c:out value = '${user.addr_line1}' escapeXml='true' />
+        <c:out value = '${user.addr_line2}' escapeXml='true' /></td>
         <td><c:out value = '${date}' escapeXml='true' /></td>
         <td><c:out value = '${user.availablebalance}' escapeXml='true' /></td>
         <td><c:out value = '${user.totalbalance}' escapeXml='true' /></td>

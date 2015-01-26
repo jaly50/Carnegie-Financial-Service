@@ -18,9 +18,7 @@ public class PositionDAO  extends GenericDAO<Position> {
 			throws DAOException {
 		super(Position.class, tableName, pool);
 	}
-	public void create(Position newPosition) throws RollbackException {
-		create(newPosition);
-	}
+	
 	/*
 	 * Given a customer id, return the positions he have
 	 */
