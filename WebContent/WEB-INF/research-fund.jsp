@@ -14,8 +14,7 @@
 <div class="container">
 <div class="container">
 <div class="container">
-  <h2>Research Funds</h2>
-  <form method="post" action="researchFundAction.do">          
+  <h2>Research Funds</h2>      
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -25,15 +24,17 @@
       </tr>
     </thead>
     <tbody>
-    <c:forEach var="fund" items="${fundList}">    
+    <c:forEach var="fundList" items="${fundList}">    
     	<tr> 
-	    <td><c:out value = '${fund.name}' escapeXml='true' /></td>       
-        <td><c:out value = '${fund.symbol}' escapeXml='true' /></td>
+	    <td>
+	    <form action="researchFundAction.do" method="POST">             		
+       		<a href= "researchFundAction.do?id=${fundList.fund_id}">${fundList.name}</a>
+	   </form>   
+        <td><c:out value = '${fundList.symbol}' escapeXml='true' /></td>
 	</tr>			    
 	</c:forEach>   	
     </tbody>
   </table>
-  </form>
 
   
 </div>

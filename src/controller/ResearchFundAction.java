@@ -13,7 +13,6 @@
  */
 package controller;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,6 +71,10 @@ public class ResearchFundAction extends Action {
 		// get fund list
 		try {
 			Fund[] fundList = (Fund[]) fundDAO.getFunds();
+			if (fundList.length == 0) {
+				errors.add("No available fund");
+				return "research-fund.jsp";
+			}
 			request.setAttribute("fundList", fundList);
 		} catch (RollbackException e) {
 			return "research-fund.jsp";
@@ -105,18 +108,16 @@ public class ResearchFundAction extends Action {
 			request.setAttribute("fund", fund);
 			
 			int fund_id = form.getIdAsInt();
-			Fund_Price_History[] fundPriceHistoryOrigin = fundPriceHistoryDAO.getFundPrice(fund_id);
-			Fund_Price_History[] fundPriceHistory = new Fund_Price_History[20];
+			Fund_Price_History[] fundPriceHistory = fundPriceHistoryDAO.getFundPrice(fund_id);
 			
-			if (fundPriceHistoryOrigin.length == 0) errors.add("Fund item does not have history");
+			if (fundPriceHistory.length == 0) {
+				errors.add("Fund item does not have history");
+				return "research-fund-detail.jsp";
+			}
 			
-			if (fundPriceHistoryOrigin.length > 20) {
-				for (int i = 0; i < 20; i++) {
-					fundPriceHistory[i] = fundPriceHistoryOrigin[fundPriceHistoryOrigin.length - 20 + i];
-				}
-				request.setAttribute("fundPriceHistory", fundPriceHistory);
-			} else request.setAttribute("fundPriceHistory", fundPriceHistoryOrigin);
+			request.setAttribute("fundPriceHistory", fundPriceHistory);
 			return "research-fund-detail.jsp";
+			
 		} catch (FormBeanException e) {
 			return "research-fund.jsp";
 		} catch (RollbackException e) {

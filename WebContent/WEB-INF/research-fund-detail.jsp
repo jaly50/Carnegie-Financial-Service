@@ -3,7 +3,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:include page="template-top.jsp" />
 
 <jsp:include page="error-list.jsp" />
@@ -14,14 +14,11 @@
 <div class="container">
 <div class="container">
 <div class="container">
-  <h2>Research Funds</h2>
-    </br>
-  <h5>Funds Name: <c:out value = '${user.name}' escapeXml='true' /></h5> 
-  <h5>Funds Symbol: <c:out value = '${user.symbol}' escapeXml='true' /></h5>            
+  <h3>Fund Name: ${fund.name}<br> Fund Symbol: ${fund.symbol }</h3>
+    </br>     
   <table class="table table-bordered">
     <thead>
-      <tr>
-        
+      <tr>       
         <th>Date</th>
         <th>Price</th>
       </tr>
