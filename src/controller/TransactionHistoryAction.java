@@ -70,9 +70,11 @@ public class TransactionHistoryAction extends Action {
 		// You might get customer attribute from page CustomerList
         customer = (Customer) session.getAttribute("customer");
         session.setAttribute("customer", null);
+     
         if (customer == null) {
         	customer = (Customer) session.getAttribute("user");
         }
+        request.setAttribute("customer", customer);
 		
 		if (customer == null) return "login.jsp";
 		
