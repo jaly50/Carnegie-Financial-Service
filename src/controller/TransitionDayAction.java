@@ -213,38 +213,41 @@ public class TransitionDayAction extends Action {
 
 	public void pendingTransactionsHandler(Transaction[] pendingTransactions,
 			HashMap<Integer, String> fidPriceMap, Date newDate) {
-        Transaction t;
+		Transaction t;
 		for (int i = 0; i < pendingTransactions.length; i++) {
 			t = pendingTransactions[i];
 			String type = t.getTransaction_type();
-			long amount = t.getAmount();
-			int fund_id = t.getFund_id();
-			String getPrice = fidPriceMap.get(fund_id);
-			double realPrice = Double.valueOf(getPrice);
-			long databasePrice = (long)realPrice *100;
-			long shares;
-			// buy transaction case
-			if (type.equals("BuyFund")) {
-				shares = amount / databasePrice;
-				try {
-					transactionDAO.transactionBuyUpdate(newDate, shares,
-							pendingTransactions[i]);
-				} catch (RollbackException e) {
-					e.printStackTrace();
-				}
-			}
-			// sell transaction case;
-			else if (pendingTransactions[i].getTransaction_type().equals(
-					"SellFund")) {
-				amount = (long) (pendingTransactions[i].getShares() * Double
-						.valueOf(fidPriceMap.get(pendingTransactions[i]
-								.getFund_id())));
-				try {
+			if (type.equals("BuyFund") || type.equals("SellFund")) {
+				long amount = t.getAmount();
+				int fund_id = t.getFund_id();
+				String getPrice = fidPriceMap.get(fund_id);
+				double realPrice = Double.valueOf(getPrice);
+				long databasePrice = (long) realPrice * 100;
+				long shares;
 
-					transactionDAO.transactionSellUpdate(newDate, amount,
-							pendingTransactions[i]);
-				} catch (RollbackException e) {
-					e.printStackTrace();
+				// buy transaction case
+				if (type.equals("BuyFund")) {
+					shares = amount / databasePrice;
+					try {
+						transactionDAO.transactionBuyUpdate(newDate, shares,
+								pendingTransactions[i]);
+					} catch (RollbackException e) {
+						e.printStackTrace();
+					}
+				}
+				// sell transaction case;
+				else if (pendingTransactions[i].getTransaction_type().equals(
+						"SellFund")) {
+					amount = (long) (pendingTransactions[i].getShares() * Double
+							.valueOf(fidPriceMap.get(pendingTransactions[i]
+									.getFund_id())));
+					try {
+
+						transactionDAO.transactionSellUpdate(newDate, amount,
+								pendingTransactions[i]);
+					} catch (RollbackException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 			// deposit transaction case;
@@ -315,7 +318,8 @@ public class TransitionDayAction extends Action {
 			}
 			// update blanceIncre to customer table
 			try {
-				System.out.println("Customer : " + cusUpdate[i].getCustomer_id());
+				System.out.println("Customer : "
+						+ cusUpdate[i].getCustomer_id());
 				System.out.println("balanceIncre: " + balanceIncre);
 				customerDAO.transiUpdate(balanceIncre, cusUpdate[i]);
 			} catch (RollbackException e) {
@@ -339,7 +343,8 @@ public class TransitionDayAction extends Action {
 				try {
 					System.out.println("Position CusId: "
 							+ position.getCustomer_id());
-					System.out.println("Position FundId: " + position.getFund_id());
+					System.out.println("Position FundId: "
+							+ position.getFund_id());
 					System.out.println("Position AvailShares: "
 							+ position.getAvailableShares());
 					System.out.println("Position shareIncre : " + shareIncre);
@@ -358,9 +363,13 @@ public class TransitionDayAction extends Action {
 
 			}
 			System.out.println("Line 354");
-			System.out.println(cusUpdate[i].getCustomer_id());
-			System.out.println(cusUpdate[i].getAvailablebalance());
-			cusUpdate[i].setTotalbalance(cusUpdate[i].getAvailablebalance());
+			
+			try {
+				customerDAO.totalBalanceUpdate(cusUpdate[i]);
+			} catch (RollbackException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		}
 

@@ -113,5 +113,24 @@ public class CustomerDAO extends GenericDAO<Customer> {
 				Transaction.rollback();
 		}
 	}
+	
+	public void totalBalanceUpdate(Customer cus)
+			throws RollbackException {
+		// TODO Auto-generated method stub
+		try {
+
+			Transaction.begin();
+			cus.setTotalbalance(cus.getAvailablebalance());
+			update(cus);
+			Transaction.commit();
+		}
+
+		finally {
+			if (Transaction.isActive())
+				Transaction.rollback();
+		}
+	}
+	
+	
 
 }
