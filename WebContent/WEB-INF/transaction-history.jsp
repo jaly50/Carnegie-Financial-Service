@@ -16,7 +16,7 @@
 <div class="container">
 <div class="container">
 <div class="container">
-  <h2>${user.firstname} ${user.lastname}'s Transaction History</h2>
+  <h2>${customer.firstname} ${customer.lastname}'s Transaction History</h2>
     </br>
   
   <table class="table table-bordered">

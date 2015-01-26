@@ -166,7 +166,7 @@ public class TransitionDayAction extends Action {
 			System.out.println("165 " + date[0]);
 			try {
 
-				SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMDD");
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 				newDate = sdf.parse(date[0]);
 
 			} catch (ParseException | java.text.ParseException e) {

@@ -6,6 +6,7 @@ package controller;
 
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -49,6 +50,7 @@ public class TransactionHistoryAction extends Action {
 	
 	DecimalFormat priceFormat = new DecimalFormat("#,##0.00");
 	DecimalFormat sharesFormat = new DecimalFormat("#,##0.000");
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
 	// get action name
 	public String getName() {
@@ -118,13 +120,11 @@ public class TransactionHistoryAction extends Action {
 				
 				// date
 				Date dateOrigin = (Date) trans.getExecute_date();
-				
-				System.out.println("Date:" + trans.getExecute_date());
-				
+			
 				if (dateOrigin == null) {
 					item.setDate("No date");
 				} else {
-					String date = dateOrigin.toString();
+					String date = sdf.format(dateOrigin);
 					item.setDate(date);
 				}
 				
@@ -173,8 +173,14 @@ public class TransactionHistoryAction extends Action {
 				item.setAmount(amount);
 				
 				// date
-				String date = trans.getExecute_date().toString();
-				item.setDate(date);
+				Date dateOrigin = (Date) trans.getExecute_date();
+			
+				if (dateOrigin == null) {
+					item.setDate("No date");
+				} else {
+					String date = sdf.format(dateOrigin);
+					item.setDate(date);
+				}
 				
 				// name
 				String name = fund.getName();
@@ -211,13 +217,11 @@ public class TransactionHistoryAction extends Action {
 				
 				// date
 				Date dateOrigin = (Date) trans.getExecute_date();
-				
-				System.out.println("Date:" + trans.getExecute_date());
-				
+			
 				if (dateOrigin == null) {
 					item.setDate("No date");
 				} else {
-					String date = dateOrigin.toString();
+					String date = sdf.format(dateOrigin);
 					item.setDate(date);
 				}
 	
@@ -254,12 +258,11 @@ public class TransactionHistoryAction extends Action {
 				
 				// date
 				Date dateOrigin = (Date) trans.getExecute_date();
-				System.out.println("Date:" + trans.getExecute_date());
-				
+			
 				if (dateOrigin == null) {
 					item.setDate("No date");
 				} else {
-					String date = dateOrigin.toString();
+					String date = sdf.format(dateOrigin);
 					item.setDate(date);
 				}
 				
