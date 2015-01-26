@@ -80,8 +80,14 @@ public class ViewAccAction extends Action {
 			if (transactions.length == 0) {
 				session.setAttribute("date", "No transaction record");
 			} else {
-				date = (Date) transactions[transactions.length - 1].getExecute_date();
-				session.setAttribute("date", date);
+				int i = transactions.length - 1;
+				while (i > 0 && transactions[i].getExecute_date() == null) i--;
+				if (i == 0 && transactions[i].getExecute_date() == null) session.setAttribute("date", "N/A");
+				else {
+					date = (Date) transactions[i].getExecute_date();
+					System.out.println("Date:" + date);
+					session.setAttribute("date", date);
+				}				
 			}
 		} catch (RollbackException e) {
 			e.printStackTrace();

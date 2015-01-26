@@ -55,7 +55,7 @@ public class TransactionHistoryAction extends Action {
 	
 	DecimalFormat priceFormat = new DecimalFormat("#,##0.00");
 	DecimalFormat sharesFormat = new DecimalFormat("#,##0.000");
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 	
 	// get action name
 	public String getName() {
