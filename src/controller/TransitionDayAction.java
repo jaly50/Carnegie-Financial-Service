@@ -373,24 +373,21 @@ public class TransitionDayAction extends Action {
 		String tempLatestDate = null;
 		Date LatestDate = null;
 		try {
-			tempLatestDate = fundPriceHistoryDAO.getLatestDate();
+			LatestDate = fundPriceHistoryDAO.getLatestDate();
 		} catch (RollbackException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (tempLatestDate == null)
-			return true;
-     
-		try {
+		
+		
 			System.out.println();
 			System.out.println("new " + newDate);
-			System.out.println("old " + tempLatestDate);
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-			LatestDate = sdf.parse(tempLatestDate);
+			System.out.println("old: " + tempLatestDate);
+			//SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMDD");
+			//LatestDate = sdf.parse(tempLatestDate);
+			System.out.println("Latest: " + LatestDate);
 
-		} catch (ParseException | java.text.ParseException e) {
-
-		}
+		
 
 		if (newDate.after(LatestDate))
 			return true;
