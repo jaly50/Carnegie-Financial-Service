@@ -96,15 +96,9 @@ public class TransactionHistoryAction extends Action {
 				
 				int fund_id = trans.getFund_id();
 				Fund fund = fundDAO.getFund(fund_id);
-				
-				// get price: Long to double 
-				long priceOrigin = 0;
-				Fund_Price_History fundPrice = fundPriceHistoryDAO.getLatestFundPrice(fund_id);
-				if (fundPrice == null) item.setPrice("pending");
-				else {
-					priceOrigin = fundPrice.getPrice();
-					String price = priceFormat.format((double) priceOrigin / 100);
-					item.setPrice(price);
+				if (fund == null) {
+					errors.add("Invalid fund");
+					return "transaction-history.jsp";
 				}
 				
 				// get share : Long to double 
@@ -130,6 +124,20 @@ public class TransactionHistoryAction extends Action {
 					item.setDate(date);
 				}
 				
+				// get price: Long to double
+				if (dateOrigin == null) {
+					item.setPrice("pending");
+				} else {
+					long priceOrigin = 0;
+					Fund_Price_History fundPrice = fundPriceHistoryDAO.getLatestFundPrice(fund_id);
+					if (fundPrice == null) item.setPrice("pending");
+					else {
+						priceOrigin = fundPrice.getPrice();
+						String price = priceFormat.format((double) priceOrigin / 100);
+						item.setPrice(price);
+					}
+				}
+				
 				// name
 				String name = fund.getName();
 				item.setName(name);
@@ -151,14 +159,9 @@ public class TransactionHistoryAction extends Action {
 				int fund_id = trans.getFund_id();
 				Fund fund = fundDAO.getFund(fund_id);
 				
-				// get price: Long to double 
-				long priceOrigin = 0;
-				Fund_Price_History fundPrice = fundPriceHistoryDAO.getLatestFundPrice(fund_id);
-				if (fundPrice == null) item.setPrice("pending");
-				else {
-					priceOrigin = fundPrice.getPrice();
-					String price = priceFormat.format((double) priceOrigin / 100);
-					item.setPrice(price);
+				if (fund == null) {
+					errors.add("Invalid fund");
+					return "transaction-history.jsp";
 				}
 				
 				// get share : Long to double 
@@ -184,6 +187,20 @@ public class TransactionHistoryAction extends Action {
 					item.setDate(date);
 				}
 				
+				// get price: Long to double
+				if (dateOrigin == null) {
+					item.setPrice("pending");
+				} else {
+					long priceOrigin = 0;
+					Fund_Price_History fundPrice = fundPriceHistoryDAO.getLatestFundPrice(fund_id);
+					if (fundPrice == null) item.setPrice("pending");
+					else {
+						priceOrigin = fundPrice.getPrice();
+						String price = priceFormat.format((double) priceOrigin / 100);
+						item.setPrice(price);
+					}
+				}
+					
 				// name
 				String name = fund.getName();
 				item.setName(name);
