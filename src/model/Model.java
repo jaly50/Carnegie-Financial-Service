@@ -7,6 +7,9 @@
  */
 package model;
 
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 
@@ -15,8 +18,12 @@ import org.genericdao.DAOException;
 import org.genericdao.RollbackException;
 
 
-import databeans.Customer;
 
+
+
+import com.mysql.jdbc.Connection;
+
+import databeans.Customer;
 import databeans.Employee;
 import databeans.Fund;
 
@@ -34,7 +41,7 @@ public class Model {
 			String jdbcDriver = config.getInitParameter("jdbcDriverName");
 			String jdbcURL    = config.getInitParameter("jdbcURL");			
 			ConnectionPool pool = new ConnectionPool(jdbcDriver, jdbcURL);
-		
+			Connection con = (Connection) DriverManager.getConnection(jdbcURL, "root", "");
 			
 			customerDAO  = new CustomerDAO("Customer", pool);
 			employeeDAO = new EmployeeDAO("Employee", pool);
@@ -46,6 +53,9 @@ public class Model {
 		} catch (DAOException e) {
 			throw new ServletException(e);
 		} catch (RollbackException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
