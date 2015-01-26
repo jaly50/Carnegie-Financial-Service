@@ -79,11 +79,11 @@ public class TransitionDayAction extends Action {
 			request.setAttribute("transitionDayForm", transitionDayForm);
 
 			Fund[] fundList = fundDAO.getFunds();
-			
-			if (fundList == null || fundList.length ==0) {
-				
+
+			if (fundList == null || fundList.length == 0) {
+
 			}
-			
+
 			for (Fund f : fundList) {
 				System.out.print(f.getName() + " ");
 			}
@@ -125,23 +125,23 @@ public class TransitionDayAction extends Action {
 			String[] symbols = new String[fundList.length];
 			String[] prices = request.getParameterValues("price");
 			// validate prices;
-			
+
 			HashMap<Integer, String> fidPriceMap = new HashMap<Integer, String>();
-			
+
 			// assign symbols and fund_ids;
 			for (int i = 0; i < prices.length; i++) {
 				symbols[i] = fundList[i].getSymbol();
 				fund_ids[i] = fundList[i].getFund_id();
 			}
 			/*
-			for (Entry<Integer, String> entry : fidPriceMap.entrySet()) {
-				int fund_id = entry.getKey();
-				String price = entry.getValue();
-				Position position = null;
-				System.out.println(fund_id + "'s price is " + price);
+			 * for (Entry<Integer, String> entry : fidPriceMap.entrySet()) { int
+			 * fund_id = entry.getKey(); String price = entry.getValue();
+			 * Position position = null; System.out.println(fund_id +
+			 * "'s price is " + price);
+			 * 
+			 * }
+			 */
 
-			}*/
-			
 			for (int i = 0; i < fund_ids.length; i++) {
 				System.out.print("No" + i + "  ");
 				System.out.print("fund name: " + fund_ids[i] + "  ");
@@ -149,19 +149,18 @@ public class TransitionDayAction extends Action {
 				fidPriceMap.put(fund_ids[i], prices[i]);
 				System.out.println("hash" + i);
 			}
-			
 
 			String[] date = request.getParameterValues("newDate");
-			if (date==null || date.length <1) {
+			if (date == null || date.length < 1) {
 				errors.add("no date here");
 				return "transitionDay.jsp";
 			}
 			List<String> dateErrors;
 			dateErrors = transitionDayForm.validateDate(date[0]);
-			if (dateErrors!=null)
-			// validate Date format;
-			errors.addAll(transitionDayForm.validateDate(date[0]));
-			
+			if (dateErrors != null)
+				// validate Date format;
+				errors.addAll(transitionDayForm.validateDate(date[0]));
+
 			Date newDate = null;
 			System.out.println("152 " + date[0]);
 			try {
@@ -179,7 +178,7 @@ public class TransitionDayAction extends Action {
 			if (!compareLatestDate(newDate)) {
 				errors.add("New Date must be after the latest Date");
 				return "transitionDay.jsp";
-			}	
+			}
 
 			// deal with Fund_Price_History table;
 			System.out.println("185");
@@ -346,8 +345,8 @@ public class TransitionDayAction extends Action {
 	@SuppressWarnings("null")
 	public void fund_Price_HistoryHandler(Date newDate,
 			HashMap<Integer, String> fidPriceMap) {
-			int fund_id = 0;
-			Long fundPrice = (long) 0;
+		int fund_id = 0;
+		Long fundPrice = (long) 0;
 		for (Entry<Integer, String> entry : fidPriceMap.entrySet()) {
 			fund_id = entry.getKey();
 			fundPrice = Long.parseLong(entry.getValue());
@@ -370,7 +369,6 @@ public class TransitionDayAction extends Action {
 	}
 
 	public boolean compareLatestDate(Date newDate) {
-		String tempLatestDate = null;
 		Date LatestDate = null;
 		try {
 			LatestDate = fundPriceHistoryDAO.getLatestDate();
@@ -378,16 +376,6 @@ public class TransitionDayAction extends Action {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-			System.out.println();
-			System.out.println("new " + newDate);
-			System.out.println("old: " + tempLatestDate);
-			//SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMDD");
-			//LatestDate = sdf.parse(tempLatestDate);
-			System.out.println("Latest: " + LatestDate);
-
-		
 
 		if (newDate.after(LatestDate))
 			return true;
