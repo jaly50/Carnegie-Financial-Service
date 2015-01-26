@@ -97,29 +97,26 @@ public class TransitionDayAction extends Action {
 					tableRow.setFund_id(fundList[i].getFund_id());
 					tableRow.setSymbol(fundList[i].getSymbol());
 					double displayPrice = 0;
-					System.out.println("89");
+
 					if (fundPriceHistoryDAO.getFundPrice(fundList[i]
 							.getFund_id()) != null) {
 						displayPrice = (double) fundPriceHistoryDAO
 								.getCurrentPrice(fundList[i].getFund_id());
 					}
-					System.out.println("94");
+
 					displayPrice = displayPrice / 100;
 					tableRow.setLatestPrice(String.valueOf(fundPriceHistoryDAO
 							.getCurrentPrice(fundList[i].getFund_id())));
 					TransiFundTable.add(tableRow);
-					System.out.println("96");
+
 				}
 			}
 
 			request.setAttribute("TransiFundTable", TransiFundTable);
-			System.out.println("119");
 
 			if (!transitionDayForm.isPresent()) {
 				return "transitionDay.jsp";
 			}
-
-			System.out.println("123");
 
 			Integer[] fund_ids = new Integer[fundList.length];
 			String[] symbols = new String[fundList.length];
@@ -143,11 +140,8 @@ public class TransitionDayAction extends Action {
 			 */
 
 			for (int i = 0; i < fund_ids.length; i++) {
-				System.out.print("No" + i + "  ");
-				System.out.print("fund name: " + fund_ids[i] + "  ");
-				System.out.println("fund price: " + prices[i]);
 				fidPriceMap.put(fund_ids[i], prices[i]);
-				System.out.println("hash" + i);
+
 			}
 
 			String[] date = request.getParameterValues("newDate");
@@ -163,7 +157,7 @@ public class TransitionDayAction extends Action {
 
 			Date newDate = null;
 			Date oldDate = null;
-			System.out.println("165 " + date[0]);
+
 			try {
 
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -173,8 +167,6 @@ public class TransitionDayAction extends Action {
 
 			}
 
-			System.out.println("175 " + newDate);
-
 			// validate Date time
 			oldDate = fundPriceHistoryDAO.getLatestDate();
 			if (oldDate != null && !newDate.after(oldDate)) {
@@ -183,9 +175,7 @@ public class TransitionDayAction extends Action {
 			}
 
 			// 1.deal with Fund_Price_History table;
-			System.out.println("185");
 			fund_Price_HistoryHandler(newDate, fidPriceMap);
-			System.out.println("186");
 			// 2.deal with pending transaction table first;
 			Transaction[] pendingTransactions = transactionDAO
 					.getPendingTransactions();
@@ -279,6 +269,7 @@ public class TransitionDayAction extends Action {
 			Transaction[] workedTransactions, Date newDate) {
 		for (int i = 0; i < cusUpdate.length; i++) {
 			long balanceIncre = 0;
+			// Integer is f_id, long is shareIncrease
 			HashMap<Integer, Long> shareIncreMap = new HashMap<Integer, Long>();
 
 			for (int j = 0; j < workedTransactions.length; j++) {
@@ -328,11 +319,25 @@ public class TransitionDayAction extends Action {
 			}
 			// update shareIncre to position table
 			// traverse hashmap shareIncreMap
+			System.out.println("326");
 			int num = 1;
+			// if shareIncreMap isEmpty, set customer's all position total =
+			// available;
+			if (shareIncreMap.isEmpty()) {
+				try {
+					positionDAO.updatePosition(cusUpdate[i].getCustomer_id());
+				} catch (RollbackException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+
 			for (Entry<Integer, Long> entry : shareIncreMap.entrySet()) {
 				System.out.println(num++);
 				int fund_id = entry.getKey();
 				long shareIncre = entry.getValue();
+				System.out.println(fund_id);
+				System.out.println(shareIncre);
 				Position position = new Position();
 				try {
 					if (positionDAO.getPosition(cusUpdate[i].getCustomer_id(),
@@ -343,7 +348,7 @@ public class TransitionDayAction extends Action {
 						position.setAvailableShares(shareIncre);
 						positionDAO.create(position);
 					}
-						
+
 					else {
 						position = positionDAO.getPosition(
 								cusUpdate[i].getCustomer_id(), fund_id);
@@ -379,7 +384,7 @@ public class TransitionDayAction extends Action {
 				}
 
 			}
-			System.out.println("Line 78");
+			System.out.println("Line 382");
 
 			try {
 				customerDAO.totalBalanceUpdate(cusUpdate[i]);
