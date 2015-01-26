@@ -57,11 +57,7 @@ public class PositionDAO extends GenericDAO<Position> {
 		}
 	}
 
-	/*
-	 * Given a new position whose share is different from what in the database
-	 * table, while customer id and fund id remain the same equals to : Update
-	 * Position set share = newValue where costomer_id and fund_id keep same
-	 */
+	
 	public void update(long value, Position pos) throws RollbackException {
 		// TODO Auto-generated method stub
 		try {
