@@ -81,12 +81,9 @@ public class TransitionDayAction extends Action {
 			Fund[] fundList = fundDAO.getFunds();
 
 			if (fundList == null || fundList.length == 0) {
-
+				return "transitionDay.jsp";
 			}
 
-			for (Fund f : fundList) {
-				System.out.print(f.getName() + " ");
-			}
 			request.setAttribute("fundList", fundDAO.getFunds());
 
 			// TransitionTable to show funds information
@@ -309,9 +306,9 @@ public class TransitionDayAction extends Action {
 			}
 			// update blanceIncre to customer table
 			try {
-				System.out.println("Customer : "
+				System.out.print("Customer : "
 						+ cusUpdate[i].getCustomer_id());
-				System.out.println("balanceIncre: " + balanceIncre);
+				System.out.println("'s balanceIncre is: " + balanceIncre);
 				customerDAO.transiUpdate(balanceIncre, cusUpdate[i]);
 			} catch (RollbackException e) {
 				// TODO Auto-generated catch block
@@ -321,19 +318,9 @@ public class TransitionDayAction extends Action {
 			// traverse hashmap shareIncreMap
 			System.out.println("326");
 			int num = 1;
-			// if shareIncreMap isEmpty, set customer's all position total =
-			// available;
-			if (shareIncreMap.isEmpty()) {
-				try {
-					positionDAO.updatePosition(cusUpdate[i].getCustomer_id());
-				} catch (RollbackException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
 
 			for (Entry<Integer, Long> entry : shareIncreMap.entrySet()) {
-				System.out.println(num++);
+				System.out.println("buy: " + num++);
 				int fund_id = entry.getKey();
 				long shareIncre = entry.getValue();
 				System.out.println(fund_id);
@@ -384,8 +371,18 @@ public class TransitionDayAction extends Action {
 				}
 
 			}
+			
+			// update customer[i] totalPosition in position table
+			try {
+				positionDAO.updatePosition(cusUpdate[i].getCustomer_id());
+			} catch (RollbackException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 			System.out.println("Line 382");
 
+			// update totalBalance in cusUpdate[i] table
 			try {
 				customerDAO.totalBalanceUpdate(cusUpdate[i]);
 			} catch (RollbackException e) {
@@ -409,9 +406,7 @@ public class TransitionDayAction extends Action {
 			fund_Price_History.setFund_id(fund_id);
 			fund_Price_History.setPrice(fundPrice * 100);
 			fund_Price_History.setPrice_date(newDate);
-			System.out.println(fund_Price_History.getFund_id());
-			System.out.println(fund_Price_History.getPrice());
-			System.out.println(fund_Price_History.getPrice_date());
+		
 			try {
 				fundPriceHistoryDAO.create(fund_Price_History);
 			} catch (RollbackException e) {
