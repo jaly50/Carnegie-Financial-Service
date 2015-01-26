@@ -17,9 +17,11 @@ public class BuyFundForm extends FormBean {
 		return buyAmount;
 	}
 	
-	public double getAmountAsDouble() {
+	public long getAmountAsLong() {
 		try {
-			return Double.parseDouble(buyAmount);
+			Double tempDouble = Double.parseDouble(buyAmount);
+			Long amountLong = (long)(tempDouble * 100);
+			return amountLong;
 		} catch (NumberFormatException e) {
 			// call getValidationErrors() to detect this
 			return -1;

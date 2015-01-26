@@ -129,22 +129,23 @@ public class BuyFundAction extends Action {
 				return "buyFund.jsp";
 					}
 			
-			if (buyFundForm.getAmountAsDouble() > customer
+			if (buyFundForm.getAmountAsLong() > customer
 					.getAvailablebalance()) {
 				errors.add("Your available balance is not enough");
 				return "buyFund.jsp";
 			}
 
-			customerDAO.update((long) buyFundForm.getAmountAsDouble()*100, customer);
+			customerDAO.update(buyFundForm.getAmountAsLong(), customer);
 
 			Transaction transaction = new Transaction();
-			transaction.setAmount((long)(buyFundForm.getAmountAsDouble()*100));
+			transaction.setAmount(buyFundForm.getAmountAsLong());
 			transaction.setCustomer_id(customer.getCustomer_id());
 			transaction.setFund_id(fundDAO.getFund_ID(buyFundForm.getSymbol()));
 			transaction.setExecute_date(null);
 			transaction.setShares(0);
 			transaction.setTransaction_type("BuyFund");
-
+			System.out.println(buyFundForm.getAmountAsLong());
+			
 			System.out.println("113");
 
 			transactionDAO.create(transaction);

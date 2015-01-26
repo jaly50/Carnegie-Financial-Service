@@ -62,7 +62,7 @@ public class PositionDAO  extends GenericDAO<Position> {
 		try {
 
 				Transaction.begin();
-				pos.setAvailableShares(shareIncre);
+				pos.setAvailableShares(pos.getAvailableShares()+shareIncre);
 				update(pos);
 				Transaction.commit();
 			} 
