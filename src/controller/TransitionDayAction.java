@@ -216,13 +216,19 @@ public class TransitionDayAction extends Action {
 
 	public void pendingTransactionsHandler(Transaction[] pendingTransactions,
 			HashMap<Integer, String> fidPriceMap, Date newDate) {
-
+        Transaction t;
 		for (int i = 0; i < pendingTransactions.length; i++) {
+			t = pendingTransactions[i];
+			String type = t.getTransaction_type();
+			long amount = t.getAmount();
+			int fund_id = t.getFund_id();
+			String getPrice = fidPriceMap.get(fund_id);
+			double realPrice = Double.valueOf(getPrice);
+			long databasePrice = (long)realPrice *100;
+			long shares;
 			// buy transaction case
-			if (pendingTransactions[i].getTransaction_type().equals("BuyFund")) {
-				long shares = (long) (pendingTransactions[i].getAmount() / Double
-						.valueOf(fidPriceMap.get(pendingTransactions[i]
-								.getFund_id())));
+			if (type.equals("BuyFund")) {
+				shares = amount / databasePrice;
 				try {
 					transactionDAO.transactionBuyUpdate(newDate, shares,
 							pendingTransactions[i]);
@@ -233,7 +239,7 @@ public class TransitionDayAction extends Action {
 			// sell transaction case;
 			else if (pendingTransactions[i].getTransaction_type().equals(
 					"SellFund")) {
-				long amount = (long) (pendingTransactions[i].getShares() * Double
+				amount = (long) (pendingTransactions[i].getShares() * Double
 						.valueOf(fidPriceMap.get(pendingTransactions[i]
 								.getFund_id())));
 				try {
