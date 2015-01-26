@@ -121,7 +121,7 @@ public class BuyFundAction extends Action {
 			*/
 			if(buyFundForm.getSymbol()== null || (buyFundForm.getSymbol().length() == 0 ))
 					{
-				errors.add("ftff");
+				errors.add("can't get symbol");
 				return "buyFund.jsp";
 					}
 			
