@@ -23,3 +23,5 @@ WebContent/WEB-INF/classes
 bin/
 .classpath
 
+
+src/databeans/Customer.java
