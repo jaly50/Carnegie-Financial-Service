@@ -61,6 +61,11 @@ public class RequestCheckAction   extends Action  {
 			if (customer==null) {
 				return "login.jsp";
 			}
+			double availableBalance = (double)customer.getAvailablebalance()/100;
+			if (customer.getAvailablebalance() < form.getDatabaseAmount()) {
+				errors.add("Balance is not enough. Please try a number less than available balance $"+availableBalance);
+				return "requestCheck.jsp";
+			}
 			
 			Transaction transaction;
 			// Create the transaction bean
