@@ -51,24 +51,31 @@ public class BuyFundForm extends FormBean {
 		if (amount == null || amount.length() == 0) {
 			errors.add("Please enter an amount.");
 		}
+		if (select == null || select.length() == 0) {
+			errors.add("Please choose a fund");
+			return errors;
+		}
 		  try {
 		    	realAmount = Double.parseDouble(amount);
 		    } catch (NumberFormatException e) {
 				errors.add("Buy amount should be a number");
 				return errors;
 			}
-		    if (realAmount < 1 || realAmount>1000000) {
+		    if (realAmount < 1) {
 		  	  errors.add("The minimum buy amount is $1");
+		  	  return errors;
+		    }
+		    if (realAmount > 1000000) {
+		    	errors.add("Money more than 1 million is not allowed, please contact the CFS administrator.");
+		    	return errors;
 		    }
 		    //Cash and fund share prices are tracked to two decimal places and also stored as (long) integers in the database.
 		    databaseAmount = (long) (realAmount * 100);
 		    if (databaseAmount - realAmount*100 !=0) {
-		   	 errors.add("Buy amount should be x.xx(tracked to two decimal places)"+databaseAmount+" "+realAmount);
+		   	 errors.add("Buy amount should be x.xx(tracked to two decimal places)");
 		    }
 		   
-		if (select == null || select.length() == 0) {
-			errors.add("Please choose a fund");
-		}
+
 		 try {
 		 fund_id = Integer.valueOf(select);
 		 //Someone change Jsp sneakingly
