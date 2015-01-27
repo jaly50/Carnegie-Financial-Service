@@ -76,7 +76,7 @@ public class CreateCusAccForm extends FormBean {
 
 	
 	public void setZip(String s) {
-		zip = s;
+		zip = trimAndConvert(s, "<>\"");
 	}
 
 	public void setCity(String s) {
@@ -135,7 +135,7 @@ public class CreateCusAccForm extends FormBean {
 		}
 		if(password.length()<6)
 		{
-			errors.add("Password is too short");
+			errors.add("Password is too short! it must be between 6 and 15 characters");
 		}
 		if(password.length()>15)
 		{

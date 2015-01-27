@@ -32,7 +32,7 @@
 		</tr>
 		<tr>
 			<td colspan="2" align="center"><h6 align = "center" style = "margin-left:380px">
- <input align = "center" class="btn btn-default" type="submit" name="button" value="Register" /></td>
+ <input align = "center" class="btn btn-default" type="submit" name="button" value="Create" /></td>
 		</h6>
 		</tr>
 	</table>

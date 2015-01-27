@@ -75,7 +75,7 @@ public class CreateEmpAccForm extends FormBean {
 		}
 		if(password.length()<6)
 		{
-			errors.add("Password is too short");
+			errors.add("Password is too short!it must be between 6 and 15 characters");
 		}
 		if(password.length()>15)
 		{
