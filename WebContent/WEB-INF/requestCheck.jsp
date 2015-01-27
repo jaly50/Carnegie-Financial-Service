@@ -1,6 +1,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:include page="template-top.jsp" />
 <jsp:include page="error-list.jsp" />
+<jsp:include page="message.jsp" />
 <div class="container">
 <br />
  <br />

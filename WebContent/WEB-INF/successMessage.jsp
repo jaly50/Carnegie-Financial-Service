@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <br/>
 <script type="text/javascript"> 
-var t=5;
+var t=3;
 setInterval("refer()",1000); 
 function refer(){  
     if(t==0){ 

@@ -34,6 +34,7 @@ public class RequestCheckAction   extends Action  {
 	}
 	public String perform(HttpServletRequest request) {
 		List<String> errors = new ArrayList<String>();
+		String message = null;
 		request.setAttribute("errors", errors);
 		
 		// get session
@@ -79,8 +80,8 @@ public class RequestCheckAction   extends Action  {
 			customer.setAvailablebalance(customer.getAvailablebalance() - form.getDatabaseAmount());
             customerDAO.update(customer);
      
-            
-			return "TransactionHistoryAction.do";
+        	message = "Your request has been submitted. Please wait for transition processing."; 
+		
 		} catch (RollbackException e) {
 			errors.add(e.getMessage());
 			return "requestCheck.jsp";
@@ -88,6 +89,9 @@ public class RequestCheckAction   extends Action  {
 			errors.add(e.getMessage());
 			return "requestCheck.jsp";
 		}
+		request.setAttribute("form", null);
+		 request.setAttribute("messages", message);
+		return "requestCheck.jsp";
 	}
 
 }

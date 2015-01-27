@@ -44,7 +44,7 @@ public class DepositCheckAction  extends Action  {
 		List<String> errors = new ArrayList<String>();
 		User user = (User) session.getAttribute("user");
 		request.setAttribute("errors", errors);
-		
+		String message = null;
 		try {
 			if (user==null) {
 				errors.add("Please login first");
@@ -91,7 +91,7 @@ public class DepositCheckAction  extends Action  {
 			customer.setAvailablebalance(customer.getAvailablebalance() + form.getDatabaseAmount());
             customerDAO.update(customer);
             
-			return "viewCustomerList.do";
+            
 		} catch (RollbackException e) {
 			errors.add(e.getMessage());
 			return "depositCheck.jsp";
@@ -99,5 +99,9 @@ public class DepositCheckAction  extends Action  {
 			errors.add(e.getMessage());
 			return "depositCheck.jsp";
 		}
+		message = "Your request has been submitted. Please wait for transition processing."; 
+		request.setAttribute("form", null);
+		 request.setAttribute("messages", message);
+		return "depositCheck.jsp";
 	}
 }
