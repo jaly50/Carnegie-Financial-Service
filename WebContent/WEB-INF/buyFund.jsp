@@ -48,7 +48,7 @@ function verification() {
         <td>${f.name}</td>
         <td>${f.symbol}</td>
          <td align = "right">${f.latestPrice}</td>
-        <td align="center"><input type="radio" name="symbol" value="${f.symbol}"/></td>
+        <td align="center"><input type="radio" name="select" value="${f.fund_id}"/></td>
       </tr>
 	</c:forEach>
     </tbody>

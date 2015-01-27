@@ -5,6 +5,7 @@ public class BuyFundTable {
 	private String name;
 	private String symbol;
 	private String latestPrice;
+	private int fund_id;
 
 	public BuyFundTable() {
 
@@ -42,6 +43,14 @@ public class BuyFundTable {
 
 	public String getLatestPrice() {
 		return latestPrice;
+	}
+
+	public int getFund_id() {
+		return fund_id;
+	}
+
+	public void setFund_id(int fund_id) {
+		this.fund_id = fund_id;
 	}
 
 }

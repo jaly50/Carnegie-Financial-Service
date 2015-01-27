@@ -65,9 +65,10 @@ public class BuyFundAction extends Action {
 			}
 
 			Customer customer = (Customer) session.getAttribute("user");
+			int customer_id = customer.getCustomer_id();
 			System.out.println(customer.getCustomer_id());
-			BuyFundForm buyFundForm = formBeanFactory.create(request);
-			request.setAttribute("buyFundForm", buyFundForm);
+			BuyFundForm form = formBeanFactory.create(request);
+			request.setAttribute("buyFundForm", form);
 
 			// get fund name;
 			Fund[] fundList = fundDAO.getFunds();
@@ -89,6 +90,7 @@ public class BuyFundAction extends Action {
 					BuyFundTable tableRow = new BuyFundTable();
 					tableRow.setName(fund.getName());
 					tableRow.setSymbol(fund.getSymbol());
+					tableRow.setFund_id(fund.getFund_id());
 					double displayPrice = 0;
 					if (fundPriceHistoryDAO.getFundPrice(fund_id) == null) {
 						tableRow.setLatestPrice("N/A");
@@ -103,48 +105,49 @@ public class BuyFundAction extends Action {
 					buyFundTable.add(tableRow);
 				}
 			}
-			System.out.println("101");
+		
 			request.setAttribute("buyFundTable", buyFundTable);
-			System.out.println("103");
-			if (!buyFundForm.isPresent()) {
-				return "buyFund.jsp";
-			}
-			System.out.println("105");
 			
-			errors.addAll(buyFundForm.getValidationErrors());
-
-			/*
-			if (buyFundForm.getAmountAsDouble() == -1.0) {
-				errors.add("Please input buy amount");
+			if (!form.isPresent()) {
 				return "buyFund.jsp";
 			}
-			*/
-			if(buyFundForm.getSymbol()== null || (buyFundForm.getSymbol().length() == 0 ))
-					{
-				errors.add("can't get symbol");
-				return "buyFund.jsp";
-					}
+
 			
-			if (buyFundForm.getAmountAsLong() > customer
-					.getAvailablebalance()) {
-				errors.add("Your available balance is not enough");
-				return "buyFund.jsp";
-			}
-
-			customerDAO.update(buyFundForm.getAmountAsLong(), customer);
-
+			errors.addAll(form.getValidationErrors());
+            if (errors.size() >0) {
+            	return "buyFund.jsp";
+            }
+			
+            // update customer available balance in database
+			 long oldBalance = customer.getAvailablebalance();
+			 long databaseAmount = form.getDatabaseAmount();
+			 if (oldBalance < databaseAmount) {
+				 errors.add("Your available balance is not enough");
+					return "buyFund.jsp"; 
+			 }
+			 customer.setAvailablebalance(oldBalance - databaseAmount);
+			customerDAO.update(customer);
+             
+			//update transaction in database
 			Transaction transaction = new Transaction();
-			transaction.setAmount(buyFundForm.getAmountAsLong());
-			transaction.setCustomer_id(customer.getCustomer_id());
-			transaction.setFund_id(fundDAO.getFund_ID(buyFundForm.getSymbol()));
+			transaction.setAmount(databaseAmount);
+			transaction.setCustomer_id(customer_id);
+			transaction.setFund_id(form.getFund_id());
 			transaction.setExecute_date(null);
 			transaction.setShares(-1);
 			transaction.setTransaction_type("BuyFund");
-			System.out.println(buyFundForm.getAmountAsLong());
-			
-
 			transactionDAO.create(transaction);
-
+            
+			Position pos;
+			pos =positionDAO.read(customer_id,form.getFund_id());
+			// No such position exists before
+			if (pos==null) {
+				pos = new Position();
+				pos.setAvailableShares(0);
+				pos.setCustomer_id(customer_id);
+				pos.setFund_id(form.getFund_id());
+			}
+            positionDAO.update(pos);
 
 			return "buyFund.jsp";
 

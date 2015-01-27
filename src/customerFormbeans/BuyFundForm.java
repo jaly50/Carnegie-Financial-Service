@@ -8,18 +8,20 @@ import org.mybeans.form.FormBean;
 
 public class BuyFundForm extends FormBean {
 
-	private String buyAmount;
+	private String amount;
+	private double realAmount;
+	private long databaseAmount;
 	private String chooseFund;
 	private int    fund_id;
-	private String symbol;
+	private String select;
 
 	public String getBuyAmount() {
-		return buyAmount;
+		return amount;
 	}
 	
 	public long getAmountAsLong() {
 		try {
-			Double tempDouble = Double.parseDouble(buyAmount);
+			Double tempDouble = Double.parseDouble(amount);
 			Long amountLong = (long)(tempDouble * 100);
 			return amountLong;
 		} catch (NumberFormatException e) {
@@ -29,17 +31,8 @@ public class BuyFundForm extends FormBean {
 	}
 
 	public void setBuyAmount(String buyAmount) {
-		this.buyAmount = buyAmount;
+		this.amount = buyAmount;
 	}
-	
-	public void setSymbol(String symbol) {
-		this.symbol = symbol;
-	}
-
-	public String getSymbol() {
-		return symbol;
-	}
-	
 	public String getChooseFund() {
 		return chooseFund;
 	}
@@ -55,21 +48,32 @@ public class BuyFundForm extends FormBean {
 
 	public List<String> getValidationErrors() {
 		List<String> errors = new ArrayList<String>();
-		if (buyAmount == null || buyAmount.length() == 0) {
+		if (amount == null || amount.length() == 0) {
 			errors.add("Please enter an amount.");
 		}
-		if (symbol == null || symbol.length() == 0) {
+		  try {
+		    	realAmount = Double.parseDouble(amount);
+		    } catch (NumberFormatException e) {
+				errors.add("Buy amount should be a number");
+				return errors;
+			}
+		    if (realAmount < 1) {
+		  	  errors.add("The minimum buy amount is $1");
+		    }
+		    //Cash and fund share prices are tracked to two decimal places and also stored as (long) integers in the database.
+		    databaseAmount = (long) (realAmount * 100);
+		    if (databaseAmount - realAmount*100 !=0) {
+		   	 errors.add("Buy amount should be x.xx(tracked to two decimal places)");
+		    }
+		   
+		if (select == null || select.length() == 0) {
 			errors.add("Please choose a fund");
 		}
-		if (buyAmount != null && buyAmount.matches(".*[<>\"].*"))
-			errors.add("Buy amount format error!");
-		if (!checkDecimal(buyAmount)) {
-			errors.add("Only numbers with a maximum of 2 decimals places are allowed for amount.");
-		}
+		
 		if (errors.size() > 0)
 			return errors;
 		try {
-			double amt = Double.parseDouble(buyAmount);
+			double amt = Double.parseDouble(amount);
 			amt = Math.round(amt * 100);
 			amt = amt / 100;
 			if (amt < 10) {
@@ -87,6 +91,30 @@ public class BuyFundForm extends FormBean {
 	public boolean checkDecimal(String input) {
 		Pattern p = Pattern.compile("[+-]?[0-9]+.{0,1}[0-9]{0,2}");
 		return p.matcher(input).matches();
+	}
+
+	public double getRealAmount() {
+		return realAmount;
+	}
+
+	public void setRealAmount(double realAmount) {
+		this.realAmount = realAmount;
+	}
+
+	public long getDatabaseAmount() {
+		return databaseAmount;
+	}
+
+	public void setDatabaseAmount(long databaseAmount) {
+		this.databaseAmount = databaseAmount;
+	}
+
+	public String getSelect() {
+		return select;
+	}
+
+	public void setSelect(String select) {
+		this.select = select;
 	}
 
 }
