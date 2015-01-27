@@ -82,7 +82,7 @@ public class ViewAccAction extends Action {
 			} else {
 				int i = transactions.length - 1;
 				while (i > 0 && transactions[i].getExecute_date() == null) i--;
-				if (i == 0 && transactions[i].getExecute_date() == null) session.setAttribute("date", "N/A");
+				if (i == 0 && transactions[i].getExecute_date() == null) session.setAttribute("date", null);
 				else {
 					date = (Date) transactions[i].getExecute_date();
 					System.out.println("Date:" + date);

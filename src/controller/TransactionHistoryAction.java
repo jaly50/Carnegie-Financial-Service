@@ -100,11 +100,17 @@ public class TransactionHistoryAction extends Action {
 				TransactionHistory item = new TransactionHistory();
 				
 				int fund_id = trans.getFund_id();
+				System.out.println("fund id is: " + fund_id);
 				Fund fund = fundDAO.getFund(fund_id);
+				if (fund == null) {
+					System.out.println("fund is null");
+				}
+				/*
 				if (fund == null) {
 					errors.add("Invalid fund");
 					return "transaction-history.jsp";
 				}
+				*/
 				
 				Date dateOrigin = (Date) trans.getExecute_date();
 				item.setDateForSort(dateOrigin);
