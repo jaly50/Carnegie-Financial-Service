@@ -53,6 +53,7 @@ public class SellFundAction extends Action {
 
 	public String perform(HttpServletRequest request) {
 		List<String> errors = new ArrayList<String>();
+		String message = null;
 		request.setAttribute("errors", errors);
 		System.out.println("SellFund Action get performed");
 
@@ -91,11 +92,13 @@ public class SellFundAction extends Action {
 				return "sellFund.jsp";
 			}
             long sellShares = form.getDatabaseShares();
+            int fund_id = form.getFun_id();
+            Fund fund = fundDAO.getFund(fund_id);
 			Transaction transaction;
 			// Create the transaction bean
 			transaction = new Transaction();
 			transaction.setCustomer_id(customer_id);
-			transaction.setFund_id(form.getFun_id());
+			transaction.setFund_id(fund_id);
 			transaction.setExecute_date(null);
 			transaction.setTransaction_type("SellFund");
 			transaction.setShares(sellShares);
@@ -117,15 +120,19 @@ public class SellFundAction extends Action {
 			
 			sellFundTable = getSellFundTable(customer);
 			request.setAttribute("sellFundTable", sellFundTable);
-			
-
-		} catch (FormBeanException e) {
+		
+			message ="Your request has been submitted. Please wait for transition processing.";
+          // message = "Sell fund "+ fund.getName()+" for "+form.getRealShares()+" shares. Request submitted.";
+           } catch (FormBeanException e) {
 			errors.add("Formbean Exception, please contact the administrator.");
+			return "sellFund.jsp";
 
 		} catch (RollbackException e1) {
 			errors.add(e1.getMessage());
+			return "sellFund.jsp";
 		}
-		return "sellFund.do";
+		 request.setAttribute("messages", message);
+		return "sellFund.jsp";
 
 	}
 

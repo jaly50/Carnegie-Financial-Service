@@ -53,6 +53,7 @@ public class BuyFundAction extends Action {
 
 	public String perform(HttpServletRequest request) {
 		List<String> errors = new ArrayList<String>();
+		String message;
 		request.setAttribute("errors", errors);
 
 		HttpSession session = request.getSession();
@@ -129,29 +130,36 @@ public class BuyFundAction extends Action {
 			customerDAO.update(customer);
              
 			//update transaction in database
+			fund_id = form.getFund_id();
+			fund = fundDAO.getFund(fund_id);
 			Transaction transaction = new Transaction();
 			transaction.setAmount(databaseAmount);
 			transaction.setCustomer_id(customer_id);
-			transaction.setFund_id(form.getFund_id());
+			transaction.setFund_id(fund_id);
 			transaction.setExecute_date(null);
 			transaction.setShares(-1);
 			transaction.setTransaction_type("BuyFund");
 			transactionDAO.create(transaction);
             
+			/*
+			 * Position part ---- it will be created in transitionDay
 			System.out.println("Transaction created successfully");
 			Position pos;
-			pos = positionDAO.getPosition(customer_id, form.getFund_id());
+			pos = positionDAO.read(customer_id, form.getFund_id());
+			System.out.println(pos+" "+ form.getFund_id());
+            
 			// No such position exists before
 			if (pos==null) {
 				pos = new Position();
 				pos.setAvailableShares(0);
 				pos.setCustomer_id(customer_id);
 				pos.setFund_id(form.getFund_id());
+				positionDAO.create(pos);
 			}
-            positionDAO.update(pos);
-
-			return "buyFund.jsp";
-
+			*/
+        
+			message = "Your request has been submitted. Please wait for transition processing.";
+		     //"You successfully bought fund "+ fund.getName() +" for $"+ form.getBuyAmount()+";
 		} catch (RollbackException e) {
 			errors.add(e.getMessage());
 			errors.add("Roll backException.");
@@ -161,5 +169,7 @@ public class BuyFundAction extends Action {
 			errors.add("FormBean Exception.");
 			return "buyFund.jsp";
 		}
+		      request.setAttribute("messages", message);
+					return "buyFund.jsp";
 	}
 }

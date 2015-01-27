@@ -4,6 +4,7 @@
 <jsp:include page="template-top.jsp" />
 
 <jsp:include page="error-list.jsp" />
+<jsp:include page="message.jsp" />
 <script type="text/javascript">	
 
 
