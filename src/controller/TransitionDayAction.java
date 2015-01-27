@@ -118,7 +118,15 @@ public class TransitionDayAction extends Action {
 			Integer[] fund_ids = new Integer[fundList.length];
 			String[] symbols = new String[fundList.length];
 			String[] prices = request.getParameterValues("price");
+		
 			// validate prices;
+			List<String> pricesErrors;
+			pricesErrors = transitionDayForm.validateFundPrice(prices);
+			
+			if (pricesErrors != null) {
+				errors.addAll(transitionDayForm.validateFundPrice(prices));
+				return "transitionDay.jsp";
+			}
 
 			HashMap<Integer, String> fidPriceMap = new HashMap<Integer, String>();
 
@@ -127,20 +135,14 @@ public class TransitionDayAction extends Action {
 				symbols[i] = fundList[i].getSymbol();
 				fund_ids[i] = fundList[i].getFund_id();
 			}
-			/*
-			 * for (Entry<Integer, String> entry : fidPriceMap.entrySet()) { int
-			 * fund_id = entry.getKey(); String price = entry.getValue();
-			 * Position position = null; System.out.println(fund_id +
-			 * "'s price is " + price);
-			 * 
-			 * }
-			 */
 
 			for (int i = 0; i < fund_ids.length; i++) {
 				fidPriceMap.put(fund_ids[i], prices[i]);
 
 			}
 
+			
+			 // validate Date format;
 			String[] date = request.getParameterValues("newDate");
 			if (date == null || date.length < 1) {
 				errors.add("no date here");
@@ -148,9 +150,13 @@ public class TransitionDayAction extends Action {
 			}
 			List<String> dateErrors;
 			dateErrors = transitionDayForm.validateDate(date[0]);
-			if (dateErrors != null)
-				// validate Date format;
+			
+			if (dateErrors != null) {
 				errors.addAll(transitionDayForm.validateDate(date[0]));
+				return "transitionDay.jsp";
+			}
+			
+			 
 
 			Date newDate = null;
 			Date oldDate = null;
