@@ -84,8 +84,9 @@ public class TransitionDayForm extends FormBean {
 
 	public List<String> validateDate(String sdate) {
 		List<String> errors = new ArrayList<String>();
-		if (sdate == null) {
+		if (sdate.isEmpty() || sdate.length() == 0) {
 			errors.add("Please add a date");
+			return errors;
 		}
 		if (sdate.length() < 8) {
 			errors.add("Please input correct date format. It should be like yyyymmdd");

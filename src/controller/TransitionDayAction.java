@@ -110,7 +110,7 @@ public class TransitionDayAction extends Action {
 			}
 
 			request.setAttribute("TransiFundTable", TransiFundTable);
-
+			System.out.println("113");
 			if (!transitionDayForm.isPresent()) {
 				return "transitionDay.jsp";
 			}
@@ -118,16 +118,16 @@ public class TransitionDayAction extends Action {
 			Integer[] fund_ids = new Integer[fundList.length];
 			String[] symbols = new String[fundList.length];
 			String[] prices = request.getParameterValues("price");
-		
-			// validate prices;
+			
+			// validate prices
 			List<String> pricesErrors;
 			pricesErrors = transitionDayForm.validateFundPrice(prices);
 			
-			if (pricesErrors != null) {
+			if (!pricesErrors.isEmpty()) {
 				errors.addAll(transitionDayForm.validateFundPrice(prices));
 				return "transitionDay.jsp";
 			}
-
+			
 			HashMap<Integer, String> fidPriceMap = new HashMap<Integer, String>();
 
 			// assign symbols and fund_ids;
@@ -141,23 +141,23 @@ public class TransitionDayAction extends Action {
 
 			}
 
-			
-			 // validate Date format;
+			// validate ifDate exist;
 			String[] date = request.getParameterValues("newDate");
-			if (date == null || date.length < 1) {
+			
+			if (date == null || date.length == 0) {
 				errors.add("no date here");
 				return "transitionDay.jsp";
 			}
+			// validate Date format;
 			List<String> dateErrors;
+			System.out.println("date[0] is" + date[0]);
 			dateErrors = transitionDayForm.validateDate(date[0]);
-			
-			if (dateErrors != null) {
+			if (!dateErrors.isEmpty()) {
+
 				errors.addAll(transitionDayForm.validateDate(date[0]));
 				return "transitionDay.jsp";
 			}
 			
-			 
-
 			Date newDate = null;
 			Date oldDate = null;
 
@@ -190,7 +190,7 @@ public class TransitionDayAction extends Action {
 					.getWorkedTransactions(newDate);
 			Customer[] cusUpdate = customerDAO.getCustomers();
 			workedTransactionHandler(cusUpdate, workedTransactions, newDate);
-			System.out.println("198");
+			System.out.println("success");
 
 		} catch (RollbackException e) {
 			// TODO Auto-generated catch block
@@ -312,8 +312,7 @@ public class TransitionDayAction extends Action {
 			}
 			// update blanceIncre to customer table
 			try {
-				System.out.print("Customer : "
-						+ cusUpdate[i].getCustomer_id());
+				System.out.print("Customer : " + cusUpdate[i].getCustomer_id());
 				System.out.println("'s balanceIncre is: " + balanceIncre);
 				customerDAO.transiUpdate(balanceIncre, cusUpdate[i]);
 			} catch (RollbackException e) {
@@ -377,7 +376,7 @@ public class TransitionDayAction extends Action {
 				}
 
 			}
-			
+
 			// update customer[i] totalPosition in position table
 			try {
 				positionDAO.updatePosition(cusUpdate[i].getCustomer_id());
@@ -385,7 +384,7 @@ public class TransitionDayAction extends Action {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
+
 			System.out.println("Line 382");
 
 			// update totalBalance in cusUpdate[i] table
@@ -412,7 +411,7 @@ public class TransitionDayAction extends Action {
 			fund_Price_History.setFund_id(fund_id);
 			fund_Price_History.setPrice(fundPrice * 100);
 			fund_Price_History.setPrice_date(newDate);
-		
+
 			try {
 				fundPriceHistoryDAO.create(fund_Price_History);
 			} catch (RollbackException e) {
