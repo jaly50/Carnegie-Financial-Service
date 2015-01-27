@@ -98,16 +98,17 @@ public class SellFundAction extends Action {
 			transaction.setFund_id(form.getFun_id());
 			transaction.setExecute_date(null);
 			transaction.setTransaction_type("SellFund");
-			transaction.setShares(form.getDatabaseShares());
+			transaction.setShares(sellShares);
 			transaction.setAmount(-1);
 			
 			transactionDAO.create(transaction);
-			
 			Position pos;
 			pos =positionDAO.read(customer_id,form.getFun_id());
+			System.out.println(pos);
 			long oldShares = pos.getAvailableShares();
 			if (sellShares > oldShares) {
-				errors.add("You don't have enough shares");
+				System.out.println(sellShares +" "+oldShares);
+				errors.add("You don't have enough shares ");
 				return "sellFund.jsp";
 			}
 			pos.setAvailableShares(oldShares - sellShares);
@@ -144,6 +145,8 @@ public class SellFundAction extends Action {
 				if (p.getShares() == 0) {
 					continue;
 				}
+				long databaseShares = p.getAvailableShares();
+				double realShares = (double)databaseShares / 1000;
 				//System.out.println("Position Share:" + p.getShares());
 				Fund fund = fundDAO.getFund(p.getFund_id());
 				//System.out.println("Fund id: " + fund.getFund_id());
@@ -157,7 +160,7 @@ public class SellFundAction extends Action {
 				tableRow.setFundName(fund.getName());
 				tableRow.setSymbol(fund.getSymbol());
 				tableRow.setLatestPrice(priceShow.toString());
-				tableRow.setAvailableShares(String.valueOf(p.getAvailableShares()));
+				tableRow.setAvailableShares(String.valueOf(realShares));
 				tableRow.setFund_id(fund.getFund_id());
 				//System.out.println("172");
 				sellFundTable.add(tableRow);

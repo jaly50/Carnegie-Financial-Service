@@ -63,12 +63,19 @@ public class BuyFundForm extends FormBean {
 		    //Cash and fund share prices are tracked to two decimal places and also stored as (long) integers in the database.
 		    databaseAmount = (long) (realAmount * 100);
 		    if (databaseAmount - realAmount*100 !=0) {
-		   	 errors.add("Buy amount should be x.xx(tracked to two decimal places)");
+		   	 errors.add("Buy amount should be x.xx(tracked to two decimal places)"+databaseAmount+" "+realAmount);
 		    }
 		   
 		if (select == null || select.length() == 0) {
 			errors.add("Please choose a fund");
 		}
+		 try {
+		 fund_id = Integer.valueOf(select);
+		 //Someone change Jsp sneakingly
+		  } catch (NumberFormatException e) {
+				errors.add("Please don't change element value.");
+				return errors;
+			}
 		
 		if (errors.size() > 0)
 			return errors;

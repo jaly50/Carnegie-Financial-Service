@@ -90,7 +90,7 @@ public class BuyFundAction extends Action {
 					BuyFundTable tableRow = new BuyFundTable();
 					tableRow.setName(fund.getName());
 					tableRow.setSymbol(fund.getSymbol());
-					tableRow.setFund_id(fund.getFund_id());
+					tableRow.setFund_id(fund_id);
 					double displayPrice = 0;
 					if (fundPriceHistoryDAO.getFundPrice(fund_id) == null) {
 						tableRow.setLatestPrice("N/A");
@@ -138,8 +138,9 @@ public class BuyFundAction extends Action {
 			transaction.setTransaction_type("BuyFund");
 			transactionDAO.create(transaction);
             
+			System.out.println("Transaction created successfully");
 			Position pos;
-			pos =positionDAO.read(customer_id,form.getFund_id());
+			pos = positionDAO.getPosition(customer_id, form.getFund_id());
 			// No such position exists before
 			if (pos==null) {
 				pos = new Position();
@@ -153,9 +154,11 @@ public class BuyFundAction extends Action {
 
 		} catch (RollbackException e) {
 			errors.add(e.getMessage());
+			errors.add("Roll backException.");
 			return "buyFund.jsp";
 		} catch (FormBeanException e) {
 			errors.add(e.getMessage());
+			errors.add("FormBean Exception.");
 			return "buyFund.jsp";
 		}
 	}
