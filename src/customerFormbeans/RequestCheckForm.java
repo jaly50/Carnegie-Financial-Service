@@ -40,7 +40,10 @@ public class RequestCheckForm   extends FormBean   {
 		return errors;
 	}
     if (realAmount < 1) {
-  	  errors.add("The minimum request number is $1");
+  	  errors.add("The minimum request amount is $1");
+    }
+    if (realAmount > 1000000) {
+    	errors.add("Money more than 1 million is not allowed, please contact the CFS administrator.");
     }
   //Cash and fund share prices are tracked to two decimal places and also stored as (long) integers in the database.
    databaseAmount = (long) (realAmount * 100);

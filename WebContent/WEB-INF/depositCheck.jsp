@@ -50,7 +50,7 @@
  <td><h4 style = "margin-left:380px">   Deposit Amount: &nbsp;</h4>
  </td>
  <td>
-     <h4> <input type="text" name="amount"  value="${form.amount}"/> </h4>
+     <h4> <input type="text" name="amount" placeholder="1-1000000"  value="${form.amount}"/> </h4>
       </td>
    </tr>
      <tr>

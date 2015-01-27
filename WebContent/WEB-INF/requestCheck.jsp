@@ -13,7 +13,7 @@
  <br />
  
   <h4 style = "margin-left:380px">   Available Balance: &nbsp;
-      <span class="menu-head"><fmt:formatNumber type="number" 
+      $ <span class="menu-head"><fmt:formatNumber type="number" 
             pattern="#,##0.00" value="${user.availablebalance/100}" />&ensp;</span>
 
       
@@ -21,7 +21,7 @@
  <br />
  
  <h4 style = "margin-left:380px">   Request Amount: &nbsp;
-      <input type="text" name="amount"  value="${form.amount}"/> 
+      <input type="text" name="amount" placeholder="1-1000000" value="${form.amount}"/> 
  </h4>
  <br />
  <h6 align = "center">

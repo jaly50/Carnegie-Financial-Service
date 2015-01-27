@@ -40,8 +40,8 @@ public class DepositCheckForm   extends FormBean   {
           if (realAmount < 1) {
         	  errors.add("The minimum deposit amount is $1");
           }
-          if (realAmount > 1000000000) {
-        	  errors.add("Money more than 1 billion is not allowed, please contact administrator to deposit it.");
+          if (realAmount > 1000000) {
+        	  errors.add("Money more than 1 million is not allowed, please contact administrator to deposit it.");
           }
         //Cash and fund share prices are tracked to two decimal places and also stored as (long) integers in the database.
          databaseAmount = (long) (realAmount * 100);

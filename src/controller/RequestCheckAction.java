@@ -64,7 +64,7 @@ public class RequestCheckAction   extends Action  {
 			}
 			double availableBalance = (double)customer.getAvailablebalance()/100;
 			if (customer.getAvailablebalance() < form.getDatabaseAmount()) {
-				errors.add("Balance is not enough. Please try a number less than available balance $"+availableBalance);
+				errors.add("Balance is not enough. Please try a number less than your available balance");
 				return "requestCheck.jsp";
 			}
 			
