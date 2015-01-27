@@ -343,6 +343,7 @@ public class TransitionDayAction extends Action {
 						position.setShares(shareIncre);
 						position.setAvailableShares(shareIncre);
 						positionDAO.create(position);
+						continue;
 					}
 
 					else {
@@ -369,7 +370,7 @@ public class TransitionDayAction extends Action {
 				}
 
 				try {
-					System.out.println("371");
+					System.out.println("Final Position");
 					System.out.println(position.getAvailableShares());
 					System.out.println(position.getShares());
 					positionDAO.totalShareUpdate(position);
@@ -410,10 +411,10 @@ public class TransitionDayAction extends Action {
 		Long fundPrice = (long) 0;
 		for (Entry<Integer, String> entry : fidPriceMap.entrySet()) {
 			fund_id = entry.getKey();
-			fundPrice = Long.parseLong(entry.getValue());
+			fundPrice = (long)(Double.parseDouble(entry.getValue())*100);
 			Fund_Price_History fund_Price_History = new Fund_Price_History();
 			fund_Price_History.setFund_id(fund_id);
-			fund_Price_History.setPrice(fundPrice * 100);
+			fund_Price_History.setPrice(fundPrice);
 			fund_Price_History.setPrice_date(newDate);
 
 			try {
