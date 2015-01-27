@@ -66,10 +66,10 @@ public class SellFundForm extends FormBean {
 		    if (realShares < 1) {
 		  	  errors.add("The minimum shares to sell is 1");
 		    }
-		    //Cash and fund share prices are tracked to two decimal places and also stored as (long) integers in the database.
-		    databaseShares = (long) (realShares * 100);
-		    if (databaseShares - realShares*100 !=0) {
-		   	 errors.add("Request amount should be x.xx(tracked to two decimal places)");
+		  // shares get into database 
+		    databaseShares = (long) (realShares * 1000);
+		    if (databaseShares - realShares*1000 !=0) {
+		   	 errors.add("Request amount should be x.xxx(tracked to three decimal places)");
 		    }
 		   
 		return errors;
