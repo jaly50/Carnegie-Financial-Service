@@ -97,7 +97,6 @@ public class ViewAccAction extends Action {
 		try {
 			Position[] positions = positionDAO.getPositions(customer.getCustomer_id());
 			// check position null
-			System.out.println("positions" + positions == null);
 			
 			if (positions.length == 0) return "view-account.jsp";			
 			ArrayList<ViewAccountFund> fundInfo = new ArrayList<ViewAccountFund>();
@@ -106,18 +105,12 @@ public class ViewAccAction extends Action {
 				ViewAccountFund item = new ViewAccountFund();
 				int fund_id = position.getFund_id();	
 				
-				System.out.println("fund_id: " + fund_id);
-				
 				Fund fund = fundDAO.getFund(fund_id);
-				
-				System.out.println("fund: " + (fund == null));
+			
 				if (fund == null) {
 					errors.add("Invalid fund");
 					return "view-account.jsp";
 				}
-				
-				System.out.println("fund is null" + fundDAO.getFund(fund_id) == null);
-				System.out.println("fund name" + fundDAO.getFund(fund_id).getName());
 				
 				item.setName(fundDAO.getFund(fund_id).getName());
 				item.setSymbol(fundDAO.getFund(fund_id).getSymbol());
