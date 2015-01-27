@@ -136,7 +136,10 @@ public class TransitionDayAction extends Action {
 			String[]  prices = request.getParameterValues("price");
 			Integer[] fund_ids = new Integer[prices.length];
 			String[]  symbols = new String[prices.length];
-
+			if(fundList.length != prices.length) {
+				errors.add("New funds created, please input every fund's price");
+				return "transitionDay.jsp";
+			}
 			// validate prices
 			List<String> pricesErrors;
 			pricesErrors = transitionDayForm.validateFundPrice(prices);
