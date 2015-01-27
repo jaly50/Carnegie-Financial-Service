@@ -5,7 +5,7 @@
 
 
 <div class="container">
-	<br /> <br /> <br />
+	<br /> <br /> 
 	<form method="post" action="login.do">
 		<h4 style="margin-left: 380px">
 			Username: <input type="text" name="username" value="${form.username}" />
