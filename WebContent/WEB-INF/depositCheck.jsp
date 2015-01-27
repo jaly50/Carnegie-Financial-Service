@@ -9,36 +9,65 @@
  <br />
  <br />
 <form method="post" action="depositCheck.do">
+
+<table style = " border-spacing: 5px">
+
 <c:choose>
 			<c:when test="${ (empty customer) }">
-				<h4 style="margin-left: 380px">
-					Customer Username: &nbsp;&nbsp;&nbsp; <input name="username"
+			<tr>
+				<td> <h4 style="margin-left: 380px">
+					Customer Username: &nbsp;&nbsp;&nbsp;</h4>
+				</td> 
+				<td><input name="username"
 						type="text" value="${form.username}" />
-				</h4>
+				</td>
+			</tr>	
 			</c:when>
 			<c:otherwise>
-			<h4 style="margin-left: 380px">Customer Name:
-					&nbsp;&nbsp;&nbsp; ${customer.firstname}&nbsp; ${customer.lastname}</h4>
-			<br />
-				<h4 style="margin-left: 380px">Customer Username:
+			<tr>
+			<td><h4 style="margin-left: 380px">
+			Customer Name:
+					&nbsp;&nbsp;&nbsp; </h4>
+			</td>
+			<td><h4>${customer.firstname}&nbsp; ${customer.lastname}</h4>
+			</td>
+			</tr>
+			<tr>
+				<td ><h4 style="margin-left: 380px">Customer Username:
 
-					&nbsp;&nbsp;&nbsp;<input type="hidden"  name = "username" value="${customer.username}" > ${customer.username}</h4>
+					&nbsp;&nbsp;&nbsp;</h4>
+				</td>
+				<td><h4>
+				<input type="hidden"  name = "username" value="${customer.username}" > ${customer.username}
+				</h4>
+				</td>
+			</tr>
 
 			</c:otherwise>
 		</c:choose>
+
+ <tr>
+ <td><h4 style = "margin-left:380px">   Deposit Amount: &nbsp;</h4>
+ </td>
+ <td>
+     <h4> <input type="text" name="amount"  value="${form.amount}"/> </h4>
+      </td>
+   </tr>
+     <tr>
+     <td> </td>
+     <td> </td>
+     </tr>
+ 
+ <tr  >
+ <td colspan="2" align="center"><h6 align = "center" style = "margin-left:380px">
+ 	<input align="center"  class="btn btn-default" type="submit" value="Deposit"></h6>
+ </td>
+ </tr>
+ </table>
+ <br />
+ <br />
  <br />
  
- <h4 style = "margin-left:380px">   Deposit Amount: &nbsp;
-      <input type="text" name="amount"  value="${form.amount}"/> 
- </h4>
- <br />
- <h6 align = "center">
- <input  class="btn btn-default" type="submit" value="Deposit">
- </h6>
- 
- <br />
- <br />
- <br />
 </form>
 </div>
 
