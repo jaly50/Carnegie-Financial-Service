@@ -42,9 +42,9 @@ public class MessageAction extends Action {
 			request.setAttribute("errors", errors);
 		}
 		if (errors.size()>0) {
-			return "message.jsp";
+			return "errorPage.jsp";
 		}
-		return "message.jsp";
+		return "errorPage.jsp";
 	}
 
 

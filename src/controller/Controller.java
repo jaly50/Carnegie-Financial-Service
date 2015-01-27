@@ -97,7 +97,7 @@ public class Controller extends HttpServlet {
 		}
 		if (!(user instanceof Customer)) {
 			// If not the class type, the operation would be denied
-			if (action.equals("viewAccAction.do") || action.equals("buyFund.do")
+			if (action.equals("buyFund.do")
 					|| action.equals("sellFund.do") 
 					|| action.equals("researchFundAction.do") || action.equals("requestCheck.do")) {
 				request.setAttribute("errors", errors);
