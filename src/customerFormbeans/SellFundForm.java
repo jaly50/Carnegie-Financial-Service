@@ -66,6 +66,9 @@ public class SellFundForm extends FormBean {
 		    if (realShares < 1) {
 		  	  errors.add("The minimum shares to sell is 1");
 		    }
+		    if (realShares > 1000000) {
+		    	errors.add("The maximum shares to sell is one million");
+		    }
 		  // shares get into database 
 		    databaseShares = (long) (realShares * 1000);
 		    if (databaseShares - realShares*1000 !=0) {
