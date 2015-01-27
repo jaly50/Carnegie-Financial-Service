@@ -214,7 +214,7 @@ public class TransitionDayAction extends Action {
 
 				// buy transaction case
 				if (type.equals("BuyFund")) {
-					shares = amount / databasePrice;
+					shares = amount / databasePrice * 1000;
 					try {
 						transactionDAO.transactionBuyUpdate(newDate, shares,
 								pendingTransactions[i]);
