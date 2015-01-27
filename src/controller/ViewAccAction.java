@@ -10,6 +10,7 @@
 package controller;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -53,6 +54,7 @@ public class ViewAccAction extends Action {
 	
 	DecimalFormat priceFormat = new DecimalFormat("#,##0.00");
 	DecimalFormat sharesFormat = new DecimalFormat("#,##0.000");
+	SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 	
 	// get action name
 	public String getName() {
@@ -76,15 +78,16 @@ public class ViewAccAction extends Action {
 		try {
 			Transaction[] transactions = 
 					transactionDAO.getTransactions(customer.getCustomer_id());
-			Date date = null;
+			String date = null;
 			if (transactions.length == 0) {
 				session.setAttribute("date", "No transaction record");
 			} else {
 				int i = transactions.length - 1;
 				while (i > 0 && transactions[i].getExecute_date() == null) i--;
-				if (i == 0 && transactions[i].getExecute_date() == null) session.setAttribute("date", null);
+				if (i == 0 && transactions[i].getExecute_date() == null) session.setAttribute("date", "N/A");
 				else {
-					date = (Date) transactions[i].getExecute_date();
+					Date dateOrigin = (Date) transactions[i].getExecute_date();
+					date = sdf.format(dateOrigin);
 					System.out.println("Date:" + date);
 					session.setAttribute("date", date);
 				}				

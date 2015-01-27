@@ -39,7 +39,7 @@
         <td><c:out value = '${customer.username}' escapeXml='true' /></td>
         <td><c:out value = '${customer.addr_line1}' escapeXml='true' />
         <c:out value = '${customer.addr_line2}' escapeXml='true' /></td>
-        <td><fmt:formatDate value='${date}' pattern='MM/dd/yyyy'/></td>
+        <td><c:out value = '${date}' escapeXml='true' />
         <td> <fmt:formatNumber value="${customer.totalbalance / 100}" pattern = "#,###.00" type="number"/></td>
         <td> <fmt:formatNumber value="${customer.availablebalance / 100}" pattern = "#,###.00" type="number"/></td>
       </tr>
