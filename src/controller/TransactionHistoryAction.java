@@ -142,6 +142,7 @@ public class TransactionHistoryAction extends Action {
 				} else {
 					long priceOrigin = 0;
 					Fund_Price_History fundPrice = fundPriceHistoryDAO.getFundPrice(dateOrigin, fund_id);
+					
 					if (fundPrice == null) item.setPrice("pending");
 					else {
 						priceOrigin = fundPrice.getPrice();
@@ -149,6 +150,8 @@ public class TransactionHistoryAction extends Action {
 						item.setPrice(price);
 					}
 				}
+				
+				//System.out.println("#####################################" + fundPriceHistoryDAO.getFundPrice(dateOrigin, fund_id).getPrice());
 				
 				// name
 				String name = fund.getName();
@@ -215,7 +218,9 @@ public class TransactionHistoryAction extends Action {
 						item.setPrice(price);
 					}
 				}
-					
+				System.out.println("#####################################" + dateOrigin);
+				System.out.println("#####################################" + fundPriceHistoryDAO.getFundPrice(dateOrigin, fund_id).getPrice());
+				
 				// name
 				String name = fund.getName();
 				item.setName(name);
