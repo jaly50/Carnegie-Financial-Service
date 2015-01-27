@@ -14,19 +14,20 @@
 <div class="container">
 <div class="container">
 <div class="container">
-  <h3>Fund Name: ${fund.name}<br> Fund Symbol: ${fund.symbol }</h3>
+	<h3>Fund Price History<br></h3>
+  <h4>Fund Name: ${fund.name}<br> Fund Symbol: ${fund.symbol }</h4>
     </br>     
   <table class="table table-bordered">
     <thead>
       <tr>       
         <th>Date</th>
-        <th>Price</th>
+        <th>Fund Price</th>
       </tr>
     </thead>
     <tbody>
      <c:forEach var="fundPriceHistory" items="${fundPriceHistory}">    
     	<tr> 
-        <td><c:out value = '${fundPriceHistory.price_date}' escapeXml='true' /></td>
+    		<td><fmt:formatDate value='${fundPriceHistory.price_date}' pattern='MM/dd/yyyy'/></td>
         <td> <fmt:formatNumber value="${fundPriceHistory.price / 100}" pattern = "#,##0.00" type="number"/></td>
 	</tr>			    
 	</c:forEach>   	

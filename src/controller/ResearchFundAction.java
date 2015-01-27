@@ -108,11 +108,17 @@ public class ResearchFundAction extends Action {
 			request.setAttribute("fund", fund);
 			
 			int fund_id = form.getIdAsInt();
-			Fund_Price_History[] fundPriceHistory = fundPriceHistoryDAO.getFundPrice(fund_id);
+			Fund_Price_History[] fundPriceHistoryOrigin = fundPriceHistoryDAO.getFundPrice(fund_id);
 			
-			if (fundPriceHistory == null || fundPriceHistory.length == 0) {
+			
+			if (fundPriceHistoryOrigin == null || fundPriceHistoryOrigin.length == 0) {
 				errors.add("Fund item does not have history");
 				return "research-fund-detail.jsp";
+			}
+			Fund_Price_History[] fundPriceHistory = new Fund_Price_History[fundPriceHistoryOrigin.length];
+			int j = 0;
+			for (int i = fundPriceHistoryOrigin.length - 1; i >= 0; i--) {
+				fundPriceHistory[j++] = fundPriceHistoryOrigin[i];
 			}
 			
 			request.setAttribute("fundPriceHistory", fundPriceHistory);
