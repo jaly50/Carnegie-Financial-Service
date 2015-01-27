@@ -117,7 +117,7 @@ public class TransitionDayAction extends Action {
 			}
 
 			request.setAttribute("TransiFundTable", TransiFundTable);
-			
+
 			// get Last Trading Day;
 			Date LatestDate = null;
 			try {
@@ -126,18 +126,22 @@ public class TransitionDayAction extends Action {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			request.setAttribute("latestDate", sdf.format(LatestDate));
-			
+
+			if (LatestDate == null || LatestDate.toString() == "")
+				request.setAttribute("latestDate", "");
+			else
+				request.setAttribute("latestDate", sdf.format(LatestDate));
+
 			System.out.println("113");
 			if (!transitionDayForm.isPresent()) {
 				return "transitionDay.jsp";
 			}
 
-			String[]  prices = request.getParameterValues("price");
+			String[] prices = request.getParameterValues("price");
 			Integer[] fund_ids = new Integer[prices.length];
-			String[]  symbols = new String[prices.length];
-			if(fundList.length != prices.length) {
-				errors.add("New funds created, please input every fund's price");
+			String[] symbols = new String[prices.length];
+			if (fundList.length != prices.length) {
+				errors.add("New funds created, automatically refreshing");
 				return "transitionDay.jsp";
 			}
 			// validate prices

@@ -80,6 +80,9 @@ public class TransitionDayForm extends FormBean {
 			if (realAmount < 0.01) {
 				errors.add("The minimum deposit number is $0.01");
 			}
+			
+			//if (realAmount)
+			
 			databaseAmount = (long) (realAmount * 100);
 			if (databaseAmount - realAmount * 100 != 0) {
 				errors.add("Fund price should be x.xx(tracked to two decimal places)");

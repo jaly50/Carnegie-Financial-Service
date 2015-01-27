@@ -112,7 +112,7 @@ public class BuyFundAction extends Action {
 			if (!form.isPresent()) {
 				return "buyFund.jsp";
 			}
-
+			
 			
 			errors.addAll(form.getValidationErrors());
             if (errors.size() >0) {
