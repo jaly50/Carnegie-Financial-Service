@@ -81,7 +81,10 @@ public class TransitionDayForm extends FormBean {
 				errors.add("The minimum deposit number is $0.01");
 			}
 			
-			//if (realAmount)
+			if (realAmount > 1000000) {
+				errors.add("The maximum deposit number is $1,000,000");
+			}
+				
 			
 			databaseAmount = (long) (realAmount * 100);
 			if (databaseAmount - realAmount * 100 != 0) {
