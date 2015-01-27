@@ -30,7 +30,7 @@ import customerFormbeans.SellFundForm;
 public class SellFundAction extends Action {
 	private FormBeanFactory<SellFundForm> formBeanFactory = FormBeanFactory
 			.getInstance(SellFundForm.class);
-
+	static DecimalFormat displayMoney = new DecimalFormat("$#,###0.000"); 
 	private CustomerDAO customerDAO;
 	private FundDAO fundDAO;
 	private PositionDAO positionDAO;
@@ -59,8 +59,7 @@ public class SellFundAction extends Action {
 
 		HttpSession session = request.getSession();
 		SellFundForm form;
-		DecimalFormat latestPrice = new DecimalFormat("#,##0.00");
-		DecimalFormat shares = new DecimalFormat("#,##0.000");
+		
 
 
 		if (session.getAttribute("user") == null) {
@@ -167,7 +166,7 @@ public class SellFundAction extends Action {
 				tableRow.setFundName(fund.getName());
 				tableRow.setSymbol(fund.getSymbol());
 				tableRow.setLatestPrice(priceShow.toString());
-				tableRow.setAvailableShares(String.valueOf(realShares));
+				tableRow.setAvailableShares(displayMoney.format(realShares).toString());
 				tableRow.setFund_id(fund.getFund_id());
 				//System.out.println("172");
 				sellFundTable.add(tableRow);
