@@ -118,16 +118,16 @@ public class TransitionDayAction extends Action {
 			Integer[] fund_ids = new Integer[fundList.length];
 			String[] symbols = new String[fundList.length];
 			String[] prices = request.getParameterValues("price");
-			
+
 			// validate prices
 			List<String> pricesErrors;
 			pricesErrors = transitionDayForm.validateFundPrice(prices);
-			
+
 			if (!pricesErrors.isEmpty()) {
 				errors.addAll(transitionDayForm.validateFundPrice(prices));
 				return "transitionDay.jsp";
 			}
-			
+
 			HashMap<Integer, String> fidPriceMap = new HashMap<Integer, String>();
 
 			// assign symbols and fund_ids;
@@ -143,7 +143,7 @@ public class TransitionDayAction extends Action {
 
 			// validate ifDate exist;
 			String[] date = request.getParameterValues("newDate");
-			
+
 			if (date == null || date.length == 0) {
 				errors.add("no date here");
 				return "transitionDay.jsp";
@@ -157,7 +157,7 @@ public class TransitionDayAction extends Action {
 				errors.addAll(transitionDayForm.validateDate(date[0]));
 				return "transitionDay.jsp";
 			}
-			
+
 			Date newDate = null;
 			Date oldDate = null;
 
@@ -204,6 +204,7 @@ public class TransitionDayAction extends Action {
 
 	}
 
+	// 1.deal with pending transactions;
 	public void pendingTransactionsHandler(Transaction[] pendingTransactions,
 			HashMap<Integer, String> fidPriceMap, Date newDate) {
 		Transaction t;
@@ -268,6 +269,7 @@ public class TransitionDayAction extends Action {
 
 	}
 
+	// 2.deal with worked transactions;
 	public void workedTransactionHandler(Customer[] cusUpdate,
 			Transaction[] workedTransactions, Date newDate) {
 		for (int i = 0; i < cusUpdate.length; i++) {
@@ -287,10 +289,12 @@ public class TransitionDayAction extends Action {
 								.getFund_id()) != null) {
 							tempShareIncre = shareIncreMap
 									.get(workedTransactions[j].getFund_id());
+						} else {
+							tempShareIncre += workedTransactions[j].getShares();
+							shareIncreMap.put(
+									workedTransactions[j].getFund_id(),
+									tempShareIncre);
 						}
-						tempShareIncre += workedTransactions[j].getShares();
-						shareIncreMap.put(workedTransactions[j].getFund_id(),
-								tempShareIncre);
 
 					}
 					// sell transaction case; edit amount
