@@ -15,6 +15,7 @@ public class TransitionDayForm extends FormBean {
 	private String name;
 	private String symbol;
 	private String newDate;
+	private Date latestDate;
 
 	public String getName() {
 		return name;
@@ -46,6 +47,14 @@ public class TransitionDayForm extends FormBean {
 
 	public void get(String newDate) {
 		this.newDate = newDate;
+	}
+	
+	public void setLatestDate(Date latestDate) {
+		this.latestDate = latestDate;
+	}
+	
+	public Date getLatestDate() {
+		return latestDate;
 	}
 
 	public List<String> validateFundPrice(String[] prices) {

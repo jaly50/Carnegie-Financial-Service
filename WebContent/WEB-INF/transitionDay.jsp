@@ -63,10 +63,15 @@ function check(lbl){
  <br />
  <br />
  <h2>Transition Day</h2>
+ 
 <br />
 <h5>Set New Funds Price:</h5>
  
 <form method="post" action="transitionDay.do">
+<h4 align="center">  New Date(YYYYMMDD): 
+      <input type="text" id="newDate" name="newDate" value=""/> 
+      <input class="btn btn-default" type="submit" name="button" value="Submit">
+ </h4>
 
  <table class="table table-bordered">
     <thead>
@@ -83,7 +88,7 @@ function check(lbl){
       <tr>
         <td>${f.fund_id }</td>
         <td>${f.symbol}</td>
-        <td align="right"><fmt:formatNumber type="number" value="${f.latestPrice/100}" minFractionDigits="2" maxFractionDigits="2"/></td>
+         <td align = "right">${f.latestPrice}</td>
         <td align="center"><input type="text" id="price" name="price" value=""/></td>
       </tr>
      </c:forEach>
@@ -92,11 +97,9 @@ function check(lbl){
   </table>
 
  <br />
- <h4 align="center">  New Date(YYYYMMDD): 
-      <input type="text" id="newDate" name="newDate" value=""/> 
-      <input class="btn btn-default" type="submit" name="button" value="Submit">
- </h4>
  
+ <h4 style = "margin-left:380px"> Latest Date:&nbsp;
+      <span>${latestDate}</span></h4>
  <br />
  <br />
  <br />
