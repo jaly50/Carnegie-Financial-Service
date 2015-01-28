@@ -69,6 +69,9 @@
 	</c:forEach>   	
     </tbody>
   </table>
+<h5>Instruction: For your convenience, we also show position with 0.000 shares on this page to let your know all of the position related to the account.
+There are two cases may cause the 0.000 shares situation. One is the fund shares have been totally sold out. Another is the price of the fund is well 
+larger than the amount of bought fund, and shares less than 0.001 will also show 0.000. For more information, please turn to the Transaction History page. Thank you.</h5>    
 
 </div>
 </div>
