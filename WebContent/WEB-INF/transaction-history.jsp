@@ -22,26 +22,26 @@
   <table class="table table-bordered">
     <thead> 
     <tr>
-        <th>Date</th>
-        <th>Operation</th>
-        <th>Fund Name</th>
-        <th>Fund Symbol</th>
-        <th>Shares</th>
-        <th>Price</th>
-        <th>Amount</th>
+        <th><p align = left>Date</th>
+        <th><p align = left>Operation</th>
+        <th><p align = left>Fund Name</th>
+        <th><p align = left>Fund Symbol</th>
+        <th><p align = right>Shares</th>
+        <th><p align = right>Price</th>
+        <th><p align = right>Amount</th>
       </tr>      
     </thead>
     
     <tbody>
     	<c:forEach var="transactionInfo" items="${transactionInfo}">    
     	<tr> 
-	    <td><c:out value = '${transactionInfo.date}' escapeXml='true' /></td>
-        <td><c:out value = '${transactionInfo.operation}' escapeXml='true' /></td>
-        <td><c:out value = '${transactionInfo.name}' escapeXml='true' /></td>
-        <td><c:out value = '${transactionInfo.symbol}' escapeXml='true' /></td>
-        <td><c:out value = '${transactionInfo.shares}' escapeXml='true' /></td>
-        <td><c:out value = '${transactionInfo.price}' escapeXml='true' /></td>
-        <td><c:out value = '${transactionInfo.amount}' escapeXml='true' /></td>
+	    <td><p align = left><c:out value = '${transactionInfo.date}' escapeXml='true' /></td>
+        <td><p align = left><c:out value = '${transactionInfo.operation}' escapeXml='true' /></td>
+        <td><p align = left><c:out value = '${transactionInfo.name}' escapeXml='true' /></td>
+        <td><p align = left><c:out value = '${transactionInfo.symbol}' escapeXml='true' /></td>
+        <td><p align = right><c:out value = '${transactionInfo.shares}' escapeXml='true' /></td>
+        <td><p align = right><c:out value = '${transactionInfo.price}' escapeXml='true' /></td>
+        <td><p align = right><c:out value = '${transactionInfo.amount}' escapeXml='true' /></td>
 	</tr>			    
 	</c:forEach>   	 
     </tbody>

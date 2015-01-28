@@ -23,25 +23,25 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>User Name</th>
-        <th>Address</th>
-        <th>Date of Last Trading</th>
-        <th>Current Balance</th>
-        <th>Available Balance</th>
+        <th><p align = left>First Name</th>
+        <th><p align = left>Last Name</th>
+        <th><p align = left>User Name</th>
+        <th><p align = left>Address</th>
+        <th><p align = left>Date of Last Trading</th>
+        <th><p align = right>Current Balance</th>
+        <th><p align = right>Available Balance</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><c:out value = '${customer.firstname}' escapeXml='true' /></td>
-        <td><c:out value = '${customer.lastname}' escapeXml='true' /></td>
-        <td><c:out value = '${customer.username}' escapeXml='true' /></td>
-        <td><c:out value = '${customer.addr_line1}' escapeXml='true' />
+        <td><p align = left><c:out value = '${customer.firstname}' escapeXml='true' /></td>
+        <td><p align = left><c:out value = '${customer.lastname}' escapeXml='true' /></td>
+        <td><p align = left><c:out value = '${customer.username}' escapeXml='true' /></td>
+        <td><p align = left><c:out value = '${customer.addr_line1}' escapeXml='true' />
         <c:out value = '${customer.addr_line2}' escapeXml='true' /></td>
-        <td><c:out value = '${date}' escapeXml='true' />
-        <td> <fmt:formatNumber value="${customer.totalbalance / 100}" pattern = "#,##0.00" type="number"/></td>
-        <td> <fmt:formatNumber value="${customer.availablebalance / 100}" pattern = "#,##0.00" type="number"/></td>
+        <td><p align = left><c:out value = '${date}' escapeXml='true' />
+        <td> <p align = right><fmt:formatNumber value="${customer.totalbalance / 100}" pattern = "#,##0.00" type="number"/></td>
+        <td> <p align = right><fmt:formatNumber value="${customer.availablebalance / 100}" pattern = "#,##0.00" type="number"/></td>
       </tr>
     </tbody>
   </table>
@@ -50,21 +50,21 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th>Fund Name</th>
-        <th>Fund Symbol</th>
-        <th>Price</th>
-        <th>Shares</th>
-        <th>Value</th>    
+        <th><p align = left>Fund Name</th>
+        <th><p align = left>Fund Symbol</th>
+        <th><p align = right>Price on Last Trading Day</th>
+        <th><p align = right>Shares</th>
+        <th><p align = right>Value</th>    
       </tr>
     </thead>
     <tbody>
       <c:forEach var="fundInfo" items="${fundInfo}">    
     	<tr> 
-	    <td><c:out value = '${fundInfo.name}' escapeXml='true' /></td>
-        <td><c:out value = '${fundInfo.symbol}' escapeXml='true' /></td>
-        <td><c:out value = '${fundInfo.price}' escapeXml='true' /></td>
-        <td><c:out value = '${fundInfo.shares}' escapeXml='true' /></td>
-        <td><c:out value = '${fundInfo.value}' escapeXml='true' /></td>
+	    <td><p align = left><c:out value = '${fundInfo.name}' escapeXml='true' /></td>
+        <td><p align = left><c:out value = '${fundInfo.symbol}' escapeXml='true' /></td>
+        <td><p align = right><c:out value = '${fundInfo.price}' escapeXml='true' /></td>
+        <td><p align = right><c:out value = '${fundInfo.shares}' escapeXml='true' /></td>
+        <td><p align = right><c:out value = '${fundInfo.value}' escapeXml='true' /></td>
 	</tr>			    
 	</c:forEach>   	
     </tbody>

@@ -37,20 +37,20 @@ function verification() {
  <table class="table table-bordered">
     <thead>
       <tr>
-        <th>Fund Name</th>
-        <th>Fund Symbol</th>
-        <th>Last Transition Day Price</th>
-        <th>Select to Buy</th>
+        <th><p align = left>Fund Name</th>
+        <th><p align = left>Fund Symbol</th>
+        <th><p align = right>Last Transition Day Price</th>
+        <th><p align = center>Select to Buy</th>
       </tr>
     </thead>
     <tbody>
       
      <c:forEach var="f" items="${buyFundTable}">    
       <tr>
-        <td>${f.name}</td>
-        <td>${f.symbol}</td>
-         <td align = "right">${f.latestPrice}</td>
-        <td align="center"><input type="radio" name="select" value="${f.fund_id}"/></td>
+        <td><p align = left>${f.name}</td>
+        <td><p align = left>${f.symbol}</td>
+         <td><p align = "right">${f.latestPrice}</td>
+        <td><p align="center"><input type="radio" name="select" value="${f.fund_id}"/></td>
       </tr>
 	</c:forEach>
     </tbody>

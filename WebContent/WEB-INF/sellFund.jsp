@@ -72,20 +72,20 @@ function check(lbl){
  <table class="table table-bordered">
     <thead>
       <tr>
-        <th>Fund Name</th>
-        <th>Fund Symbol</th>
-        <th>Available Shares</th>
-        <th>Select to Sell</th>
+        <th><p align = left>Fund Name</th>
+        <th><p align = left>Fund Symbol</th>
+        <th><p align = right>Available Shares</th>
+        <th><p align = center>Select to Sell</th>
       </tr>
     </thead>
     <tbody>
       
      <c:forEach var="f" items="${sellFundTable}">    
       <tr>
-        <td>${f.fundName }</td>
-        <td>${f.symbol }</td>
-        <td align = "right">${f.availableShares}</td>
-        <td align="center"><input type="radio" id="symbol" name="select" value="${f.fund_id}"></td>
+        <td><p align = left>${f.fundName }</td>
+        <td><p align = left>${f.symbol }</td>
+        <td><p align = "right">${f.availableShares}</td>
+        <td><p align="center"><input type="radio" id="symbol" name="select" value="${f.fund_id}"></td>
      
       </tr>
   </c:forEach>
