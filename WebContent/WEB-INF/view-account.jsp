@@ -27,7 +27,7 @@
         <th><p align = left>Last Name</th>
         <th><p align = left>User Name</th>
         <th><p align = left>Address</th>
-        <th><p align = left>Date of Last Trading</th>
+        <th><p align = center>Date of Last Trading</th>
         <th><p align = right>Current Balance</th>
         <th><p align = right>Available Balance</th>
       </tr>
@@ -39,7 +39,7 @@
         <td><p align = left><c:out value = '${customer.username}' escapeXml='true' /></td>
         <td><p align = left><c:out value = '${customer.addr_line1}' escapeXml='true' />
         <c:out value = '${customer.addr_line2}' escapeXml='true' /></td>
-        <td><p align = left><c:out value = '${date}' escapeXml='true' />
+        <td><p align = center><c:out value = '${date}' escapeXml='true' />
         <td> <p align = right><fmt:formatNumber value="${customer.totalbalance / 100}" pattern = "#,##0.00" type="number"/></td>
         <td> <p align = right><fmt:formatNumber value="${customer.availablebalance / 100}" pattern = "#,##0.00" type="number"/></td>
       </tr>
