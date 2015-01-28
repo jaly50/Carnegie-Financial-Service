@@ -232,7 +232,7 @@ public class TransitionDayAction extends Action {
 		
 		
 		
-		return "transitionDay.jsp";
+		return "transitionDay.do";
 
 	}
 
