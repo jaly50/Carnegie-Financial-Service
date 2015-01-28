@@ -77,6 +77,19 @@ public class CreateEmpAccForm extends FormBean {
 		if (password == null || password.length() == 0) {
 			errors.add("Password is required");
 		}
+		if(username.length()>50)
+		{
+			errors.add("The length of username can't be more than 50");
+		}
+		if(firstName.length()>50)
+		{
+			errors.add("The length of first name can't be more than 50");
+		}
+		if(lastName.length()>50)
+		{
+			errors.add("The length of last name can't be more than 50");
+		}
+		
 		if(password.length()<6)
 		{
 			errors.add("Password is too short!it must be between 6 and 15 characters");

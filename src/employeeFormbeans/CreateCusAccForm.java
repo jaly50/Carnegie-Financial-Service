@@ -148,6 +148,36 @@ public class CreateCusAccForm extends FormBean {
 		if (password == null || password.length() == 0) {
 			errors.add("Password is required");
 		}
+		if(username.length()>50)
+		{
+			errors.add("The length of username can't be more than 50");
+		}
+		if(firstName.length()>50)
+		{
+			errors.add("The length of first name can't be more than 50");
+		}
+		if(lastName.length()>50)
+		{
+			errors.add("The length of last name can't be more than 50");
+		}
+		if(addr_line1.length()>100)
+		{
+			errors.add("The length of address line 1 cannot be more than 100");
+		}
+		if(addr_line2.length()>100)
+		{
+			errors.add("The length of address line 2 cannot be more than 100");
+		}
+		if(city.length()>50)
+		{
+			System.out.println("The length of city cannot be more than 50");
+		}
+
+		if(state.length()>50)
+		{
+			System.out.println("The length of state cannot be more than 50");
+		}
+		
 		if(password.length()<6)
 		{
 			errors.add("Password is too short! it must be between 6 and 15 characters");

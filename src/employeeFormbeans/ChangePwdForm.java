@@ -36,6 +36,14 @@ public class ChangePwdForm extends FormBean {
 		if (confirmPassword == null || confirmPassword.length() == 0) {
 			errors.add("Confirm Pwd is required");
 		}
+		if(newPassword.length()<6)
+		{
+			errors.add("Password is too short! it must be between 6 and 15 characters");
+		}
+		if(newPassword.length()>15)
+		{
+			errors.add("Password can't be more than 15 characters");
+		}
 
 		if (errors.size() > 0) {
 			return errors;
