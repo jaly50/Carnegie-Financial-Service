@@ -219,7 +219,7 @@ public class TransactionHistoryAction extends Action {
 					}
 				}
 				System.out.println("#####################################" + dateOrigin);
-				System.out.println("#####################################" + fundPriceHistoryDAO.getFundPrice(dateOrigin, fund_id).getPrice());
+//				System.out.println("#####################################" + fundPriceHistoryDAO.getFundPrice(dateOrigin, fund_id).getPrice());
 				
 				// name
 				String name = fund.getName();
