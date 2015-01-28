@@ -65,6 +65,7 @@ public class TransitionDayAction extends Action {
 		List<String> errors = new ArrayList<String>();
 		request.setAttribute("errors", errors);
 		Employee user = (Employee) session.getAttribute("user");
+		String message = null;
 
 		try {
 
@@ -216,6 +217,10 @@ public class TransitionDayAction extends Action {
 			Customer[] cusUpdate = customerDAO.getCustomers();
 			workedTransactionHandler(cusUpdate, workedTransactions, newDate);
 			System.out.println("success");
+			
+			message = "Thank you!  " + sdf.format(newDate) + "  's transition operation is complete."; 
+			request.setAttribute("form", null);
+		    request.setAttribute("messages", message);
 
 		} catch (RollbackException e) {
 			// TODO Auto-generated catch block
@@ -224,8 +229,10 @@ public class TransitionDayAction extends Action {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		return "transitionDay.do";
+		
+		
+		
+		return "transitionDay.jsp";
 
 	}
 

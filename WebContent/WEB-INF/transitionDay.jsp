@@ -6,6 +6,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:include page="template-top.jsp" />
 <jsp:include page="error-list.jsp" />
+<jsp:include page="message.jsp" />
 
 
 <script type="text/javascript"> 
@@ -71,14 +72,17 @@ function check(lbl){
 <h4 align="center">  New Date(YYYYMMDD): 
       <input type="text" id="newDate" name="newDate" value=""/> 
       <input class="btn btn-default" type="submit" name="button" value="Submit">
+      &nbsp;&nbsp;&nbsp;&nbsp;<span>Last Transition Day:&nbsp;</span><span> ${latestDate}</span>
  </h4>
+ <br>
+ 
 
  <table class="table table-bordered">
     <thead>
       <tr>
         <th>Fund ID</th>
         <th>Fund Symbol</th>
-        <th>Last Trading Day Price</th>
+        <th>Last Transition Day Price</th>
         <th>Set New Price</th>
       </tr>
     </thead>
@@ -98,8 +102,7 @@ function check(lbl){
 
  <br />
  
- <h4 style = "margin-left:380px"> Latest Date:&nbsp;
-      <span>${latestDate}</span></h4>
+ 
  <br />
  <br />
  <br />
