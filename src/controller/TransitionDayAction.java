@@ -30,6 +30,7 @@ import databeans.Employee;
 import databeans.Fund;
 import databeans.Fund_Price_History;
 import databeans.Position;
+import databeans.SellFundTable;
 import databeans.Transaction;
 import databeans.TransiFundTable;
 import databeans.User;
@@ -66,6 +67,7 @@ public class TransitionDayAction extends Action {
 		request.setAttribute("errors", errors);
 		Employee user = (Employee) session.getAttribute("user");
 		String message = null;
+		String dateShow = "";
 
 		try {
 
@@ -91,33 +93,9 @@ public class TransitionDayAction extends Action {
 
 			// TransitionTable to show funds information
 			List<TransiFundTable> TransiFundTable = new ArrayList<TransiFundTable>();
-			if (fundDAO.getFunds() != null && fundDAO.getFunds().length > 0) {
-				for (int i = 0; i < fundList.length; i++) {
-					TransiFundTable tableRow = new TransiFundTable();
-					tableRow.setFund_id(fundList[i].getFund_id());
-					tableRow.setSymbol(fundList[i].getSymbol());
-					double displayPrice = 0;
-
-					if (fundPriceHistoryDAO.getFundPrice(fundList[i]
-							.getFund_id()) == null)
-						tableRow.setLatestPrice("");
-
-					else {
-						displayPrice = (double) fundPriceHistoryDAO
-								.getCurrentPrice(fundList[i].getFund_id());
-						displayPrice = displayPrice / 100;
-						tableRow.setLatestPrice(String.valueOf(displayMoney
-								.format(displayPrice)));
-					}
-					System.out.println("103" + tableRow.getLatestPrice()
-							+ "103");
-
-					TransiFundTable.add(tableRow);
-
-				}
-			}
-
+			TransiFundTable = showFundsInformation();
 			request.setAttribute("TransiFundTable", TransiFundTable);
+			
 
 			// get Last Trading Day;
 			Date LatestDate = null;
@@ -195,11 +173,12 @@ public class TransitionDayAction extends Action {
 			} catch (ParseException | java.text.ParseException e) {
 
 			}
-
+			dateShow = String.valueOf(sdf.format(newDate));
 			// validate Date time
 			oldDate = fundPriceHistoryDAO.getLatestDate();
 			if (oldDate != null && !newDate.after(oldDate)) {
-				errors.add("New Date must be after the latest Date " + sdf.format(oldDate));
+				errors.add("New Date must be after the latest Date "
+						+ sdf.format(oldDate));
 				return "transitionDay.jsp";
 			}
 
@@ -217,10 +196,17 @@ public class TransitionDayAction extends Action {
 			Customer[] cusUpdate = customerDAO.getCustomers();
 			workedTransactionHandler(cusUpdate, workedTransactions, newDate);
 			System.out.println("success");
-			
-			message = "Thank you!  " + sdf.format(newDate) + "  's transition operation is completed."; 
+
+			message = ("Thank you!  " + dateShow + "  's transition operation is completed.");
 			request.setAttribute("form", null);
-		    request.setAttribute("messages", message);
+			request.setAttribute("messages", message);
+			System.out.println(message);
+			request.setAttribute("latestDate", sdf.format(newDate));
+
+			List<TransiFundTable> TransiFundTableNew = new ArrayList<TransiFundTable>();
+			TransiFundTableNew = showFundsInformation();
+			request.setAttribute("TransiFundTable", TransiFundTableNew);
+			System.out.println("225");
 
 		} catch (RollbackException e) {
 			// TODO Auto-generated catch block
@@ -229,10 +215,8 @@ public class TransitionDayAction extends Action {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
-		return "transitionDay.do";
+
+		return "transitionDay.jsp";
 
 	}
 
@@ -255,8 +239,8 @@ public class TransitionDayAction extends Action {
 
 				// buy transaction case
 				if (type.equals("BuyFund")) {
-					
-					shares = (long)(doubleAmount / doubleDatabasePrice * 1000);
+
+					shares = (long) (doubleAmount / doubleDatabasePrice * 1000);
 					try {
 						transactionDAO.transactionBuyUpdate(newDate, shares,
 								pendingTransactions[i]);
@@ -480,6 +464,39 @@ public class TransitionDayAction extends Action {
 			return true;
 
 		return false;
+
+	}
+
+	private ArrayList<TransiFundTable> showFundsInformation()
+			throws RollbackException {
+
+		Fund[] fundList = fundDAO.getFunds();
+
+		ArrayList<TransiFundTable> TransiFundTable = new ArrayList<TransiFundTable>();
+		if (fundDAO.getFunds() != null && fundDAO.getFunds().length > 0) {
+			for (int i = 0; i < fundList.length; i++) {
+				TransiFundTable tableRow = new TransiFundTable();
+				tableRow.setFund_id(fundList[i].getFund_id());
+				tableRow.setSymbol(fundList[i].getSymbol());
+				double displayPrice = 0;
+
+				if (fundPriceHistoryDAO.getFundPrice(fundList[i].getFund_id()) == null)
+					tableRow.setLatestPrice("");
+
+				else {
+					displayPrice = (double) fundPriceHistoryDAO
+							.getCurrentPrice(fundList[i].getFund_id());
+					displayPrice = displayPrice / 100;
+					tableRow.setLatestPrice(String.valueOf(displayMoney
+							.format(displayPrice)));
+				}
+
+				TransiFundTable.add(tableRow);
+
+			}
+		}
+
+		return TransiFundTable;
 
 	}
 
