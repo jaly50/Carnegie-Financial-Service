@@ -197,7 +197,7 @@ public class TransitionDayAction extends Action {
 			workedTransactionHandler(cusUpdate, workedTransactions, newDate);
 			System.out.println("success");
 
-			message = ("Thank you! The transition operation on " + dateShow + " is complete.");
+			message = ("Thank you! The transition operation on " + dateShow + " is completed.");
 			request.setAttribute("form", null);
 			request.setAttribute("messages", message);
 			System.out.println(message);
