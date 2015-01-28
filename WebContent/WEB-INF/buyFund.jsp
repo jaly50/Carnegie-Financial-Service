@@ -24,10 +24,11 @@ function verification() {
 
 
 <div class="container">
+<h2>Buy Funds</h2>
+
 <br />
- <br />
- <br />
- <h2>Mutual Funds</h2>
+
+ 
 <br />
 <h5>Funds Information:</h5>
  
@@ -38,7 +39,7 @@ function verification() {
       <tr>
         <th>Fund Name</th>
         <th>Fund Symbol</th>
-        <th>Latest Price</th>
+        <th>Last Transition Day Price</th>
         <th>Select to Buy</th>
       </tr>
     </thead>

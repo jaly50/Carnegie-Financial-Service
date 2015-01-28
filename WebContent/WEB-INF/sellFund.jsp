@@ -31,7 +31,7 @@ function myfilter(e) {
 function verification() {
 	var text = document.getElementById("shares").value;
 	  if (text == '') {
-	     alert("Please Input Buying Amount");
+	     alert("Please Input shares to sell");
 	     return false;
 	  }
  	
@@ -95,7 +95,7 @@ function check(lbl){
 
  <br />
  <h4 align="center">  Shares to Sell: 
-      <input type="text" id="shares" name="shares" 
+      <input type="text" id="shares" name="shares" placeholder="1-1000000"
   	  style="ime-mode:disabled" onkeypress="return myfilter(event)"
       /> 
       <input class="btn btn-default" type="submit" value="Sell!" onClick="return verification()">
