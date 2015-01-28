@@ -110,6 +110,10 @@ public class CreateCusAccForm extends FormBean {
 		{
 			errors.add("The first character of the username can't be a number");
 		}
+		if(!(username.matches("^\\d*[a-zA-Z][a-zA-Z\\d]*$")))
+		{
+			errors.add("Characters other than alphabets and numbers are not allowed");
+		}
 
 		if (firstName == null || firstName.length() == 0) {
 			errors.add("First Name is required");
