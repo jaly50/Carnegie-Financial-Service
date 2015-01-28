@@ -79,16 +79,19 @@ public class TransitionDayForm extends FormBean {
 			}
 			if (realAmount < 0.01) {
 				errors.add("The minimum fund price is $0.01");
+				return errors;
 			}
 			
 			if (realAmount > 1000000) {
 				errors.add("The maximum fund price is $1,000,000");
+				return errors;
 			}
 				
 			
 			databaseAmount = (long) (realAmount * 100);
 			if (databaseAmount - realAmount * 100 != 0) {
 				errors.add("Fund price should be x.xx(tracked to two decimal places)");
+				return errors;
 			}
 
 		}
