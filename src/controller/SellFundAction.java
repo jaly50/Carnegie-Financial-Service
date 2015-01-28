@@ -30,7 +30,7 @@ import customerFormbeans.SellFundForm;
 public class SellFundAction extends Action {
 	private FormBeanFactory<SellFundForm> formBeanFactory = FormBeanFactory
 			.getInstance(SellFundForm.class);
-	static DecimalFormat displayMoney = new DecimalFormat("$#,###0.000"); 
+	static DecimalFormat displayMoney = new DecimalFormat("$#,##0.000"); 
 	private CustomerDAO customerDAO;
 	private FundDAO fundDAO;
 	private PositionDAO positionDAO;
