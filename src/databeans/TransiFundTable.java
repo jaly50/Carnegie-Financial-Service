@@ -5,6 +5,7 @@ public class TransiFundTable {
 	private String symbol;
 	private String latestPrice;
 	private String newDate;
+	private String name;
 
 	
 	public void setFund_id(int fund_id) {
@@ -36,6 +37,12 @@ public class TransiFundTable {
 	}
 	public String getNewDate() {
 		return newDate;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 
