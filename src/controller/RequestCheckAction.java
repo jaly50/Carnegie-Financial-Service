@@ -41,7 +41,13 @@ public class RequestCheckAction   extends Action  {
 				HttpSession session = request.getSession();
 
 		try {
-			
+			 //Get customer id from the session
+			// and refresh customer information from database customer Table
+			// store the new customer information into session
+			Customer customer = (Customer) session.getAttribute("user");
+			int customer_id = customer.getCustomer_id();
+			customer = customerDAO.getCustomer(customer_id);
+			session.setAttribute("user", customer);
 
 			RequestCheckForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
@@ -58,11 +64,7 @@ public class RequestCheckAction   extends Action  {
 			if (errors.size() != 0) {
 				return "requestCheck.jsp";
 			}
-			Customer customer = (Customer) session.getAttribute("user");
-			if (customer==null) {
-				return "login.jsp";
-			}
-			double availableBalance = (double)customer.getAvailablebalance()/100;
+
 			if (customer.getAvailablebalance() < form.getDatabaseAmount()) {
 				errors.add("Balance is not enough. Please try a number less than your available balance");
 				return "requestCheck.jsp";

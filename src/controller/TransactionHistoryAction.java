@@ -70,21 +70,31 @@ public class TransactionHistoryAction extends Action {
 		// get session
 		HttpSession session = request.getSession();
 		
+		
+		
+
+		
 		// get customer
 		Customer customer;
 		// You might get customer attribute from page CustomerList
         customer = (Customer) session.getAttribute("customer");
         session.setAttribute("customer", null);
-     
+        try {
         if (customer == null) {
+        	 //Get customer id from the session
+    		// and refresh customer information from database customer Table
+    		// store the new customer information into session
         	customer = (Customer) session.getAttribute("user");
+        	int customer_id = customer.getCustomer_id();
+    		customer = customerDAO.getCustomer(customer_id);
+    		session.setAttribute("user", customer);
         }
         request.setAttribute("customer", customer);
 		
 		if (customer == null) return "login.jsp";
 		
 		// get transaction
-		try {
+		
 			Transaction[] buyFundTransactions = 
 					transactionDAO.getTransactions(customer.getCustomer_id(), "BuyFund");
 			Transaction[] sellFundTransactions= 

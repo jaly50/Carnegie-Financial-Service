@@ -66,9 +66,15 @@ public class SellFundAction extends Action {
 
 			return "login.do";
 		}
-
+		try {
+		 //Get customer id from the session
+		// and refresh customer information from database customer Table
+		// store the new customer information into session
 		Customer customer = (Customer) session.getAttribute("user");
 		int customer_id = customer.getCustomer_id();
+		customer = customerDAO.getCustomer(customer_id);
+		session.setAttribute("user", customer);
+
 
 		// get sell fund table
 		ArrayList<SellFundTable> sellFundTable = getSellFundTable(customer);
@@ -78,7 +84,7 @@ public class SellFundAction extends Action {
 			return "sellFund.jsp";
 		}
 		System.out.println("79");
-		try {
+		
 			// button
 			form = formBeanFactory.create(request);
 			request.setAttribute("sellFundForm", form);

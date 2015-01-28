@@ -70,18 +70,25 @@ public class ViewAccAction extends Action {
 		HttpSession session = request.getSession();
 		
 		// get customer
-		Customer customer;
+		Customer customer = null;
+		try {
 		//Test whether it is employee's behavior
 		customer = (Customer) session.getAttribute("customer");
 		session.setAttribute("customer", null);
 		// No customer session, means that the user is Customer
 		if (customer==null)
-		customer = (Customer) session.getAttribute("user");
+			 //Get customer id from the session
+			// and refresh customer information from database customer Table
+			// store the new customer information into session
+			 customer = (Customer) session.getAttribute("user");
+			int customer_id = customer.getCustomer_id();
+			customer = customerDAO.getCustomer(customer_id);
+			session.setAttribute("user", customer);
 		request.setAttribute("customer", customer);
 		if (customer == null) return "login.jsp";
 		System.out.println("Set customer successfully");
 		// set date
-		try {
+		
 			Transaction[] transactions = 
 					transactionDAO.getTransactions(customer.getCustomer_id());
 			String date = null;

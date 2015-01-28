@@ -64,10 +64,15 @@ public class BuyFundAction extends Action {
 				errors.add("Please Log in first");
 				return "login.do";
 			}
-
+            //Get customer id from the session
+			// and refresh customer information from database customer Table
+			// store the new customer information into session
 			Customer customer = (Customer) session.getAttribute("user");
 			int customer_id = customer.getCustomer_id();
-			System.out.println(customer.getCustomer_id());
+			customer = customerDAO.getCustomer(customer_id);
+			session.setAttribute("user", customer);
+			
+			
 			BuyFundForm form = formBeanFactory.create(request);
 			request.setAttribute("buyFundForm", form);
 
