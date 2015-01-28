@@ -199,7 +199,7 @@ public class TransitionDayAction extends Action {
 			// validate Date time
 			oldDate = fundPriceHistoryDAO.getLatestDate();
 			if (oldDate != null && !newDate.after(oldDate)) {
-				errors.add("New Date must be after the latest Date " + oldDate);
+				errors.add("New Date must be after the latest Date " + sdf.format(oldDate));
 				return "transitionDay.jsp";
 			}
 

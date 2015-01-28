@@ -13,7 +13,7 @@
  <br />
  
  <h4 style = "margin-left:380px">   Fund Symbol: &nbsp;
-      <input type="text" name="symbol"  value="${form.symbol}"/> 
+      <input type="text" name="symbol" placeholder="Only Capital Letters"  value="${form.symbol}"/> 
  </h4>
  <br />
  <h6 align = "center">

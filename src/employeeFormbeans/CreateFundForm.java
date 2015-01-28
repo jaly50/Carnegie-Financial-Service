@@ -9,6 +9,7 @@ public class CreateFundForm  extends FormBean  {
 	private String name;
 	private String symbol;
 	static String pattern= "^[a-zA-Z0-9._-]*$";
+	static String symbolPattern = "^[A-Z]*$";
 	public String getName() {
 		return name;
 	}
@@ -34,8 +35,8 @@ public class CreateFundForm  extends FormBean  {
 		if (symbol == null || symbol.length() == 0) {
 			errors.add("Fund symbol is required");
 		}
-		if (!symbol.matches(pattern)) {
-			errors.add("Only character, number, and \"-\", \"_\", \".\" are allowed for fund symbol.");
+		if (!symbol.matches(symbolPattern)) {
+			errors.add("Only capital letters allowed for fund symbol.");
 		}
 
 		if (errors.size() > 0) {

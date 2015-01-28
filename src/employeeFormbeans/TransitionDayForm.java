@@ -129,7 +129,7 @@ public class TransitionDayForm extends FormBean {
 			return errors;
 		}
 		Date date;
-		DateFormat format = new SimpleDateFormat("yyyyMMdd", Locale.ENGLISH);
+		DateFormat format = new SimpleDateFormat("yyyyMMdd");
 		try {
 			date = format.parse(sdate);
 		} catch (java.text.ParseException e) {
