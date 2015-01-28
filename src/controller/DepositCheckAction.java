@@ -91,7 +91,7 @@ public class DepositCheckAction  extends Action  {
 			customer.setAvailablebalance(customer.getAvailablebalance() + form.getDatabaseAmount());
             customerDAO.update(customer);
             
-            
+            message = "The request to deposit $"+form.getRealAmount()+" has been submitted. Please wait for transition processing.";  
 		} catch (RollbackException e) {
 			errors.add(e.getMessage());
 			return "depositCheck.jsp";
@@ -99,7 +99,7 @@ public class DepositCheckAction  extends Action  {
 			errors.add(e.getMessage());
 			return "depositCheck.jsp";
 		}
-		message = "Your request has been submitted. Please wait for transition processing."; 
+		
 		request.setAttribute("form", null);
 		 request.setAttribute("messages", message);
 		return "depositCheck.jsp";

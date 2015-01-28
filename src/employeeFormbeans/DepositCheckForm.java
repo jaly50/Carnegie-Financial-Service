@@ -46,7 +46,7 @@ public class DepositCheckForm   extends FormBean   {
         //Cash and fund share prices are tracked to two decimal places and also stored as (long) integers in the database.
          databaseAmount = (long) (realAmount * 100);
          if (databaseAmount - realAmount*100 !=0) {
-        	 errors.add("Depsit amount should be x.xx(tracked to two decimal places)");
+        	 errors.add("Deposit amount should be x.xx(tracked to two decimal places)");
          }
         
         
