@@ -75,6 +75,7 @@ function check(lbl){
     <thead>
       <tr>
         <th>Fund ID</th>
+        <th>Fund Name</th>
         <th>Fund Symbol</th>
         <th>Last Transition Day Price</th>
         <th>Set New Price</th>
@@ -85,6 +86,7 @@ function check(lbl){
      <c:forEach var="f" items="${TransiFundTable}">    
       <tr>
         <td>${f.fund_id }</td>
+        <td>${f.name}</td> 
         <td>${f.symbol}</td>
          <td align = "right">${f.latestPrice}</td>
         <td align="center"><input type="text" id="price" name="price" value=""/></td>

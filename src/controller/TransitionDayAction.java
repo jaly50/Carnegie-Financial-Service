@@ -476,8 +476,10 @@ public class TransitionDayAction extends Action {
 		ArrayList<TransiFundTable> TransiFundTable = new ArrayList<TransiFundTable>();
 		if (fundDAO.getFunds() != null && fundDAO.getFunds().length > 0) {
 			for (int i = 0; i < fundList.length; i++) {
+				Fund fund = fundList[i];
 				TransiFundTable tableRow = new TransiFundTable();
 				tableRow.setFund_id(fundList[i].getFund_id());
+				tableRow.setName(fund.getName());
 				tableRow.setSymbol(fundList[i].getSymbol());
 				double displayPrice = 0;
 
