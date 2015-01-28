@@ -59,13 +59,8 @@ function check(lbl){
 
 
 <div class="container">
-<br />
- <br />
- <br />
  <h2>Transition Day</h2>
- 
-<br />
-<h5>Set New Funds Price:</h5>
+<br>
  
 <form method="post" action="transitionDay.do">
 <h4 align="center">  New Date: 
