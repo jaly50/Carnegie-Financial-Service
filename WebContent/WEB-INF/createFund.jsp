@@ -8,7 +8,7 @@
  <br />
 <form method="post" action="createFund.do">
 <h4 style = "margin-left:380px">   Fund Name: &nbsp;&nbsp;&nbsp;&nbsp;
-     <input name="name" type="text" value="${form.name}" />
+     <input name="name" maxlength="30" type="text" value="${form.name}" />
  </h4>
  <br />
  

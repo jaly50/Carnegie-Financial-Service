@@ -28,8 +28,11 @@ public class CreateFundForm  extends FormBean  {
 		if (name == null || name.length() == 0) {
 			errors.add("Fund Name is required");
 		}
+		if (name.length() >30) {
+			errors.add("Please input a shorter fund name(with 30 characters)");
+		}
 		if (!name.matches(pattern)) {
-			errors.add("Only character, number, and \"-\", \"_\", \".\" are allowed for fund name.");
+			errors.add("Only characters, numbers, and \"-\", \"_\", \".\" are allowed for fund name.");
 		}
 
 		if (symbol == null || symbol.length() == 0) {
