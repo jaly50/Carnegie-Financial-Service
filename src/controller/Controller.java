@@ -52,7 +52,6 @@ public class Controller extends HttpServlet {
         Action.add(new TransactionHistoryAction(model));
         Action.add(new ViewCusDetailAccAction(model));
         Action.add(new ViewCusAccAction(model));
-        Action.add(new ViewCusTransactionHistoryAction(model));
 		Action.add(new BuyFundAction(model));
 		Action.add(new ResearchFundAction(model));
 		Action.add(new TransitionDayAction(model));
