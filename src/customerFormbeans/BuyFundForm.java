@@ -57,7 +57,7 @@ public class BuyFundForm extends FormBean {
 				errors.add("Buy amount should be a number");
 				return errors;
 			}
-		    if (realAmount < 1) {
+		    if (realAmount < 1 || realAmount>1000000) {
 		  	  errors.add("The minimum buy amount is $1");
 		    }
 		    //Cash and fund share prices are tracked to two decimal places and also stored as (long) integers in the database.
