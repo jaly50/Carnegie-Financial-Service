@@ -105,14 +105,16 @@ public class CreateCusAccForm extends FormBean {
 
 		if (username == null || username.length() == 0) {
 			errors.add("Username is required");
+			
 		}
 		if(username.substring(0, 1).matches("[0-9]"))
 		{
 			errors.add("The first character of the username can't be a number");
+			System.out.println("error check in addr_line2"+addr_line2);
 		}
 		if(!(username.matches("^\\d*[a-zA-Z][a-zA-Z\\d]*$")))
 		{
-			errors.add("Characters other than alphabets and numbers are not allowed");
+			errors.add("Characters other than alphabets and numbers are not allowed in username");
 		}
 
 		if (firstName == null || firstName.length() == 0) {
@@ -125,7 +127,16 @@ public class CreateCusAccForm extends FormBean {
 		if (addr_line1 == null || addr_line1.length() == 0) {
 			errors.add("Address Line 1 is required");
 		}
+        if(addr_line1.contains("&lt;")||addr_line1.contains("&gt;")||addr_line1.contains("&amp;")||addr_line1.contains("\""))
+        {    //System.out.println("In error address thing");
+        	errors.add("addr_line1 cannot contain angle brackets or quotes");
+        }	
 
+        
+        if(addr_line2.contains("&lt;")||addr_line2.contains("&gt;")||addr_line2.contains("&amp;")||addr_line2.contains("\""))
+        {    //System.out.println("In error address thing");
+        	errors.add("addr_line2 cannot contain angle brackets or quotes");
+        }	
 		if (city == null || city.length() == 0) {
 			errors.add("City is required");
 		}
@@ -177,10 +188,19 @@ public class CreateCusAccForm extends FormBean {
 		{
 			errors.add("Zip should only contain numbers");
 		}
+		if(Double.parseDouble(cash)<0)
+		{
+			errors.add("Cash value cannot be negative");
+		}
+		if(Double.parseDouble(cash)>1000000000 || Double.parseDouble(cash)<0.01)
+		{
+			errors.add("Cash out of range! Contact admin for assistance");
+		}
 		if(!(cash.matches("^\\d+(\\.\\d{1,2})?$")))
 		{
 			errors.add("Should be a number with upto two decimal places");
 		}
+		
 			if(zip.length()>5)
 		{
 			errors.add("Zip can't ba more than 5 characters");
