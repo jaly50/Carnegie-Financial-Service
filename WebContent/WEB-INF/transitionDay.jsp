@@ -69,8 +69,8 @@ function check(lbl){
 <h5>Set New Funds Price:</h5>
  
 <form method="post" action="transitionDay.do">
-<h4 align="center">  New Date(YYYYMMDD): 
-      <input type="text" id="newDate" name="newDate" value=""/> 
+<h4 align="center">  New Date: 
+      <input type="text" id="newDate" name="newDate" placeholder="YYYYMMDD" value=""/> 
       <input class="btn btn-default" type="submit" name="button" value="Submit">
       &nbsp;&nbsp;&nbsp;&nbsp;<span>Last Transition Day:&nbsp;</span><span> ${latestDate}</span>
  </h4>
