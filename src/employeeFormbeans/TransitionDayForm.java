@@ -77,6 +77,12 @@ public class TransitionDayForm extends FormBean {
 				errors.add("Fund price should be a number");
 				return errors;
 			}
+			if (realAmount == 0) {
+				errors.add("The price cannot be zero");
+				return errors;
+			}
+				
+			
 			if (realAmount < 0.01) {
 				errors.add("The minimum fund price is $0.01");
 				return errors;

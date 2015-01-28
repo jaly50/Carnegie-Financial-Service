@@ -232,7 +232,7 @@ public class TransitionDayAction extends Action {
 				int fund_id = t.getFund_id();
 				String getPrice = fidPriceMap.get(fund_id);
 				double realPrice = Double.valueOf(getPrice);
-				long databasePrice = (long) realPrice * 100;
+				long databasePrice = (long) (realPrice * 100);
 				long shares;
 				double doubleDatabasePrice = Double.valueOf(databasePrice);
 				double doubleAmount = Double.valueOf(amount);
@@ -240,7 +240,7 @@ public class TransitionDayAction extends Action {
 				// buy transaction case
 				if (type.equals("BuyFund")) {
 
-					shares = (long) (doubleAmount / doubleDatabasePrice * 1000);
+					shares = (long) ((amount * 1000) / (databasePrice * 1000) * 1000);
 					try {
 						transactionDAO.transactionBuyUpdate(newDate, shares,
 								pendingTransactions[i]);
