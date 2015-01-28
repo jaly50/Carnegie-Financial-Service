@@ -74,11 +74,12 @@ function check(lbl){
  <table class="table table-bordered">
     <thead>
       <tr>
-        <th>Fund ID</th>
-        <th>Fund Name</th>
-        <th>Fund Symbol</th>
-        <th>Last Transition Day Price</th>
-        <th>Set New Price</th>
+        <th><p align="left">Fund ID</th>
+        <th><p align="left">Fund Name</th>
+        <th><p align="left">Fund Symbol</th>
+        <th><p align="right">Last Transition Day Price</th>
+        <th><p align="center">Set New Price</th>
+
       </tr>
     </thead>
     <tbody>

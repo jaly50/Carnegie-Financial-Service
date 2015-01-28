@@ -24,10 +24,10 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th>Full Name</th>
-        <th>User Name</th>
-        <th>Current Balance</th>
-        <th>Available Blance</th>
+        <th><p align="left">Full Name</th>
+        <th><p align="left">User Name</th>
+        <th><p align="right">Current Balance</th>
+        <th><p align="right">Available Balance</th>
         <th></th>
       </tr>
     </thead>
@@ -39,9 +39,9 @@
 						value="${c.customer_id}" /> ${c.firstname}&nbsp;${c.lastname}
 			</td>
 			 <td>${c.username}</td>
-        <td><fmt:formatNumber type="number" 
+        <td align="right"><fmt:formatNumber type="number" 
             pattern="#,##0.00" value="${c.totalbalance/100}" /></td>
-        <td><fmt:formatNumber type="number" 
+        <td align="right"><fmt:formatNumber type="number" 
             pattern="#,##0.00" value="${c.availablebalance/100}" /></td>
         <td align="center"><input type="radio" name="select" value="${c.customer_id}"></td>
 		</tr>
