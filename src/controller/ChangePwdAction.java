@@ -34,7 +34,7 @@ public class ChangePwdAction extends Action {
 		// Set up error list
 		List<String> errors = new ArrayList<String>();
 		request.setAttribute("errors", errors);
-
+		String message = null;
 		try {
 			// Set up user list for nav bar
 			//request.setAttribute("userList", userDAO.getUsers());
@@ -67,7 +67,11 @@ public class ChangePwdAction extends Action {
             	 {  // user.setPassword(form.getNewPassword());
             		 
             		customerDAO.setPassword(user.getUsername(),form.getNewPassword());
-      				return "viewAccAction.do";
+            		 message = "Password changed successfully: "; 
+            			request.setAttribute("form", null);
+    	        		 request.setAttribute("messages", message);
+    	        		 return "change-pwd.jsp";
+    	            
              }
             	 else
   	            {
@@ -82,7 +86,11 @@ public class ChangePwdAction extends Action {
  	            	//user.setHashedPassword(form.getNewPassword());
  				    System.out.println("In employee setting new password");
  	            	employeeDAO.setPassword(user.getUsername(),form.getNewPassword());
- 				return "createFund.do";
+ 	            	 message = "Password changed successfully: "; 
+ 	            	  
+ 	        		request.setAttribute("form", null);
+ 	        		 request.setAttribute("messages", message);
+ 	        		 return "change-pwd.jsp";
  	            }
  				else
  	            {
@@ -94,6 +102,7 @@ public class ChangePwdAction extends Action {
  				errors.add("No such a user type");
  				return "login.jsp";
  			}
+            
 		} catch (RollbackException e) {
 			errors.add(e.toString());
 			return "error-list.jsp";

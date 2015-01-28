@@ -1,5 +1,6 @@
 <jsp:include page="template-top.jsp" />
 <jsp:include page="error-list.jsp" />
+<jsp:include page="message.jsp" />
 
 <p>
 <div class="container">
@@ -42,7 +43,7 @@
 		</tr>
 		<tr>
 			<td><h4 style = "margin-left:380px">Zip:<span style="color:red;">*</span></td>
-			<td><input type="text" name="zip" value="${form.zip}" /></td>
+			<td><input type="text" name="zip" value="${form.zip}" placeholder="upto 5 numbers long"/></td>
 		</tr>		
         <tr>
 			<td><h4 style = "margin-left:380px">Cash:<span style="color:red;">*</span></td>
@@ -58,7 +59,7 @@
 		</tr>
 		<tr>
 			<td colspan="2" align="center"> <h6 align = "center" style = "margin-left:380px">
-			<input align="center" type="submit" class="btn btn-default"	name="button" value="Register" /></td>
+			<input align="center" type="submit" class="btn btn-default"	name="button" value="Create" /></td>
 	   </h6>
 		
 		<tr>

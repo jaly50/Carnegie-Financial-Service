@@ -1,6 +1,8 @@
 
 <jsp:include page="template-top.jsp" />
 <jsp:include page="error-list.jsp" />
+<jsp:include page="message.jsp" />
+
 <p style="font-size:medium">
 	Enter your new password
 </p>

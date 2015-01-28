@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="template-top.jsp" />
 <jsp:include page="error-list.jsp" />
+<jsp:include page="message.jsp" />
 
 <div class="container">
 	<br /> <br /> <br />
@@ -23,7 +24,7 @@
 		<br />
 		<h4 style="margin-left: 380px">
 			New Password: &nbsp;&nbsp;&nbsp; <input name="newPassword"
-				type="text" value="${form.newPassword}" />
+				type="password" value="${form.newPassword}" />
 		</h4>
 		<br />
 

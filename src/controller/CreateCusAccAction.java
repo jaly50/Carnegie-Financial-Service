@@ -37,6 +37,7 @@ public class CreateCusAccAction extends Action {
     public String perform(HttpServletRequest request) {
         List<String> errors = new ArrayList<String>();
         request.setAttribute("errors",errors);
+        String message = null;
 
         try {
 	        CreateCusAccForm form = formBeanFactory.create(request);
@@ -74,14 +75,18 @@ public class CreateCusAccAction extends Action {
             cus.setAvailablebalance(form.getCashAsLong());
             
 	        customerDAO.createCustomer(cus);
-	        
-			return "viewCustomerList.do";
-        } catch (Exception e) { //RollBackException 
+	        message = "You successfully created a new customer: "+cus.getFirstname()+" "+cus.getLastname(); 
+	    } catch (Exception e) { //RollBackException 
         	errors.add(e.getMessage());
         	return "create-customer.jsp";
         } /*catch (FormBeanException e) {
         	errors.add(e.getMessage());
         	return "register.jsp";
         }*/
+		request.setAttribute("form", null);
+		 request.setAttribute("messages", message);
+			return "create-customer.jsp";
+		    
+
     }
 }
