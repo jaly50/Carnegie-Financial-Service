@@ -88,8 +88,8 @@ public class TransitionDayForm extends FormBean {
 				return errors;
 			}
 			
-			if (realAmount > 1000000) {
-				errors.add("The maximum fund price is $1,000,000");
+			if (realAmount > 10000) {
+				errors.add("The maximum fund price is $10,000");
 				return errors;
 			}
 				
