@@ -250,10 +250,13 @@ public class TransitionDayAction extends Action {
 				double realPrice = Double.valueOf(getPrice);
 				long databasePrice = (long) realPrice * 100;
 				long shares;
+				double doubleDatabasePrice = Double.valueOf(databasePrice);
+				double doubleAmount = Double.valueOf(amount);
 
 				// buy transaction case
 				if (type.equals("BuyFund")) {
-					shares = amount / databasePrice * 1000;
+					
+					shares = (long)(doubleAmount / doubleDatabasePrice * 1000);
 					try {
 						transactionDAO.transactionBuyUpdate(newDate, shares,
 								pendingTransactions[i]);
