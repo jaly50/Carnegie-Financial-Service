@@ -83,8 +83,8 @@ public class TransitionDayForm extends FormBean {
 			}
 				
 			
-			if (realAmount < 0.01) {
-				errors.add("The minimum fund price is $0.01");
+			if (realAmount < 1) {
+				errors.add("The minimum fund price is $1");
 				return errors;
 			}
 			

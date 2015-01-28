@@ -90,7 +90,7 @@ function check(lbl){
         <td>${f.name}</td> 
         <td>${f.symbol}</td>
          <td align = "right">${f.latestPrice}</td>
-        <td align="center"><input type="text" id="price" name="price" value=""/></td>
+        <td align="center"><input type="text" id="price" placeholder="$1-10,000"  name="price" value=""/></td>
       </tr>
      </c:forEach>
     </tbody>
