@@ -96,11 +96,31 @@ public class SellFundAction extends Action {
 			if (errors.size() != 0) {
 				return "sellFund.jsp";
 			}
+			
+			
+			
+			
             long sellShares = form.getDatabaseShares();
             int fund_id = form.getFun_id();
             Fund fund = fundDAO.getFund(fund_id);
+            
+            // check balance overflow
+            Position originPos = positionDAO.getPosition(customer_id, fund_id);
+			long originBalance = customer.getAvailablebalance();
+			long originShares = originPos.getAvailableShares();
+			long nextBalance = originBalance + 1000000 * originShares;
+			long upperBalance = 10000000000000L;
+			if(nextBalance > upperBalance)
+			{
+				errors.add("The balance of Fund " + fund_id + " is too high, please "
+						+ "try to use your money or you can contact us");
+				return "sellFund.jsp";
+			}
+				
+           
+            
+         // Create the transaction bean
 			Transaction transaction;
-			// Create the transaction bean
 			transaction = new Transaction();
 			transaction.setCustomer_id(customer_id);
 			transaction.setFund_id(fund_id);

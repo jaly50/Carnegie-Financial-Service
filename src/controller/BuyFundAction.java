@@ -137,6 +137,19 @@ public class BuyFundAction extends Action {
 			//update transaction in database
 			fund_id = form.getFund_id();
 			fund = fundDAO.getFund(fund_id);
+			
+			// check shares overflow
+            Position originPos = positionDAO.getPosition(customer_id, fund_id);
+			long originShares  = originPos.getAvailableShares();
+			long nextShares    = originShares + 10000000000L;
+			long upperShares  = 1000000000000L;
+			if(nextShares > upperShares)
+			{
+				errors.add("The Shares of Fund " + fund_id + " is too high, please "
+						+ "try to sell some shares or please contact us");
+				return "buyFund.jsp";
+			}
+			
 			Transaction transaction = new Transaction();
 			transaction.setAmount(databaseAmount);
 			transaction.setCustomer_id(customer_id);
