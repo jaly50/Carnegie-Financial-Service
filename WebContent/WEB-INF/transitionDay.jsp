@@ -7,8 +7,13 @@
 <jsp:include page="error-list.jsp" />
 <jsp:include page="message.jsp" />
 
+<script type="text/javascript" src="js/epoch_classes.js"></script>
+<link rel="stylesheet" type="text/css" href="css/epoch_styles.css" />
 
-<script type="text/javascript"> 
+
+<script type="text/javascript" > 
+
+
 
 function myfilter(e) {
 	 var obj=e.srcElement || e.target;
@@ -54,6 +59,11 @@ function check(lbl){
    }  
 }
 
+var bas_cal, dp_cal, ms_cal; // declare the calendars as global variables
+window.onload = function () {
+  /*initialize any calendars on the page - in this case 3.*/
+  dp_cal  = new Epoch('dp_cal','popup',document.getElementById('date_field'));
+}; 
 
 </script>
 
@@ -63,11 +73,24 @@ function check(lbl){
 <br>
  
 <form method="post" action="transitionDay.do">
-<h4 align="center">  New Date: 
-      <input type="text" id="newDate" name="newDate" placeholder="YYYYMMDD" value=""/> 
-      <input class="btn btn-default" type="submit" name="button" value="Submit">
-      &nbsp;&nbsp;&nbsp;&nbsp;<span>Last Transition Day:&nbsp;</span><span> ${latestDate}</span>
- </h4>
+
+ <div class="col-lg-6">
+<div class="input-group"  style="margin-left:150px" > 
+<span class="input-group-btn">
+<span style="font-size:30px;"  class="glyphicon glyphicon-calendar"  aria-hidden="true" onclick="dp_cal.toggle();" > </span>
+  </span>
+ <input type="text" id="date_field" name="newDate" readonly="readonly"  placeholder="New Transition Date" class="form-control" style="width: 280"  />
+&nbsp;&nbsp; 
+<span class="input-group-btn">
+   <input class="btn btn-default" type="submit" name="button" value="Submit"/>
+    </span>
+     
+</div>
+</div>
+<br/>
+<br/>
+  <h4 style="text-align: right;margin-right:70px;">   <span >Last Transition Day:&nbsp;</span><span> ${latestDate}</span></h4>
+ 
  <br>
  
 
