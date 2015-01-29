@@ -62,7 +62,7 @@ function check(lbl){
 var bas_cal, dp_cal, ms_cal; // declare the calendars as global variables
 window.onload = function () {
   /*initialize any calendars on the page - in this case 3.*/
-  dp_cal  = new Epoch('dp_cal','popup',document.getElementById('date_field'));
+  dp_cal  = new Epoch('dp_cal','popup',document.getElementById('newDate'));
 }; 
 
 </script>
@@ -79,7 +79,7 @@ window.onload = function () {
 <span class="input-group-btn">
 <span style="font-size:30px;"  class="glyphicon glyphicon-calendar"  aria-hidden="true" onclick="dp_cal.toggle();" > </span>
   </span>
- <input type="text" id="date_field" name="newDate" readonly="readonly"  placeholder="New Transition Date" class="form-control" style="width: 280"  />
+ <input type="text" id="newDate" name="newDate" readonly="readonly"  placeholder="New Transition Date" class="form-control" style="width: 280"  />
 &nbsp;&nbsp; 
 <span class="input-group-btn">
    <input class="btn btn-default" type="submit" name="button" value="Submit"/>
