@@ -222,7 +222,7 @@ public class CreateCusAccForm extends FormBean {
 		{
 			errors.add("Cash value cannot be negative");
 		}
-		if(Double.parseDouble(cash)>1000000000 || Double.parseDouble(cash)<0.01)
+		if(Double.parseDouble(cash)>10000000 || Double.parseDouble(cash)<0.01)
 		{
 			errors.add("Cash out of range! Contact admin for assistance");
 		}
