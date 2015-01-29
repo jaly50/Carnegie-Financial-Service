@@ -62,7 +62,7 @@ function verification() {
 	
  <br />
  <h4 align="center">   Amount to buy: 
-      <input type="text" id="buyAmount" name="buyAmount" placeholder="1-1000000"
+      <input type="text" id="buyAmount" name="buyAmount" placeholder="$1-1,000,000"
       style="ime-mode:disabled" onkeypress="return myfilter(event)"
       /> 
       <input class="btn btn-default" type="submit" value="Buy!" onClick="return verification()">
