@@ -9,6 +9,7 @@ import databeans.*;
 import employeeFormbeans.*;
 import model.*;
 
+import org.genericdao.RollbackException;
 import org.mybeans.form.FormBeanException;
 import org.mybeans.form.FormBeanFactory;
 
@@ -76,13 +77,14 @@ public class CreateCusAccAction extends Action {
             
 	        customerDAO.createCustomer(cus);
 	        message = "You successfully created a new customer: "+cus.getFirstname()+" "+cus.getLastname(); 
-	    } catch (Exception e) { //RollBackException 
+	    } catch (RollbackException e) { //RollBackException 
         	errors.add(e.getMessage());
         	return "create-customer.jsp";
-        } /*catch (FormBeanException e) {
+        } catch (FormBeanException e) {
         	errors.add(e.getMessage());
-        	return "register.jsp";
-        }*/
+        	System.out.println("Error is here"+e.getMessage());
+        	return "create-customer.jsp";
+        }
 		request.setAttribute("form", null);
 		 request.setAttribute("messages", message);
 			return "create-customer.jsp";

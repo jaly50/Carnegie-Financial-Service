@@ -100,21 +100,28 @@ public class CreateCusAccForm extends FormBean {
 	}
 
 
+	public String getCash() {
+		return cash;
+	}
+	public long getCashAsLong() {
+
+		long cashLong = (long) (100*(Double.parseDouble(cash)));
+
+		return cashLong;
+		
+	}
+
+	public void setcash(String cash) {
+		this.cash = cash;
+	}
+
+
 	public List<String> getValidationErrors() {
 		List<String> errors = new ArrayList<String>();
 
 		if (username == null || username.length() == 0) {
 			errors.add("Username is required");
-			
-		}
-		if(username.substring(0, 1).matches("[0-9]"))
-		{
-			errors.add("The first character of the username can't be a number");
-			System.out.println("error check in addr_line2"+addr_line2);
-		}
-		if(!(username.matches("^\\d*[a-zA-Z][a-zA-Z\\d]*$")))
-		{
-			errors.add("Characters other than alphabets and numbers are not allowed in username");
+			//return errors;
 		}
 
 		if (firstName == null || firstName.length() == 0) {
@@ -127,7 +134,38 @@ public class CreateCusAccForm extends FormBean {
 		if (addr_line1 == null || addr_line1.length() == 0) {
 			errors.add("Address Line 1 is required");
 		}
+		if (city == null || city.length() == 0) {
+			errors.add("City is required");
+		}
 
+		if (state == null || state.length() == 0) {
+			errors.add("State is required");
+		}
+		if (cash == null || cash.length() == 0) {
+			errors.add("Cash is required");
+		}
+
+		if (password == null || password.length() == 0) {
+			errors.add("Password is required");
+		}
+
+
+		if (confirm == null || confirm.length() == 0) {
+			errors.add("Confirm Password is required");
+		}
+
+		if (errors.size() > 0) {
+			return errors;
+		}
+
+		if(username.substring(0, 1).matches("[0-9]"))
+		{
+			errors.add("The first character of the username can't be a number");
+		}
+		if(!(username.matches("^\\d*[a-zA-Z][a-zA-Z\\d]*$")))
+		{
+			errors.add("Characters other than alphabets and numbers are not allowed in username");
+		}
         if(addr_line1.contains("!")||addr_line1.contains("?")||addr_line1.contains("*")||addr_line1.contains("&lt;")||addr_line1.contains("&gt;")||addr_line1.contains("&amp;")||addr_line1.contains("\""))
         {    //System.out.println("In error address thing");
         	errors.add("addr_line1 cannot contain <>,?,!,* or quotes");
@@ -137,17 +175,6 @@ public class CreateCusAccForm extends FormBean {
         {    //System.out.println("In error address thing");
         	errors.add("addr_line2 cannot contain <>,?,!,* or quotes");
         }	
-		if (city == null || city.length() == 0) {
-			errors.add("City is required");
-		}
-
-		if (state == null || state.length() == 0) {
-			errors.add("State is required");
-		}
-
-		if (password == null || password.length() == 0) {
-			errors.add("Password is required");
-		}
 		if(username.length()>50)
 		{
 			errors.add("The length of username can't be more than 50");
@@ -170,12 +197,12 @@ public class CreateCusAccForm extends FormBean {
 		}
 		if(city.length()>50)
 		{
-			System.out.println("The length of city cannot be more than 50");
+			errors.add("The length of city cannot be more than 50");
 		}
 
 		if(state.length()>50)
 		{
-			System.out.println("The length of state cannot be more than 50");
+			errors.add("The length of state cannot be more than 50");
 		}
 		
 		if(password.length()<6)
@@ -187,13 +214,6 @@ public class CreateCusAccForm extends FormBean {
 			errors.add("Password can't be more than 15 characters");
 		}
 
-		if (confirm == null || confirm.length() == 0) {
-			errors.add("Confirm Password is required");
-		}
-
-		if (errors.size() > 0) {
-			return errors;
-		}
 
 		if (!password.equals(confirm)) {
 			errors.add("Passwords are not the same");
@@ -218,7 +238,9 @@ public class CreateCusAccForm extends FormBean {
 		{
 			errors.add("Zip should only contain numbers");
 		}
-		if(Double.parseDouble(cash)<0)
+		if(cash.matches("^\\d+(\\.\\d{1,2})?$"))
+				{
+		 if(Double.parseDouble(cash)<0)
 		{
 			errors.add("Cash value cannot be negative");
 		}
@@ -226,6 +248,7 @@ public class CreateCusAccForm extends FormBean {
 		{
 			errors.add("Cash out of range! Contact admin for assistance");
 		}
+				}
 		if(!(cash.matches("^\\d+(\\.\\d{1,2})?$")))
 		{
 			errors.add("Should be a number with upto two decimal places");
@@ -235,24 +258,9 @@ public class CreateCusAccForm extends FormBean {
 		{
 			errors.add("Zip can't ba more than 5 characters");
 		}
+	
 		return errors;
 	}
     
     
-	public String getCash() {
-		return cash;
-	}
-	public long getCashAsLong() {
-
-		long cashLong = (long) (100*(Double.parseDouble(cash)));
-
-		return cashLong;
-		
-	}
-
-	public void setcash(String cash) {
-		this.cash = cash;
-	}
-
-
 }

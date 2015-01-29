@@ -12,6 +12,7 @@ import databeans.*;
 import employeeFormbeans.*;
 import model.*;
 
+import org.genericdao.RollbackException;
 import org.mybeans.form.FormBeanException;
 import org.mybeans.form.FormBeanFactory;
 
@@ -40,7 +41,8 @@ public class CreateEmpAccAction extends Action {
 		}
 
     public String perform(HttpServletRequest request) {
-        List<String> errors = new ArrayList<String>();
+    	HttpSession session = request.getSession(true);
+    	List<String> errors = new ArrayList<String>();
         request.setAttribute("errors",errors);
         String message = null;
 
@@ -77,13 +79,13 @@ public class CreateEmpAccAction extends Action {
 
 	        message = "You successfully created a new employee: "+emp.getFirstname()+" "+emp.getLastname(); 
 			
-        } catch (Exception e) { //RollBackException 
+        } catch (RollbackException e) { //RollBackException 
         	errors.add(e.getMessage());
         	return "create-employee.jsp";
-        } /*catch (FormBeanException e) {
+        } catch (FormBeanException e) {
         	errors.add(e.getMessage());
-        	return "register.jsp";
-        }*/
+        	return "create-employee.jsp";
+        }
          
 		request.setAttribute("form", null);
 		 request.setAttribute("messages", message);

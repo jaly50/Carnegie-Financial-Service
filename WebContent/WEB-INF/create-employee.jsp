@@ -5,24 +5,24 @@
 <p>
 <div class="container">
 
-<form method="post">
+<form method="post" action="create_employee.do">
 	<input type="hidden" name="redirect" value="${redirect}" />
 	<table>
 	   
 		<tr> 
 			<td><h4 style = "margin-left:380px">Username:<span style="color:red;">*</span></td>
-			<td><input type="text" name="username" value="${form.username}" /></td>
+			<td><input type="text" name="username" value="${form.username}" placeholder="Alphanumerics"/></td>
 		</tr>
 		<br>
 		<tr>
 			<td><h4 style = "margin-left:380px">First Name:<span style="color:red;">*</span></td>
 			<td><input type="text" name="firstName"
-				value="${form.firstName}" /></td>
+				value="${form.firstName}" placeholder="Alphabets"/></td>
 		</tr>
 		<br>
 		<tr>
 			<td><h4 style = "margin-left:380px">Last Name:<span style="color:red;">*</span></td>
-			<td><input type="text" name="lastName" value="${form.lastName}" /></td>
+			<td><input type="text" name="lastName" value="${form.lastName}" placeholder="Alphabets"/></td>
 		</tr>
 <br>
 		<tr>
