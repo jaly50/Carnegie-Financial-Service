@@ -69,26 +69,6 @@ public class Model {
 			   e.setPassword("adminj");
 		       employeeDAO.create(e);
 		   }
-
-		   // Just for test
-           // If everything works, we will delete it before submit
-
-		   if (fundDAO.getCount()==0) {
-			   Fund f = new Fund();
-			   f.setName("xy");
-			   f.setSymbol("interset");
-			   fundDAO.create(f);
-		   }
-
-		   if (customerDAO.getCount()==0) {
-			   Customer c = new Customer();
-			   c.setUsername("yirenz");
-			   c.setFirstname("yiren");
-			   c.setLastname("zeng");
-			   c.setTotalbalance(3232);
-			   c.setPassword("xyz");
-			   customerDAO.createCustomer(c);
-		   }
 		   
 
 		}

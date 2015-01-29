@@ -29,8 +29,11 @@ public class DepositCheckForm   extends FormBean   {
 		List<String> errors = new ArrayList<String>();
 		if (username == null || username.length()==0)
 			errors.add("Customer Username is required");
-        if (amount ==null || amount.length()==0) 
+        if (amount ==null || amount.length()==0) {
         	errors.add("Amount is required");
+	        return errors;        
+        }
+	
         try {
         	realAmount = Double.parseDouble(amount);
         } catch (NumberFormatException e) {
