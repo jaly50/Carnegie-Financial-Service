@@ -51,11 +51,6 @@ public class RequestCheckAction   extends Action  {
 
 			RequestCheckForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
-			
-			String ab = String.valueOf(customer.getAvailablebalance());
-			int len = ab.length();
-			ab = ab.substring(0,len-2) +"."+ab.substring(len-2);
-			request.setAttribute("availablebalance", ab);
 
 			// If no params were passed, return with no errors so that the form
 			// will be
