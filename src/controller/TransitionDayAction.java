@@ -341,8 +341,14 @@ public class TransitionDayAction extends Action {
 						long tempShareIncre = 0;
 						if (shareIncreMap.get(workedTransactions[j]
 								.getFund_id()) != null) {
-							tempShareIncre = shareIncreMap
+							tempShareIncre = workedTransactions[j].getShares();
+							tempShareIncre += shareIncreMap
 									.get(workedTransactions[j].getFund_id());
+							shareIncreMap.put(
+									workedTransactions[j].getFund_id(),
+									tempShareIncre);
+							System.out.println(j + " shareIncre is " + tempShareIncre);
+							
 						} else {
 							tempShareIncre += workedTransactions[j].getShares();
 							shareIncreMap.put(
