@@ -8,17 +8,6 @@
 <script type="text/javascript">	
 
 
-function verification() {
-	var text = document.getElementById("buyAmount").value;
-	  if (text == '') {
-	     alert("Please Input Amount to buy");
-	     return false;
-	  }
- 	
-  
-  return true;
-}
-
 </script>
 
 

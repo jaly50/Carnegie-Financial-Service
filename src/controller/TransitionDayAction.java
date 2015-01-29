@@ -42,7 +42,7 @@ public class TransitionDayAction extends Action {
 	private FormBeanFactory<TransitionDayForm> formBeanFactory = FormBeanFactory
 			.getInstance(TransitionDayForm.class);
 	static DecimalFormat displayMoney = new DecimalFormat("$#,##0.00");
-	static SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+	static SimpleDateFormat sdfShow = new SimpleDateFormat("MM/dd/yyyy");
 	private CustomerDAO customerDAO;
 	private Fund_Price_HistoryDAO fundPriceHistoryDAO;
 	private TransactionDAO transactionDAO;
@@ -68,6 +68,7 @@ public class TransitionDayAction extends Action {
 		Employee user = (Employee) session.getAttribute("user");
 		String message = null;
 		String dateShow = "";
+		String latestDateShow = "";
 
 		try {
 
@@ -108,8 +109,10 @@ public class TransitionDayAction extends Action {
 
 			if (LatestDate == null || LatestDate.toString() == "")
 				request.setAttribute("latestDate", "");
-			else
-				request.setAttribute("latestDate", sdf.format(LatestDate));
+			else {
+				latestDateShow = sdfShow.format(LatestDate);
+				request.setAttribute("latestDate", latestDateShow);
+				}
 
 			System.out.println("113");
 			if (!transitionDayForm.isPresent()) {
@@ -161,24 +164,28 @@ public class TransitionDayAction extends Action {
 				errors.addAll(transitionDayForm.validateDate(date[0]));
 				return "transitionDay.jsp";
 			}
-
+			
+			
 			Date newDate = null;
 			Date oldDate = null;
 
 			try {
 
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+				SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 				newDate = sdf.parse(date[0]);
 
 			} catch (ParseException | java.text.ParseException e) {
 
 			}
-			dateShow = String.valueOf(sdf.format(newDate));
+			
+			
+			dateShow = String.valueOf(sdfShow.format(newDate));
+			
 			// validate Date time
 			oldDate = fundPriceHistoryDAO.getLatestDate();
 			if (oldDate != null && !newDate.after(oldDate)) {
-				errors.add("New Date must be after the latest Date "
-						+ sdf.format(oldDate));
+				errors.add("New Date must be after the latest date "
+						+ sdfShow.format(oldDate));
 				return "transitionDay.jsp";
 			}
 
@@ -201,7 +208,7 @@ public class TransitionDayAction extends Action {
 			request.setAttribute("form", null);
 			request.setAttribute("messages", message);
 			System.out.println(message);
-			request.setAttribute("latestDate", sdf.format(newDate));
+			
 
 			List<TransiFundTable> TransiFundTableNew = new ArrayList<TransiFundTable>();
 			TransiFundTableNew = showFundsInformation();
@@ -219,8 +226,34 @@ public class TransitionDayAction extends Action {
 		return "transitionDay.jsp";
 
 	}
+	
+	// 1. deal with fund Price History table
+	@SuppressWarnings("null")
+	public void fund_Price_HistoryHandler(Date newDate,
+			HashMap<Integer, String> fidPriceMap) {
+		int fund_id = 0;
+		Long fundPrice = (long) 0;
+		System.out.println("232" + newDate);
+		for (Entry<Integer, String> entry : fidPriceMap.entrySet()) {
+			fund_id = entry.getKey();
+			fundPrice = (long) (Double.parseDouble(entry.getValue()) * 100);
+			Fund_Price_History fund_Price_History = new Fund_Price_History();
+			fund_Price_History.setFund_id(fund_id);
+			fund_Price_History.setPrice(fundPrice);
+			fund_Price_History.setPrice_date(newDate);
 
-	// 1.deal with pending transactions;
+			try {
+				fundPriceHistoryDAO.create(fund_Price_History);
+			} catch (RollbackException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+
+	// 2.deal with pending transactions;
 	public void pendingTransactionsHandler(Transaction[] pendingTransactions,
 			HashMap<Integer, String> fidPriceMap, Date newDate) {
 		Transaction t;
@@ -289,7 +322,7 @@ public class TransitionDayAction extends Action {
 
 	}
 
-	// 2.deal with worked transactions;
+	// 3.deal with worked transactions;
 	public void workedTransactionHandler(Customer[] cusUpdate,
 			Transaction[] workedTransactions, Date newDate) {
 		for (int i = 0; i < cusUpdate.length; i++) {
@@ -424,29 +457,7 @@ public class TransitionDayAction extends Action {
 
 	}
 
-	@SuppressWarnings("null")
-	public void fund_Price_HistoryHandler(Date newDate,
-			HashMap<Integer, String> fidPriceMap) {
-		int fund_id = 0;
-		Long fundPrice = (long) 0;
-		for (Entry<Integer, String> entry : fidPriceMap.entrySet()) {
-			fund_id = entry.getKey();
-			fundPrice = (long) (Double.parseDouble(entry.getValue()) * 100);
-			Fund_Price_History fund_Price_History = new Fund_Price_History();
-			fund_Price_History.setFund_id(fund_id);
-			fund_Price_History.setPrice(fundPrice);
-			fund_Price_History.setPrice_date(newDate);
-
-			try {
-				fundPriceHistoryDAO.create(fund_Price_History);
-			} catch (RollbackException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
-
-	}
+	
 
 	public boolean compareLatestDate(Date newDate) {
 		Date LatestDate = null;

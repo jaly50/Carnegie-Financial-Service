@@ -120,28 +120,15 @@ public class TransitionDayForm extends FormBean {
 
 		for (int i = 0; i < sdate.length(); i++) {
 			char c = sdate.charAt(i);
-			if (!(c >= '0' && c <= '9')) {
+			if((i == 2 || i ==5) && c !='/') {
+				errors.add("Please choose a date");
+				return errors;
+			}
+			System.out.println("index " + i + "is" + c);
+			if ((i != 2 && i !=5) && !(c >= '0' && c <= '9')) {
 				errors.add("Please input number");
 				return errors;
 			}
-		}
-		int month = Integer.parseInt(sdate.substring(4, 6));
-		if (month <= 0 || month > 12) {
-			errors.add("Please input right month number");
-			return errors;
-		}
-		int day = Integer.parseInt(sdate.substring(6, 8));
-		if (day <= 0 || day > 31) {
-			errors.add("Please input right day number");
-			return errors;
-		}
-		Date date;
-		DateFormat format = new SimpleDateFormat("yyyyMMdd");
-		try {
-			date = format.parse(sdate);
-		} catch (java.text.ParseException e) {
-			errors.add("Please input correct date");
-			e.printStackTrace();
 		}
 		return errors;
 	}
