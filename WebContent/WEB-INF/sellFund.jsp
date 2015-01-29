@@ -94,7 +94,7 @@ function check(lbl){
 
  <br />
  <h4 align="center">  Shares to Sell: 
-      <input type="text" id="shares" name="shares" placeholder="$1-1,000,000"
+      <input type="text" id="shares" name="shares" placeholder="1-1,000,000"
   	  style="ime-mode:disabled" onkeypress="return myfilter(event)"
       /> 
       <input class="btn btn-default" type="submit" value="Sell!" onClick="return verification()">
