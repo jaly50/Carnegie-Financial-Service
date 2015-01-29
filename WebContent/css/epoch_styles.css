@@ -14,7 +14,7 @@ table.calendar {
 	background-color: black;
 	border: solid #999999 1px;
 	background-color: white;
-	width: 300px;
+	width: 250px;
 	text-align: center;
 	/*prevent user from selecting text in Mozilla & Safari - check calendar constructor for IE code)*/
 	-moz-user-select: none;
@@ -61,7 +61,7 @@ table.cells th {
 	border: solid #CCCCCC 1px;
 	text-align: left;
 	font-weight: bold;
-	color: #6095cc;
+	color: #66ccff;
 	width: 50px;
 }
 table.cells th.wkhead {
@@ -81,7 +81,7 @@ table.cells td.wkhead {
 	background-color: white;
 	text-align: center;
 	border-right: double #CCCCCC 3px;
-	color: #6095cc;
+	color: #66ccff;
 }
 table.cells td.noselect {
 	background-color: #EEEEEE;
