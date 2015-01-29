@@ -127,15 +127,15 @@ public class CreateCusAccForm extends FormBean {
 		if (addr_line1 == null || addr_line1.length() == 0) {
 			errors.add("Address Line 1 is required");
 		}
-        if(addr_line1.contains("&lt;")||addr_line1.contains("&gt;")||addr_line1.contains("&amp;")||addr_line1.contains("\""))
-        {    //System.out.println("In error address thing");
-        	errors.add("addr_line1 cannot contain angle brackets or quotes");
-        }	
 
-        
-        if(addr_line2.contains("&lt;")||addr_line2.contains("&gt;")||addr_line2.contains("&amp;")||addr_line2.contains("\""))
+        if(addr_line1.contains("!")||addr_line1.contains("?")||addr_line1.contains("*")||addr_line1.contains("&lt;")||addr_line1.contains("&gt;")||addr_line1.contains("&amp;")||addr_line1.contains("\""))
         {    //System.out.println("In error address thing");
-        	errors.add("addr_line2 cannot contain angle brackets or quotes");
+        	errors.add("addr_line1 cannot contain <>,?,!,* or quotes");
+        }	
+          
+        if(addr_line2.contains("!")||addr_line2.contains("?")||addr_line2.contains("*")||addr_line2.contains("&lt;")||addr_line2.contains("&gt;")||addr_line2.contains("&amp;")||addr_line2.contains("\""))
+        {    //System.out.println("In error address thing");
+        	errors.add("addr_line2 cannot contain <>,?,!,* or quotes");
         }	
 		if (city == null || city.length() == 0) {
 			errors.add("City is required");
