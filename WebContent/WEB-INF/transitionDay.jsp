@@ -70,29 +70,26 @@ window.onload = function () {
 
 <div class="container">
  <h2>Transition Day</h2>
-<br>
+ <br>
  
 <form method="post" action="transitionDay.do">
 
- <div class="col-lg-6">
-<div class="input-group"  style="margin-left:150px" > 
-<span class="input-group-btn">
-<span style="font-size:30px;"  class="glyphicon glyphicon-calendar"  aria-hidden="true" onclick="dp_cal.toggle();" > </span>
+<div class="col-lg-6" style="margin-left:330px" >
+ <div class="input-group"  > 
+  <span class="input-group-btn">
+  <span style="font-size:30px;"  class="glyphicon glyphicon-calendar"  aria-hidden="true" onclick="dp_cal.toggle();" > </span>
   </span>
+  <h4>
  <input type="text" id="newDate" name="newDate" readonly="readonly"  placeholder="New Transition Date" class="form-control" style="width: 280"  />
-&nbsp;&nbsp; 
-<span class="input-group-btn">
-   <input class="btn btn-default" type="submit" name="button" value="Submit"/>
-    </span>
+ <input class="btn btn-default" type="submit" name="button" value="Submit"/>
+  </h4>
      
 </div>
 </div>
-<br/>
-<br/>
-  <h4 style="text-align: right;margin-right:70px;">   <span >Last Transition Day:&nbsp;</span><span> ${latestDate}</span></h4>
- 
+
+  <h4>Last Transition Day:${latestDate}</h4>
  <br>
- 
+ <br>
 
  <table class="table table-bordered">
     <thead>
