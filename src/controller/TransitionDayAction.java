@@ -123,7 +123,7 @@ public class TransitionDayAction extends Action {
 			Integer[] fund_ids = new Integer[prices.length];
 			String[] symbols = new String[prices.length];
 			if (fundList.length != prices.length) {
-				errors.add("New funds created, automatically refreshing");
+				errors.add("Submission failed. New funds created, automatically refreshing");
 				return "transitionDay.jsp";
 			}
 			// validate prices

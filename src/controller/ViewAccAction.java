@@ -76,7 +76,7 @@ public class ViewAccAction extends Action {
 		customer = (Customer) session.getAttribute("customer");
 		session.setAttribute("customer", null);
 		// No customer session, means that the user is Customer
-		if (customer==null)
+		if (customer==null) {
 			 //Get customer id from the session
 			// and refresh customer information from database customer Table
 			// store the new customer information into session
@@ -84,6 +84,7 @@ public class ViewAccAction extends Action {
 			int customer_id = customer.getCustomer_id();
 			customer = customerDAO.getCustomer(customer_id);
 			session.setAttribute("user", customer);
+		}
 		request.setAttribute("customer", customer);
 		if (customer == null) return "login.jsp";
 		System.out.println("Set customer successfully");
