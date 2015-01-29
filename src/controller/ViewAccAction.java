@@ -148,7 +148,7 @@ public class ViewAccAction extends Action {
 				}
 				
 				// get value: double 
-				double valueOrigin = (double) ((sharesOrigin / 1000) * (priceOrigin / 100));
+				double valueOrigin = (double) (((double)sharesOrigin / 1000) * ((double)priceOrigin / 100));
 				String value = priceFormat.format(valueOrigin);
 				item.setValue(fundPrice == null ? "pending" : value);
 				
