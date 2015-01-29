@@ -29,7 +29,7 @@
 		<br />
 
 		<h4 style="margin-left: 380px">
-			Confirm: &nbsp;&nbsp;&nbsp; <input type="text" name="confirm"
+			Confirm: &nbsp;&nbsp;&nbsp; <input type="password" name="confirm"
 				value="${form.confirm}" />
 		</h4>
 		<br />
