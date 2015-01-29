@@ -207,6 +207,7 @@ public class TransitionDayAction extends Action {
 			message = ("Thank you! The transition operation on " + dateShow + " is completed.");
 			request.setAttribute("form", null);
 			request.setAttribute("messages", message);
+			request.setAttribute("latestDate", dateShow);
 			System.out.println(message);
 			
 
