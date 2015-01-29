@@ -13,8 +13,7 @@
  <br />
  
   <h4 style = "margin-left:380px">   Available Balance: &nbsp;
-      $ <span class="menu-head"><fmt:formatNumber type="number" 
-            pattern="#,##0.00" value="${user.availablebalance/100}" />&ensp;</span>
+      $ <span class="menu-head">${availablebalance}</span>
 
       
  </h4>
