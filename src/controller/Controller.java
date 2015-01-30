@@ -104,12 +104,12 @@ public class Controller extends HttpServlet {
 				return Action.perform("message.do", request);
 			}
 			//When type the url directly in employee pages
-			if (action.equals("TransactionHistoryAction.do")) {
+			if (action.equals("TransactionHistoryAction.do") || action.equals("viewAccAction.do")) {
 				Customer customer;
 				 customer = (Customer) session.getAttribute("customer");
 				 if (customer == null) {
 					 request.setAttribute("errors", errors);
-						errors.add("For viewing transaction history, please select one customer.");
+						errors.add("For viewing customer information, please select one customer.");
 						return Action.perform("viewCustomerList.do", request); 
 				 }
 			}
