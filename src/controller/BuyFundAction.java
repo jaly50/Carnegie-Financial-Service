@@ -128,7 +128,7 @@ public class BuyFundAction extends Action {
 			if (originPos != null) {
 				long originShares =originPos.getAvailableShares();
 				long nextShares = (long)((double)(originShares/1000) + form.getAmountAsLong());
-				long upperShares = 1000000000000000L;
+				long upperShares = 100000000000L;
 
 				if (nextShares > upperShares) {
 					errors.add("The Shares of Fund " + fund_id
