@@ -87,6 +87,7 @@ public class TransitionDayAction extends Action {
 			Fund[] fundList = fundDAO.getFunds();
 
 			if (fundList == null || fundList.length == 0) {
+				errors.add("Sorry! There is no available fund to choose");
 				return "transitionDay.jsp";
 			}
 
@@ -118,6 +119,13 @@ public class TransitionDayAction extends Action {
 			if (!transitionDayForm.isPresent()) {
 				return "transitionDay.jsp";
 			}
+			
+			System.out.println("122" + fundList);
+			
+			if (fundList == null || fundList.length == 0) {
+				errors.add("Sorry, there is no available fund");
+				return "transitionDay.jsp";
+			}
 
 			String[] prices = request.getParameterValues("price");
 			Integer[] fund_ids = new Integer[prices.length];
@@ -134,6 +142,8 @@ public class TransitionDayAction extends Action {
 				errors.addAll(transitionDayForm.validateFundPrice(prices));
 				return "transitionDay.jsp";
 			}
+			
+			
 
 			HashMap<Integer, String> fidPriceMap = new HashMap<Integer, String>();
 
