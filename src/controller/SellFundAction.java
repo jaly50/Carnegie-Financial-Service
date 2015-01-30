@@ -103,12 +103,10 @@ public class SellFundAction extends Action {
 			if (originPos != null) {
 				long originBalance = customer.getAvailablebalance();
 				long originShares = originPos.getAvailableShares();
-				long nextBalance = originBalance + 1000000 * originShares;
-				long upperBalance = 10000000000000L;
+				long nextBalance = (long) ((double)(originBalance/100) + (form.getRealShares()*10000));
+				long upperBalance = 1000000000000000L;
 				if (nextBalance > upperBalance) {
-					errors.add("The balance of Fund " + fund_id
-							+ " is too high, please "
-							+ "try to use your money or you can contact us");
+					errors.add("After selling"+ fund.getName() +"your balance would be too high, please try selling some other amount or other funds or you can contact us");
 					return "sellFund.jsp";
 				}
 
