@@ -26,16 +26,23 @@ public class ResetCusPwdForm  extends FormBean  {
 
 		if (username == null || username.length() == 0) {
 			errors.add("Customer Username is required");
+			return errors;
 		}
 
 		if (newPassword == null || newPassword.length() == 0) {
 			errors.add("New Password is required");
+			return errors;
 		}
 		if (confirm == null || confirm.length() == 0) {
 			errors.add("The confirm password is required");
+			return errors;
 		}
 
-
+        if (!confirm.equals(newPassword)) {
+           errors.add("Confirm and New Password are different. Please try again.");
+           return errors;
+        }
+		
 		if (errors.size() > 0) {
 			return errors;
 		}

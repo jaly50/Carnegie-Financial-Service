@@ -1,10 +1,8 @@
             <!-- Footer -->
- 
-
             <div class="footer">
                 <div class="container">
                     <div class="col-md-3 footer-logo">
-                        <a href="#"><img src="images/fogo.png" title="brand-logo" /></a>
+                        <a href="#"><img height="50" width="50" style="background-color:white" src="images/logo.png" title="brand-logo" /></a>
                     </div>
                     <div class="col-md-7 footer-links">
                         <ul class="unstyled-list list-inline">
@@ -21,11 +19,20 @@
                             <div class="clearfix"> </div>
                         </ul>
                       </div>
+                      <div class="col-md-3 footer-address">
+                      <a name="myAnchor">
+                        <p style="color:white">
+                        	Carnegie Financial Services<br>
+                        	5000 Forbes Avenue<br>
+                        	Pittsburgh PA, 15213<br>
+                        </p>
+                        </a>	
+                    </div>
                     <div class="col-md-2 footer-social">
                         <ul class="unstyled-list list-inline">
                             
-                            <li><a class="twitter" href="#"><span> </span></a></li>
-                            <li><a class="facebook" href="#"><span> </span></a></li>
+                            <li><a class="twitter" href="https://twitter.com/"><span> </span></a></li>
+                            <li><a class="facebook" href="https://www.facebook.com/"><span> </span></a></li>
                             <div class="clearfix"> </div>
                         </ul>
                     </div>
