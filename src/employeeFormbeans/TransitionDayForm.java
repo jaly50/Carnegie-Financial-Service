@@ -108,13 +108,13 @@ public class TransitionDayForm extends FormBean {
 
 	public List<String> validateDate(String sdate) {
 		List<String> errors = new ArrayList<String>();
-		System.out.println(sdate+"get the date");
+		System.out.println(sdate+"  get the date");
 		if (sdate.isEmpty() || sdate.length() == 0) {
 			errors.add("Please add a date");
 			return errors;
 		}
 		if (sdate.length() < 8) {
-			errors.add("Please input correct date format. It should be like yyyymmdd");
+			errors.add("Please input correct date format. It should be like mm/dd/yyyy");
 			return errors;
 		}
 
@@ -130,6 +130,19 @@ public class TransitionDayForm extends FormBean {
 				return errors;
 			}
 		}
+
+		int month = Integer.parseInt(sdate.substring(0,2));
+		System.out.println("Month is : " + month);
+		if (month <= 0 || month > 12) {
+			errors.add("Please input the right month number. It should be like mm/dd/yyyy");
+			return errors;
+		}
+		int day = Integer.parseInt(sdate.substring(3,5));
+		if (day <= 0 || day > 31) {
+			errors.add("Please input the right day number. It should be like mm/dd/yyyy");
+			return errors;
+		}
+		
 		return errors;
 	}
 

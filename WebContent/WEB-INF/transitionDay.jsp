@@ -80,7 +80,7 @@ window.onload = function () {
   <span style="font-size:30px;"  class="glyphicon glyphicon-calendar"  aria-hidden="true" onclick="dp_cal.toggle();" > </span>
   </span>
   <h4>
- <input type="text" id="newDate" name="newDate" readonly="readonly"  placeholder="New Transition Date" class="form-control" style="width: 280"  />
+ <input type="text" id="newDate" name="newDate" placeholder="New Transition Date" class="form-control" style="width: 280"  />
  <input class="btn btn-default" type="submit" name="button" value="Submit"/>
   </h4>
      
