@@ -115,12 +115,10 @@ public class TransitionDayAction extends Action {
 				request.setAttribute("latestDate", latestDateShow);
 				}
 
-			System.out.println("113");
+			//System.out.println("113");
 			if (!transitionDayForm.isPresent()) {
 				return "transitionDay.jsp";
 			}
-			
-			System.out.println("122" + fundList);
 			
 			if (fundList == null || fundList.length == 0) {
 				errors.add("Sorry, there is no available fund");

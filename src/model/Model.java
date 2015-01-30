@@ -1,9 +1,7 @@
 /*
- * 08-600
- * Homework #9
  * Jiali Chen
  * andrewID: jialic
- * Dec 4, 2014
+ * 
  */
 package model;
 
@@ -63,10 +61,10 @@ public class Model {
 		   {
 			   //String employee[]=new String[]{"adminj","jiali","chen","jiali"};
 			   Employee e=new Employee();
-			   e.setUsername("adminj");
-			   e.setFirstname("jiali");
-			   e.setLastname("Chen");
-			   e.setPassword("adminj");
+			   e.setUsername("admin");
+			   e.setFirstname("Jeffrey");
+			   e.setLastname("Eppinger");
+			   e.setPassword("admin");
 		       employeeDAO.create(e);
 		   }
 		   

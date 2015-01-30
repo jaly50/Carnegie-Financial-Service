@@ -30,7 +30,7 @@ import customerFormbeans.SellFundForm;
 public class SellFundAction extends Action {
 	private FormBeanFactory<SellFundForm> formBeanFactory = FormBeanFactory
 			.getInstance(SellFundForm.class);
-	static DecimalFormat displayMoney = new DecimalFormat("$#,##0.000");
+	static DecimalFormat displayMoney = new DecimalFormat("#,##0.000");
 	private CustomerDAO customerDAO;
 	private FundDAO fundDAO;
 	private PositionDAO positionDAO;
@@ -55,8 +55,6 @@ public class SellFundAction extends Action {
 		List<String> errors = new ArrayList<String>();
 		String message = null;
 		request.setAttribute("errors", errors);
-		System.out.println("SellFund Action get performed");
-
 		HttpSession session = request.getSession();
 		SellFundForm form;
 
@@ -80,8 +78,7 @@ public class SellFundAction extends Action {
 			if (sellFundTable.size() == 0) {
 				return "sellFund.jsp";
 			}
-			System.out.println("79");
-
+		
 			// button
 			form = formBeanFactory.create(request);
 			request.setAttribute("sellFundForm", form);
@@ -128,7 +125,6 @@ public class SellFundAction extends Action {
 			System.out.println(pos);
 			long oldShares = pos.getAvailableShares();
 			if (sellShares > oldShares) {
-				System.out.println(sellShares + " " + oldShares);
 				errors.add("You don't have enough shares ");
 				return "sellFund.jsp";
 			}
@@ -174,11 +170,8 @@ public class SellFundAction extends Action {
 				double realShares = (double) databaseShares / 1000;
 				// System.out.println("Position Share:" + p.getShares());
 				Fund fund = fundDAO.getFund(p.getFund_id());
-				// System.out.println("Fund id: " + fund.getFund_id());
 				long priceTemp = fundPriceHistoryDAO.getCurrentPrice(fund
 						.getFund_id());
-				// System.out.println("PriceTemp: " + priceTemp);
-				// System.out.println("marketValueTemp: " + marketValueTemp);
 				Double priceShow = (double) (priceTemp / 100);
 
 				SellFundTable tableRow = new SellFundTable();

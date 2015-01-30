@@ -71,7 +71,7 @@ public class LoginAction extends Action {
 					errors.add("Please choose one user type.");
 					return "login.jsp";
 				}
-				System.out.println(userType);
+		
 
 				String username = form.getUsername();
 
