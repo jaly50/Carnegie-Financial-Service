@@ -78,7 +78,7 @@ public class SellFundAction extends Action {
 			if (sellFundTable.size() == 0) {
 				return "sellFund.jsp";
 			}
-		
+
 			// button
 			form = formBeanFactory.create(request);
 			request.setAttribute("sellFundForm", form);
@@ -100,27 +100,21 @@ public class SellFundAction extends Action {
 			if (originPos != null) {
 				long originBalance = customer.getAvailablebalance();
 				long originShares = originPos.getAvailableShares();
-				long nextBalance = (long) ((double)(originBalance/100) + (form.getRealShares()*10000));
+				long nextBalance = (long) ((double) (originBalance / 100) + (form
+						.getRealShares() * 10000));
 				long upperBalance = 100000000000L;
 				if (nextBalance > upperBalance) {
-					errors.add("After selling "+ fund.getName() +", your balance would be too high, please try selling some other amount or other funds or you can contact us");
+					errors.add("After selling "
+							+ fund.getName()
+							+ ", your balance would be too high, please try selling some other amount or other funds or you can contact us");
 					return "sellFund.jsp";
 				}
 
 			}
 
-			// Create the transaction bean
-			Transaction transaction;
-			transaction = new Transaction();
-			transaction.setCustomer_id(customer_id);
-			transaction.setFund_id(fund_id);
-			transaction.setExecute_date(null);
-			transaction.setTransaction_type("SellFund");
-			transaction.setShares(sellShares);
-			transaction.setAmount(-1);
-
-			transactionDAO.create(transaction);
 			Position pos;
+
+			// 1. Read Position Table Row
 			pos = positionDAO.read(customer_id, form.getFun_id());
 			System.out.println(pos);
 			long oldShares = pos.getAvailableShares();
@@ -130,6 +124,17 @@ public class SellFundAction extends Action {
 			}
 			pos.setAvailableShares(oldShares - sellShares);
 			positionDAO.update(pos);
+
+			// 2.Create Transaction Table Row
+			Transaction transaction;
+			transaction = new Transaction();
+			transaction.setCustomer_id(customer_id);
+			transaction.setFund_id(fund_id);
+			transaction.setExecute_date(null);
+			transaction.setTransaction_type("SellFund");
+			transaction.setShares(sellShares);
+			transaction.setAmount(-1);
+			transactionDAO.create(transaction);
 
 			sellFundTable = getSellFundTable(customer);
 			request.setAttribute("sellFundTable", sellFundTable);
