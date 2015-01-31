@@ -51,7 +51,7 @@
     <thead>
       <tr>
         <th><p align = left>Fund Name</th>
-        <th><p align = left>Fund Symbol</th>
+        <th><p align = left>Fund Ticker</th>
         <th><p align = right>Price on Last Trading Day</th>
         <th><p align = right>Shares</th>
         <th><p align = right>Value</th>    

@@ -96,7 +96,7 @@ window.onload = function () {
       <tr>
         <th><p align="left">Fund ID</th>
         <th><p align="left">Fund Name</th>
-        <th><p align="left">Fund Symbol</th>
+        <th><p align="left">Fund Ticker</th>
         <th><p align="right">Last Transition Day Price</th>
         <th><p align="center">Set New Price</th>
 

@@ -12,8 +12,8 @@
  </h4>
  <br />
  
- <h4 style = "margin-left:380px">   Fund Symbol: &nbsp;
-      <input type="text" name="symbol"  placeholder="Only Capital Letters"  value="${form.symbol}"/> 
+ <h4 style = "margin-left:380px">   Fund Ticker: &nbsp;
+      <input type="text" name="symbol"  placeholder="1-5 Characters"  value="${form.symbol}"/> 
  </h4>
  <br />
   <br />

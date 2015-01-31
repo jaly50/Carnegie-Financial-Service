@@ -19,7 +19,7 @@
     <thead>
       <tr>
         <th>Fund Name</th>
-        <th>Fund Symbol</th>
+        <th>Fund Ticker</th>
   
       </tr>
     </thead>

@@ -25,7 +25,7 @@
         <th><p align = left>Date</th>
         <th><p align = left>Operation</th>
         <th><p align = left>Fund Name</th>
-        <th><p align = left>Fund Symbol</th>
+        <th><p align = left>Fund Ticker</th>
         <th><p align = right>Shares</th>
         <th><p align = right>Price</th>
         <th><p align = right>Amount</th>

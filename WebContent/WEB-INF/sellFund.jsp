@@ -72,7 +72,7 @@ function check(lbl){
     <thead>
       <tr>
         <th><p align = left>Fund Name</th>
-        <th><p align = left>Fund Symbol</th>
+        <th><p align = left>Fund Ticker</th>
         <th><p align = right>Available Shares</th>
         <th><p align = center>Select to Sell</th>
       </tr>

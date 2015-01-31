@@ -15,7 +15,7 @@
 <div class="container">
 <div class="container">
 	<h2>Fund Price History</h2>
-  <h4>Fund Name: ${fund.name}<br> Fund Symbol: ${fund.symbol }</h4>
+  <h4>Fund Name: ${fund.name}<br> Fund Ticker: ${fund.symbol }</h4>
     </br>     
   <table class="table table-bordered">
     <thead>
