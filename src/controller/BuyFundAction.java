@@ -124,6 +124,7 @@ public class BuyFundAction extends Action {
 
 			// update customer available balance in database
 			fund_id = form.getFund_id();
+			//
 			Position originPos = positionDAO.getPosition(customer_id, fund_id);
 			if (originPos != null) {
 				long originShares =originPos.getAvailableShares();
@@ -153,7 +154,7 @@ public class BuyFundAction extends Action {
 			fund = fundDAO.getFund(fund_id);
 
 			// check shares overflow
-			
+			// 1.Transaction
 			Transaction transaction = new Transaction();
 			transaction.setAmount(databaseAmount);
 			transaction.setCustomer_id(customer_id);
