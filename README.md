@@ -1,5 +1,5 @@
 # Task7
-Carnegie Financial Service - Web Application Development
+Carnegie Financial Service - Web Application Development, JAVA J2EE
 
 
 Prototyped Mutual Fund Web Application for transaction and management with Tomcat Servlet
